@@ -1,0 +1,59 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>F1 canvas loop</title>
+<style>html,body{margin:0;background:#101418;overflow:hidden}canvas{display:block}</style>
+</head><body>
+<canvas id="c" width="960" height="540"></canvas>
+<script>
+// A plain canvas animation, written as one would for a browser: a
+// requestAnimationFrame loop timed by performance.now(), sparks spawned by a
+// setTimeout chain at random places (Math.random), moved by the elapsed time.
+// Nothing here knows about any editor.
+const cv = document.getElementById('c')
+const g = cv.getContext('2d')
+const W = cv.width, H = cv.height
+const sparks = []
+let last = performance.now()
+const start = last
+function spawn() {
+  for (let i = 0; i < 6; i++) {
+    sparks.push({ x: Math.random() * W, y: H * 0.2 + Math.random() * H * 0.6, vx: (Math.random() - 0.5) * 220, vy: (Math.random() - 0.5) * 220, hue: Math.floor(Math.random() * 360), life: 1.6 + Math.random() })
+  }
+  setTimeout(spawn, 250)
+}
+spawn()
+function frame(now) {
+  const dt = Math.min(0.1, (now - last) / 1000)
+  last = now
+  const el = (now - start) / 1000
+  g.fillStyle = '#101418'
+  g.fillRect(0, 0, W, H)
+  for (const s of sparks) {
+    s.x += s.vx * dt
+    s.y += s.vy * dt
+    s.vy += 90 * dt
+    s.life -= dt
+  }
+  for (let i = sparks.length - 1; i >= 0; i--) if (sparks[i].life <= 0) sparks.splice(i, 1)
+  for (const s of sparks) {
+    g.fillStyle = 'hsla(' + s.hue + ',80%,60%,' + Math.max(0, Math.min(1, s.life)) + ')'
+    g.beginPath()
+    g.arc(s.x, s.y, 9, 0, Math.PI * 2)
+    g.fill()
+  }
+  // A clock hand and a bar driven by the elapsed time.
+  g.strokeStyle = '#e8e8e8'
+  g.lineWidth = 8
+  g.beginPath()
+  g.moveTo(W / 2, H / 2)
+  g.lineTo(W / 2 + Math.cos(el * 1.3) * 200, H / 2 + Math.sin(el * 1.3) * 200)
+  g.stroke()
+  g.fillStyle = '#4fb3ff'
+  g.fillRect(0, H - 24, ((el % 10) / 10) * W, 24)
+  g.fillStyle = '#ffffff'
+  g.font = '700 40px sans-serif'
+  g.fillText(el.toFixed(2) + ' s', 30, 60)
+  requestAnimationFrame(frame)
+}
+requestAnimationFrame(frame)
+</script>
+</body></html>

@@ -1,0 +1,174 @@
+{
+  "version": 1,
+  "name": "Broken sample",
+  "settings": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "mode": "frame",
+  "tracks": [
+    {
+      "id": "v1",
+      "kind": "video",
+      "name": "V1",
+      "clipIds": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "id": "a1",
+      "kind": "audio",
+      "name": "A1",
+      "clipIds": [
+        "s",
+        "b"
+      ]
+    }
+  ],
+  "clips": {
+    "a": {
+      "id": "a",
+      "assetId": "vid",
+      "trackId": "v1",
+      "start": 0,
+      "inPoint": 0,
+      "duration": 4,
+      "transform": {
+        "x": 960,
+        "y": 540,
+        "scale": 1,
+        "rotation": 0
+      },
+      "volume": 1,
+      "linkId": "L",
+      "audioExtracted": true
+    },
+    "b": {
+      "id": "b",
+      "assetId": "pic",
+      "trackId": "v1",
+      "start": 4,
+      "inPoint": 0,
+      "duration": 3,
+      "transform": {
+        "x": 960,
+        "y": 540,
+        "scale": 1,
+        "rotation": 0
+      },
+      "volume": 1,
+      "channels": {
+        "scale": [
+          {
+            "id": "k1",
+            "time": 0,
+            "value": 1
+          },
+          {
+            "id": "k2",
+            "time": 2,
+            "value": 1.2
+          }
+        ]
+      }
+    },
+    "s": {
+      "id": "s",
+      "assetId": "vid",
+      "trackId": "a1",
+      "start": 0,
+      "inPoint": 0,
+      "duration": 4,
+      "transform": {
+        "x": 960,
+        "y": 540,
+        "scale": 1,
+        "rotation": 0
+      },
+      "volume": 1,
+      "linkId": "L"
+    }
+  },
+  "assets": [
+    {
+      "id": "vid",
+      "kind": "video",
+      "name": "talk.mp4",
+      "path": "C:\\media\\talk.mp4",
+      "url": "",
+      "size": 1000,
+      "duration": 10,
+      "width": 1920,
+      "height": 1080,
+      "hasAudio": true
+    },
+    {
+      "id": "pic",
+      "kind": "image",
+      "name": "pic.png",
+      "path": "C:\\media\\pic.png",
+      "url": "",
+      "size": 10,
+      "duration": 0,
+      "width": 800,
+      "height": 600,
+      "hasAudio": false
+    }
+  ],
+  "captions": [
+    {
+      "id": "c1",
+      "text": "hello there",
+      "start": 0.5,
+      "end": 2
+    },
+    {
+      "id": "c2",
+      "text": "second line",
+      "start": 2.2,
+      "end": 3.5
+    }
+  ],
+  "captionStyle": {
+    "fontFamily": "Arial",
+    "fontSize": 64,
+    "fontWeight": 800,
+    "color": "#ffffff",
+    "outlineColor": "#000000",
+    "outlineWidth": 6,
+    "bgColor": "#000000",
+    "bgOpacity": 0,
+    "posY": 0.86,
+    "maxLineChars": 28,
+    "uppercase": false,
+    "popup": {
+      "enabled": false,
+      "duration": 0.16,
+      "intensity": 1,
+      "style": "pop"
+    },
+    "wordsPerCue": 0,
+    "pauseThreshold": 0
+  },
+  "transcription": {
+    "model": "english",
+    "language": "auto"
+  },
+  "groups": [
+    {
+      "id": "g1",
+      "clipIds": [
+        "a",
+        "b"
+      ]
+    }
+  ],
+  "snap": {
+    "enabled": true,
+    "distance": 12,
+    "snapEdges": true,
+    "snapCenters": true
+  }
+}

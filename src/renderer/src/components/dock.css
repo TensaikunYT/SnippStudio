@@ -1,0 +1,257 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The left dock and its pages (SnippStudio phase 3c.1): the dock's tabs, the
+   media bin, the template gallery, the sound effects. Moved out of styles.css;
+   design values only (src/test/ui-tokens.test.ts). The controls are the
+   building blocks (ui/kit.css); this sheet only places them. */
+
+/* ---- The dock (components/WorkspaceDock.tsx) ------------------------------------------- */
+.workspace-dock {
+  /* Arayüz v4: the categories stand on the ground, the chosen page is the card. */
+  display: flex; gap: var(--gap-card); min-width: 0; min-height: 0;
+  background: transparent;
+}
+.workspace-dock.workspace-dock { overflow: visible; border-radius: 0; }
+/* The column: the categories, and at its foot the panel's close / open
+   (DENEME-1, P2). Closed, the column alone is the dock (App.tsx: DOCK_CATS_PX). */
+.dock-rail { flex: none; display: flex; flex-direction: column; align-items: center; gap: var(--space-1); width: 64px; min-height: 0; padding-bottom: var(--space-1); }
+.dock-cats { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: 2px; width: 100%; padding: var(--space-1) 0; overflow-y: auto; scrollbar-width: none; }
+.dock-rail > .dock-toggle.ui-btn { flex: none; color: var(--text-3); }
+.dock-body[hidden] { display: none !important; }
+/* Each category takes an even share of the column, 52 px when there is room
+   and down to 32 px when there is not (22 November, L10: nine categories of
+   a fixed height did not fit a 768-high window, and the last ones lost their
+   names; the column scrolls only below the window's least height). */
+.dock-cat.dock-cat {
+  flex: 1 1 52px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: 100%; min-height: 32px; max-height: 52px; padding: var(--space-1) 2px;
+  border: 0; border-radius: var(--r-ctl); background: transparent; color: var(--text-3); font-family: var(--font); cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.dock-cat.dock-cat:hover:not(:disabled) { background: var(--bg-panel); color: var(--text); }
+.dock-cat.dock-cat.is-on, .dock-cat.dock-cat.is-on:hover:not(:disabled) { background: var(--bg-hover); color: var(--text); }
+/* A short window (768 high and under): no room between the categories, and
+   their own inner room smaller, so each keeps its icon and its name whole. */
+@media (max-height: 960px) { .dock-cats { gap: 0; padding: 2px 0; } .dock-cat.dock-cat { gap: 2px; padding: 1px 2px; } }
+@media (max-height: 740px) { .dock-cat.dock-cat { gap: 1px; padding: 0 2px; } .dock-cat.dock-cat > .ui-icon { width: 16px; height: 16px; } }
+.dock-cat-label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fs-11); line-height: 1.2; }
+.dock-cat.is-on .dock-cat-label { font-weight: var(--fw-medium); }
+.dock-body {
+  flex: 1; display: flex; flex-direction: column; min-width: 0; min-height: 0; overflow: hidden;
+  border-radius: var(--r-card); background: var(--bg-panel);
+  container: dock / inline-size;
+}
+.dock-page { flex: 1; min-height: 0; min-width: 0; display: flex; flex-direction: column; }
+.dock-page[hidden] { display: none !important; }
+.dock-intro { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.dock-intro strong { font-size: var(--fs-13); font-weight: var(--fw-semibold); }
+/* A page of its own (Captions, Filters, Code; arayüz v4). */
+.dock-scroll { position: relative; overflow-y: auto; overscroll-behavior: contain; }
+.dock-page-body { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-3); }
+.dock-page-body > .dock-note { margin: 0; }
+.dock-wide.ui-btn { flex: none; width: 100%; justify-content: center; }
+.dock-empty-card { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); padding: var(--space-5) var(--space-3); border-radius: var(--r-card); background: var(--bg-app); color: var(--text-3); font-size: var(--fs-12); line-height: 1.45; text-align: center; }
+/* Arayüz v4: in the narrow page a field's label stands over its control. */
+.dock-body .ui-field-row { flex-direction: column; align-items: stretch; gap: var(--space-1); }
+.dock-body .ui-field-label { flex: none; font-size: var(--fs-12); }
+.dock-body .ui-field-hint { padding-left: 0; }
+/* Two pictures to a row in the media page. */
+.dock-body .bin-list.grid { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); }
+.dock-page-body .insp-looks { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; }
+/* The empty media panel: one large place to import into. */
+.bin-drop {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-2); min-height: 220px; padding: var(--space-4) var(--space-3);
+  border: var(--border-w) dashed var(--line-strong); border-radius: var(--r-card); background: var(--bg-app); cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+}
+.bin-drop:hover { border-color: var(--text-3); }
+.bin-drop-mark { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: var(--r-pill); background: var(--bg-raised); color: var(--text-2); }
+.bin-drop .bin-empty { padding: 0; }
+.bin-drop .bin-empty .ui-empty-text { color: var(--text-2); }
+.dock-note, .dock-empty { color: var(--text-3); font-size: var(--fs-11); line-height: 1.45; }
+.dock-note { margin: var(--space-2) 0 var(--space-3); }
+.dock-empty { display: block; padding: var(--space-3) var(--space-2); }
+
+/* ---- The media bin (components/MediaBin.tsx) ------------------------------------------- */
+.bin { display: flex; flex-direction: column; min-height: 0; min-width: 0; overflow: hidden; background: var(--bg-panel); }
+.dock-page .bin { flex: 1; }
+.bin .bin-head { display: flex; align-items: center; gap: 2px; padding: var(--space-2); }
+.bin .bin-head .bin-title { flex: 1; font-size: var(--fs-13); font-weight: var(--fw-semibold); }
+.dock-page .bin-head .bin-title { display: none; }
+.dock-page .bin-head .bin-import { margin-left: auto; }
+/* (Phase 9 audit patch D7) The Import button never gives up its word: at
+   the default width (220 px) it gives its icon's room to it instead, so
+   "Import" / "İçe aktar" is never cut; the icon tools take what is left. */
+.bin .bin-head .bin-import { flex: none; }
+@container dock (max-width: 260px) { .bin-head .bin-import > .ui-icon { display: none; } }
+.bin .bin-list { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: var(--space-2); }
+.bin-colour { position: relative; }
+.bin-colour-pop { width: 220px; gap: var(--space-2); padding: var(--space-2); }
+.bin-colour-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); color: var(--text-2); font-size: var(--fs-12); }
+.bin-colour-row input[type='color'] { width: 44px; height: var(--ctl-sm); padding: 0; border-radius: var(--r-ctl); background: var(--bg-app); }
+.bin-item {
+  position: relative; display: flex; align-items: center; gap: var(--space-2); padding: var(--space-1) var(--space-2) var(--space-1) var(--space-1);
+  border-radius: var(--r-ctl); cursor: pointer; transition: background-color var(--dur-fast) var(--ease);
+}
+.bin-item:hover { background: var(--bg-hover); }
+/* v3.1: selected is the selection's gold, as on the timeline. */
+.bin-item.selected { background: var(--bg-hover); box-shadow: inset 0 0 0 var(--border-w) var(--select); }
+.bin-item.missing { opacity: 0.5; }
+.bin-item img, .bin-item .ph, .bin-item .bin-scrub { flex: none; width: 56px; height: 32px; border-radius: var(--r-ctl); background-color: var(--bg-app); object-fit: cover; }
+.bin-item .ph { display: flex; align-items: center; justify-content: center; background: var(--bg-raised); color: var(--text-2); }
+/* v3.1: a sound without a picture wears the timeline's sound tone. */
+.bin-item .ph.is-audio { background: color-mix(in srgb, var(--clip-audio-fill) 42%, var(--bg-raised)); color: var(--clip-wave); }
+.bin-item .bin-scrub { background-repeat: no-repeat; }
+.bin-item .meta { flex: 1; min-width: 0; }
+.bin-item .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); font-size: var(--fs-13); }
+.bin-item .sub { color: var(--text-3); font-size: var(--fs-12); }
+.bin-item .bin-proxy { display: inline-flex; align-items: center; gap: 2px; }
+.bin-item .bin-undecodable { color: var(--danger-text); }
+.bin-item .add.del:not(:hover) { color: var(--text-3); }
+.bin-item .add.del:hover:not(:disabled) { color: var(--danger-text); }
+.bin-selinfo { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); padding: var(--space-1) var(--space-3); color: var(--text-2); font-size: var(--fs-11); }
+.bin-empty { padding: var(--space-2); color: var(--text-3); font-size: var(--fs-12); line-height: 1.45; }
+.bin-folder-item .ph { background: var(--bg-raised); color: var(--text-2); }
+.bin-folder-item .name { font-weight: var(--fw-semibold); }
+.bin-folder-head {
+  display: flex; align-items: center; gap: var(--space-2); width: 100%; height: var(--ctl); padding: 0 var(--space-2);
+  border: 0; border-radius: 0; background: transparent; color: var(--text-2); text-align: left; font-size: var(--fs-12); font-weight: var(--fw-semibold);
+}
+.bin-folder-head:hover:not(:disabled) { background: var(--bg-hover); color: var(--text); }
+.bin-folder-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bin-count { padding: 0 var(--space-2); border-radius: var(--r-pill); background: var(--bg-hover); color: var(--text-2); font-size: var(--fs-11); }
+/* The large thumbnail grid (the bin header's toggle). auto-fill keeps the tiles a
+   sane size; rows size to their content; min-width 0 keeps a long name from
+   widening a column; a fixed thumbnail height never collapses. */
+/* The large thumbnail grid (v3: the default). A tile is its picture (16:9,
+   rounded, the length in a badge on its corner) and its name under it; the
+   tile's actions float over the picture's top corner under the pointer. */
+.bin-list.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); grid-auto-rows: min-content; align-content: start; gap: var(--space-3) var(--space-2); }
+.bin-list.grid .bin-item { display: flex; flex-direction: column; align-items: stretch; gap: var(--space-2); min-width: 0; padding: var(--space-1); border-radius: var(--r-card); }
+.bin-list.grid .bin-item img, .bin-list.grid .bin-item .ph, .bin-list.grid .bin-item .bin-scrub { width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: var(--r-clip); }
+.bin-list.grid .bin-item .meta { min-width: 0; padding: 0 var(--space-1) var(--space-1); }
+.bin-list.grid .bin-item .sub { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bin-list.grid .bin-item .sub:has(> .bin-sub-kind:only-child) { display: none; }
+.bin-list.grid .bin-item .bin-sub-kind { display: none; }
+.bin-list.grid .bin-item > .ui-btn { position: absolute; top: var(--space-2); z-index: var(--z-sticky); width: var(--ctl-sm); background: color-mix(in srgb, var(--bg-app) 78%, transparent); color: var(--text); opacity: 0; transition: opacity var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease); }
+.bin-list.grid .bin-item > .ui-btn:hover:not(:disabled) { background: var(--bg-app); }
+.bin-list.grid .bin-item:hover > .ui-btn, .bin-list.grid .bin-item > .ui-btn:focus-visible, .bin-list.grid .bin-item.missing > .ui-btn { opacity: 1; }
+.bin-list.grid .bin-item > .ui-btn:nth-last-child(1) { right: var(--space-2); }
+.bin-list.grid .bin-item > .ui-btn:nth-last-child(2) { right: calc(var(--space-2) + var(--ctl-sm) + var(--space-1)); }
+.bin-list.grid .bin-item > .ui-btn:nth-last-child(3) { right: calc(var(--space-2) + 2 * (var(--ctl-sm) + var(--space-1))); }
+.bin-dur { display: none; }
+/* What is not a tile (the empty panel's sentence, a folder's head) takes the whole row. */
+.bin-list.grid > :not(.bin-item) { grid-column: 1 / -1; }
+.bin-list.grid .bin-dur { position: relative; z-index: var(--z-base); align-self: flex-end; margin: calc(-1 * (20px + var(--space-2) + var(--space-1))) var(--space-2) 0 0; display: inline-flex; align-items: center; gap: var(--space-1); height: 20px; padding: 0 var(--space-2); border-radius: var(--r-pill); background: color-mix(in srgb, var(--bg-app) 72%, transparent); color: var(--text); font-family: var(--font-mono); font-size: var(--fs-11); pointer-events: none; }
+
+/* ---- The template gallery (components/TemplatePanel.tsx) ------------------------------- */
+.tpl-panel { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-3) var(--space-2) var(--space-4); }
+.tpl-panel > * { flex-shrink: 0; }
+.tpl-panel .dock-note { margin: 0; }
+.tpl-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: var(--space-2); }
+.tpl-card { overflow: hidden; border-radius: var(--r-card); background: var(--bg-raised); }
+.tpl-thumb { display: block; width: 100%; aspect-ratio: 16 / 9; background: var(--bg-app); }
+.tpl-card-body { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-1); padding: var(--space-2); }
+.tpl-card-title { display: flex; align-items: center; gap: var(--space-2); font-size: var(--fs-12); }
+.tpl-card-hint { color: var(--text-3); font-size: var(--fs-11); line-height: 1.4; }
+
+/* ---- The sound effects (components/SoundEffectsPanel.tsx) ------------------------------ */
+.sfx-panel { overflow-y: auto; overscroll-behavior: contain; padding: var(--space-3) var(--space-2) var(--space-4); }
+.sfx-list { display: grid; gap: var(--space-1); margin-bottom: var(--space-3); }
+.sfx-item {
+  display: flex; align-items: center; gap: var(--space-2); width: 100%; min-width: 0; height: var(--ctl); padding: 0 var(--space-2);
+  border-radius: var(--r-ctl); background: var(--bg-raised); color: var(--text); text-align: left; font-size: var(--fs-12);
+}
+.sfx-item:hover:not(:disabled) { background: var(--bg-hover); }
+.sfx-item span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sfx-item.selected, .sfx-item.selected:hover:not(:disabled) { background: var(--accent-soft); }
+.sfx-action-row { display: flex; gap: var(--space-1); margin: var(--space-3) 0; }
+.sfx-action-row > .ui-btn { flex: 1; min-width: 0; }
+.sfx-panel .ui-slider { margin: var(--space-2) 0; }
+.sfx-cuts-head { display: flex; justify-content: space-between; margin: var(--space-4) 0 var(--space-2); color: var(--text-2); font-size: var(--fs-11); }
+.sfx-panel .sfx-all.ui-btn { width: 100%; }
+.sfx-cut-list { display: grid; gap: 2px; margin-top: var(--space-2); }
+.sfx-cut-list button {
+  display: flex; align-items: center; justify-content: space-between; height: var(--ctl-sm); padding: 0 var(--space-2);
+  border: 0; border-radius: var(--r-ctl); background: var(--bg-raised); color: var(--text-2); font-family: var(--font-mono); font-size: var(--fs-11);
+}
+.sfx-cut-list button:hover:not(:disabled) { background: var(--bg-hover); color: var(--text); }
+.sfx-cut-at { display: inline-flex; align-items: center; gap: var(--space-1); }
+.sfx-message { margin-top: var(--space-3); padding: var(--space-2); border-radius: var(--r-ctl); background: var(--bg-raised); color: var(--text-2); font-size: var(--fs-11); }
+
+/* ---- Shapes (components/ShapesTab.tsx, Library → Effects) ---------------------------- */
+.shape-add-head { margin-bottom: var(--space-1); }
+.shape-kind-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-1); }
+.shape-kind-grid > .ui-btn { justify-content: flex-start; min-width: 0; }
+.shape-highlight-action.ui-btn { width: 100%; margin: var(--space-2) 0 var(--space-1); }
+.shape-text-marker-controls { margin-bottom: var(--space-2); padding: var(--space-2); border-radius: var(--r-card); background: var(--bg-raised); }
+.shape-colour { width: 44px; height: var(--ctl-sm); padding: 0; border-radius: var(--r-ctl); background: var(--bg-app); }
+.shape-quick-row, .shape-direction-row { display: flex; gap: var(--space-2); margin: var(--space-1) 0 var(--space-2); }
+.shape-quick-row button { width: var(--ctl-sm); height: var(--ctl-sm); min-width: var(--ctl-sm); padding: 0; border-radius: var(--r-ctl); background: var(--swatch); }
+.shape-quick-row button.on, .shape-quick-row button:hover:not(:disabled) { background: var(--swatch); box-shadow: 0 0 0 2px var(--bg-panel), 0 0 0 3px var(--text); }
+.shape-direction-row button { display: inline-flex; flex: 1; align-items: center; justify-content: center; height: var(--ctl-sm); padding: 0; border-radius: var(--r-ctl); background: var(--bg-raised); color: var(--text); }
+.shape-direction-row button:hover:not(:disabled) { background: var(--bg-hover); }
+.shape-delete.ui-btn { width: 100%; margin-top: var(--space-2); }
+.dock-effects .ui-field, .dock-effects .ui-slider, .dock-effects .ui-switch-row { margin: var(--space-1) 0; }
+
+/* The Effects page's scroll and its old shared parts (from styles.css, phase 3c.4b). */
+/* (The scrollbar's room is kept whether it shows or not: the Effects and Transitions pages' cards are the same size.) */
+.dock-effects { position: relative; overflow-y: auto; scrollbar-gutter: stable; overscroll-behavior: contain; padding: var(--space-3) var(--space-3) var(--space-4); }
+.dock-effects .section { margin-bottom: var(--space-3); }
+.dock-effects .hint { font-size: var(--fs-11); line-height: 1.4; }
+.dock-effects .row button { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+/* ---- Text (components/TextPage.tsx; DENEME-1, P1) -------------------------------------- */
+/* Text and titles first; the templates are the second sub-page. */
+.dock-text { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.dock-text-head { flex: none; padding: var(--space-3) var(--space-3) 0; }
+.dock-text > .dock-page-body { flex: 1; min-height: 0; }
+.dock-text-templates { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.text-styles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3) var(--space-2); }
+/* The look tour (rule 5): a ready text's picture holds small words (a subtitle,
+   a name, a quote); one to a row they are big enough to read. */
+.text-styles.is-ready { grid-template-columns: minmax(0, 1fr); }
+/* DENEME-2/3 (worker U): a title style or a text animation is a card in the
+   transitions' language: the picture is the card, its name under it. */
+.text-style.text-style {
+  display: flex; flex-direction: column; gap: var(--gap-card); min-width: 0; padding: 0;
+  border: 0; border-radius: var(--r-clip); background: transparent; color: var(--text-2); font-family: var(--font); font-size: var(--fs-11); text-align: left; cursor: pointer;
+  transition: color var(--dur-fast) var(--ease);
+}
+.text-style.text-style:hover { background: transparent; color: var(--text); }
+.text-style-thumb { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: var(--r-clip); background: var(--well); transition: filter var(--dur-fast) var(--ease); }
+.text-style.text-style:hover .text-style-thumb { filter: brightness(1.15); }
+.text-style-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* The Text page made clearer (YAZI-PANELI-PLAN.md): folding sections, the
+   animations in three groups of three to a row, the chosen one ringed as a
+   picked look is; the quick fonts, resting faded with no text selected. */
+.dock-text .text-sec .ui-section-body { padding-bottom: var(--space-2); }
+.text-style.text-style.is-on { color: var(--text); }
+.text-style.is-on .text-style-thumb { box-shadow: 0 0 0 2px var(--bg-panel), 0 0 0 4px var(--select); }
+.text-style.text-style:focus-visible { outline: none; }
+.text-style.text-style:focus-visible .text-style-thumb { box-shadow: var(--focus-ring); }
+.text-anims { display: flex; flex-direction: column; gap: var(--space-3); }
+.text-target { margin: 0; }
+/* The search and the two lists (REF-AB, item 6): one row. */
+.text-find { position: relative; display: flex; align-items: center; gap: var(--space-1); }
+.text-find-field.ui-input { flex: 1; min-width: 0; padding-left: calc(var(--space-2) + 18px); }
+.text-find-icon { position: absolute; left: var(--space-2); color: var(--text-3); pointer-events: none; }
+/* A card's bookmark: at its picture's corner, shown on hover, kept shown when on. */
+.text-pick { position: relative; min-width: 0; display: flex; flex-direction: column; }
+.text-pick > .text-pick-fav.ui-btn { position: absolute; top: var(--space-1); right: var(--space-1); background: var(--bg-raised); opacity: 0; transition: opacity var(--dur-fast) var(--ease); }
+.text-pick:hover > .text-pick-fav.ui-btn, .text-pick > .text-pick-fav.ui-btn:focus-visible, .text-pick.is-fav > .text-pick-fav.ui-btn { opacity: 1; }
+.text-anim-grid .text-pick > .text-pick-fav.ui-btn { top: 2px; right: 2px; }
+.text-anim-group { display: flex; flex-direction: column; gap: var(--space-1); }
+.text-anim-group-name { color: var(--text-3); font-size: var(--fs-11); font-weight: var(--fw-medium); }
+.text-anim-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-2) var(--space-1); }
+.text-fonts { display: flex; flex-direction: column; gap: var(--space-2); }
+.text-fonts > .hint { margin: 0; }
+.text-font-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-1); }
+.text-font.text-font {
+  min-width: 0; height: 40px; padding: 0 var(--space-1); overflow: hidden; border: 0; border-radius: var(--r-ctl);
+  background: var(--fill-hover); color: var(--text); font-size: var(--fs-13); line-height: 1; white-space: nowrap; text-overflow: ellipsis; cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
+}
+.text-font.text-font:hover:not(:disabled) { background: var(--bg-hover); }
+.text-font.text-font.is-on { background: var(--bg-hover); box-shadow: inset 0 0 0 1px var(--select); }
+.text-font.text-font:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.text-fonts.is-off .text-font-grid { opacity: 0.4; }
+.text-font.text-font:disabled { cursor: default; }

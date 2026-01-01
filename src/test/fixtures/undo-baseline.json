@@ -1,0 +1,3705 @@
+[
+ {
+  "name": "setSettings size",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "d8e9af75a3c06272",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setSettings fps",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "cc507683886c5fa4",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setSettings same (no-op)",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "setMode shorts",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "8f26e1bd31f8bc8c",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setMode same",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setProjectName",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "b5c2bda60686a95c",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "addAssets new",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "cf36bf870855db0b",
+  "ui": {
+   "dirty": true
+  },
+  "result": "4309784186646aa2",
+  "undoRestores": true
+ },
+ {
+  "name": "addAssets existing",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "result": "4f53cda18c2baa0c",
+  "undoRestores": true
+ },
+ {
+  "name": "replaceImageClip",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "f25c1b16a429fe78",
+  "ui": {
+   "dirty": true
+  },
+  "result": "b5bea41b6c623f7c",
+  "undoRestores": true
+ },
+ {
+  "name": "deleteAsset",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "bacad1d3fc24cdd9",
+  "ui": {
+   "selectedClipIds": [
+    "cb"
+   ],
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "updateAsset",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "64d593877b23948c",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "addToTimeline",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "90a8f1b26bbe3f65",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "addToTimeline audio default track",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "47e78d9933ea192b",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "addAllToTimeline",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "2be18ca93b425f8b",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "addClipsAt existing",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "f1b30c30a44b8f20",
+  "ui": {
+   "dirty": true
+  },
+  "result": "3b4f01c09bc1a817",
+  "undoRestores": true
+ },
+ {
+  "name": "addClipsAt new asset",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "dc4736c5f4cec9f0",
+  "ui": {
+   "dirty": true
+  },
+  "result": "9b19952e2563fb17",
+  "undoRestores": true
+ },
+ {
+  "name": "addClipsAt new track",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "9e20247fe1a9ac04",
+  "ui": {
+   "dirty": true
+  },
+  "result": "5aff3523c89a25d5",
+  "undoRestores": true
+ },
+ {
+  "name": "addClipAt",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "c43f92863c0af2e5",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "addClipAt no commit",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "c43f92863c0af2e5",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "placeSoundEffect",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "4fd604678d01d6a7",
+  "ui": {
+   "dirty": true
+  },
+  "result": "d4735e3a265e16ee",
+  "undoRestores": true
+ },
+ {
+  "name": "placeSoundEffect none",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "result": "5feceb66ffc86f38",
+  "undoRestores": true
+ },
+ {
+  "name": "placeAutomationImages new layer",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "e00dec76667e0961",
+  "ui": {
+   "selectedClipIds": [
+    "00000008-0000",
+    "00000009-0000"
+   ],
+   "dirty": true
+  },
+  "result": "d81f3a6a2a0c2285",
+  "undoRestores": true
+ },
+ {
+  "name": "placeAutomationImages overlap refused",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "result": "74234e98afe7498f",
+  "undoRestores": true
+ },
+ {
+  "name": "placeAutomationImages replace",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "2d0992bc4a94eb1d",
+  "ui": {
+   "selectedClipIds": [
+    "00000007-0000"
+   ],
+   "dirty": true
+  },
+  "result": "f70e25f85f834ed9",
+  "undoRestores": true
+ },
+ {
+  "name": "fillAutomationMissingImage",
+  "steps": 1,
+  "redoKept": false,
+  "before": "d46feff5f7b95e1d",
+  "after": "986f54d6d1e57101",
+  "ui": {
+   "selectedClipIds": [
+    "00000008-0000"
+   ]
+  },
+  "result": "b5bea41b6c623f7c",
+  "undoRestores": true
+ },
+ {
+  "name": "moveClip",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "b84bee730a05ee0c",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "moveClip no commit",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "b84bee730a05ee0c",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "moveClip blocked lands free",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "moveClip linked, link on",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "b01ecb088782d31e",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "moveClip linked, link off",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "471ab75e330fec80",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "moveClipToTrack",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "86c6fcc991b90e77",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "moveClipToTrack wrong kind",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "applyTimelinePlacement",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "020c19fd5571a0d8",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "applyTimelinePlacement new track",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "dacab01782d0aef8",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "nudgeSelection",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "0adcd694ee06769f",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "nudgeSelection locked only",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "setClipHead trim in",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "384e1ec27523cc57",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setClipHead reveal blocked",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipHead same",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "trimClipEnd shorter",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "6a6a5774c98cae8d",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "trimClipEnd blocked",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "slipClip",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "b373a35bca6d3068",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "slipClip linked",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "5cf6258ab11b3b82",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "revealEarlier",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "6d35834218519802",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "keepOnlyRange",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "0789340cd35204a1",
+  "ui": {
+   "cutMarks": [],
+   "cutTrackId": null,
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "splitAtPlayhead all",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "af66090c6ffc08b8",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "splitAtPlayhead selected",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "d034593809a1bdab",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "splitAtPlayhead linked",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "1f4e47f84a80f158",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "splitAtPlayhead nothing",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "splitAtPlayhead template",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "4a571f779b3d7f3c",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "splitClipAt",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "df52b41f1450e03e",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "splitClipAt edge",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "splitTargetAtPlayhead",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "3a3e1e54e3c29d62",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "skipAhead",
+  "steps": 2,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "9703fbbb634015b4",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "deleteClip",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "04df8ad48f04e46a",
+  "ui": {
+   "selectedClipIds": [
+    "ov"
+   ],
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "deleteClips ripple",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "f6b534e26a84d623",
+  "ui": {
+   "selectedClipIds": [],
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "deleteClips locked only",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "rippleTrimToPlayhead left",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "547bd24be89b5ad6",
+  "ui": {
+   "currentTime": 2,
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "rippleTrimToPlayhead right",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "7c21913f73a522dc",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "closeGapAtPlayhead",
+  "steps": 1,
+  "redoKept": false,
+  "before": "b8394df80b902d26",
+  "after": "3278c3385e731402",
+  "ui": {
+   "currentTime": 20
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "closeGapAtPlayhead none",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "deleteBetweenCuts track",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "a2d2dce079fba2e7",
+  "ui": {
+   "cutMarks": [],
+   "cutTrackId": null,
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "deleteBetweenCuts all",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "8e80c4ab14096408",
+  "ui": {
+   "cutMarks": [],
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "deleteBetweenCuts captions",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "58f3184f6e9665a1",
+  "ui": {
+   "cutMarks": [],
+   "cutTrackId": null,
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "rippleDelete",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "8e80c4ab14096408",
+  "ui": {
+   "selectedClipIds": [],
+   "selectedCaptionIds": [],
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "rippleDelete tiny",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "rippleDeleteMany",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "58c0de9a272fc1a0",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "rippleDeleteMany through a line",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "dad57c263eebf62d",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "applySilenceCuts",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "7ed35fb42479b885",
+  "ui": {
+   "selectedClipIds": [],
+   "dirty": true,
+   "silencePreview": null
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "applySilenceCuts none",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {
+   "silencePreview": null
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "copySelection + pasteAtPlayhead",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "d5d89521fba1b9dc",
+  "ui": {
+   "selectedClipIds": [
+    "00000007-0000"
+   ],
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "pasteCaptionsAtPlayhead",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "2880b53df3b9cc8c",
+  "ui": {
+   "selectedCaptionIds": [
+    "00000007-0000"
+   ],
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "duplicateSelection",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "c73cebfc6975112b",
+  "ui": {
+   "selectedClipIds": [
+    "00000007-0000"
+   ],
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "duplicateClipsInPlace",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "345a8de9c30c1207",
+  "ui": {
+   "dirty": true
+  },
+  "result": "1cfd3367d741fc84",
+  "undoRestores": false
+ },
+ {
+  "name": "pasteAttributes",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "f0d59b96346832ad",
+  "ui": {
+   "selectedClipIds": [
+    "cc"
+   ],
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "insertFreezeFrame",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "822bf7f93a891113",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "toggleReverse",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "9f318326472ebea2",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "compoundSelection",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "5317d36eedeef736",
+  "ui": {
+   "selectedClipIds": [
+    "00000007-0000"
+   ],
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "uncompoundClip",
+  "steps": 1,
+  "redoKept": false,
+  "before": "5317d36eedeef736",
+  "after": "ccdc4fec134faaf0",
+  "ui": {
+   "selectedClipIds": [
+    "00000008-0000",
+    "00000009-0000"
+   ]
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "groupSelection",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "f722c0976816e0b7",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "ungroupSelection",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "67f06882777e876c",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipsDisabled",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "cc34ad248713c9a7",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "extractAudio",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "c63a590bab3906dd",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipSpeed",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "84f793177b7c7317",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setClipSpeed linked, link on",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "e06b70e645026038",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setClipSpeed still",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "9ff73dc3b2259c84",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setClipTransform",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "af8a0f9379b2a92c",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipTransform no commit",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "af8a0f9379b2a92c",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setClipTransform same",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setPropValue keyed",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "037ca2843ce7d67d",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setPropValue static",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "1b7baea7621a73e7",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "fillFrame",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "e541265af71ff1ba",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "fitFrame",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "e541265af71ff1ba",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "centerClip",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "07a449c1c7aa8105",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipGrade",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "c238891a37a6a792",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setClipCrop",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "7479f151827816d9",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setClipBlur",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "6e0624a7be23149f",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setClipBlendMode",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "cabd03f8d03bdeca",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setClipEffect",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "ae9005dbfb40096e",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setClipAnim",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "5608fbab28e66ae0",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setClipOpacity",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "48787c553a7722d1",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setClipFlip",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "8c4502d2a4edf1f6",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "addClipKeyframe",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "a7c42575463d2340",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "addPropKeyframe",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "0e0dde471abc1f0f",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "dragClipKeyframe",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "76b16b2b02ab6ad2",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "deleteClipKeyframe",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "6401469a83692bdc",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "moveClipKeyframe",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "c87b52f84f250fc8",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "clearClipKeyframes",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "62bdd16aeaefec8d",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "copy + pasteClipAnimation",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "0b2ff96fdf15fcbc",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipMask",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "5078ec0eb379f9f5",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "addTracker",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "8d90d2d27bfffd73",
+  "ui": {
+   "selectedTrackerId": "00000007-0000",
+   "dirty": true
+  },
+  "result": "f9f49b221cee62e6",
+  "undoRestores": true
+ },
+ {
+  "name": "addVideoTrack",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "a9ffe97c630b0680",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "addAudioTrack",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "c21442ef55a062fc",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "deleteTrack",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "83127aa957992387",
+  "ui": {
+   "selectedClipIds": [
+    "cb"
+   ],
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "deleteTrack last of kind",
+  "steps": 2,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "0b3edcf7bd078c00",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "moveTrack",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "0e45bc9fbcff271f",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "moveTrack across kinds",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setTrackFlags",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "987436e4dc757079",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setTrackHeight",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3fd1422fad64636e",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "packTrack",
+  "steps": 1,
+  "redoKept": false,
+  "before": "b8394df80b902d26",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "packMainTrack",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "resolveTrackOverlaps",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipVolume",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "04b443050b0b2452",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "toggleClipMute",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "a3490b5b7a4af770",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipFades",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "bb18b892c66c3f41",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "addVolumeKeyframe",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "282c418ed1cbf7d1",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setVolumeKeyframes",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "5d949393abcb675e",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipAudioFx",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "865aa4550b9aac2e",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "applyAutoDucking",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "f7a61e052c228064",
+  "ui": {
+   "dirty": true
+  },
+  "result": "6b86b273ff34fce1",
+  "undoRestores": true
+ },
+ {
+  "name": "setTrackLevel",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "applyMixTransitions",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "2ca4ed328bec8e6e",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "applyMixTransitions track",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "2ca4ed328bec8e6e",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "applyTransitionPreset",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "2cbca0d71d6adb99",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "applyRampInOut",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "0e05119536538a89",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "clearTransitions",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "28d17cc1cc0e5ccc",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setTransitionOut",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "c532f509c626ec79",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setTransitionOut none",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "28d17cc1cc0e5ccc",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "cinematizeAll",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "41c0cac381e70df7",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "cinematizeAll track",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "0808c1ffccdd0a43",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "applyGentlePan",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "a3082579728160e4",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "applyStillImageFx",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "cfff42cc154f67cd",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "clearStillImageFx",
+  "steps": 1,
+  "redoKept": false,
+  "before": "cfff42cc154f67cd",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "applyAmbientFx",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "d4c89da7c050cbc4",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setMotionFx",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "6a27fd2b15414ee3",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setCaptions",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "d37b923608f14b35",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setSubtitles",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "1325230a29e7b3fd",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "replaceCaptionsInRange",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "a18a1dae3715abfc",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "compactCaptions",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "c62a49a6c07fa46b",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "addCaptionAtPlayhead",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "d34bc9a30277a235",
+  "ui": {
+   "selectedCaptionIds": [
+    "00000007-0000"
+   ],
+   "dirty": true
+  },
+  "result": "f9f49b221cee62e6",
+  "undoRestores": true
+ },
+ {
+  "name": "addCaptionAtPlayhead busy layer",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "1aa4e1dc9e7df5ff",
+  "ui": {
+   "selectedCaptionIds": [
+    "00000007-0000"
+   ],
+   "dirty": true
+  },
+  "result": "f9f49b221cee62e6",
+  "undoRestores": true
+ },
+ {
+  "name": "addShapeAtPlayhead rect",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "e8973b2ba1e8515c",
+  "ui": {
+   "selectedCaptionIds": [
+    "00000007-0000"
+   ],
+   "dirty": true
+  },
+  "result": "f9f49b221cee62e6",
+  "undoRestores": true
+ },
+ {
+  "name": "addShapeAtPlayhead marker over text",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "835ca26527165f4b",
+  "ui": {
+   "selectedCaptionIds": [
+    "00000007-0000"
+   ],
+   "dirty": true
+  },
+  "result": "f9f49b221cee62e6",
+  "undoRestores": true
+ },
+ {
+  "name": "updateCaption text",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "1d2d806968dddc12",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "updateCaption move",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "885f03a2ee0cf9c6",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "updateCaption no commit",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "5c77e8c4e764bc24",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "updateCaption same",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setCaptionWordStart",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "50dab8063c4beecb",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "splitCaptionAtCursor",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "30f23a6f69f0195e",
+  "ui": {
+   "selectedCaptionIds": [
+    "00000007-0000"
+   ],
+   "currentTime": 4.6,
+   "dirty": true
+  },
+  "result": "f9f49b221cee62e6",
+  "undoRestores": true
+ },
+ {
+  "name": "deleteCaption",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "8f0c907698056a18",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "deleteCaptions",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "17dc17604cedc318",
+  "ui": {
+   "selectedCaptionIds": [],
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setCaptionShape",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "478c049317907bc1",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setCaptionOwnStyle",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "140c7005abf3c806",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setCaptionMotion",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "acfe98ce916fbba9",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setCaptionMotion commit",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "acfe98ce916fbba9",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "addCaptionKeyframe",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "f06757799e54e315",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "copy + pasteCaptionStyle",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "dad64f99dd03ab93",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setCaptionStyle",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3ee9c97d0f13d1fd",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setCaptionStyleShorts",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "aa1c592f347dfebc",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setTranscription",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "e72fae61a72f8e74",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "addMarkerAtPlayhead",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "bd94457ca88f260f",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "updateMarker",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "290dd73dcdf341b6",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "updateMarker time",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "2a23329ff2eb1d39",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "deleteMarker",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "d7351798073bd857",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "deleteMarker all",
+  "steps": 2,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "33d237c0dc2fde0f",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setShortsBase",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "d9f3fd43287a392e",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "addShortsKeyframe",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "8e01c3cb36dd0007",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "addShortSegment",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "50ecef1d84bf26e2",
+  "ui": {
+   "activeShortSegmentId": "00000007-0000",
+   "dirty": true
+  },
+  "result": "f9f49b221cee62e6",
+  "undoRestores": true
+ },
+ {
+  "name": "updateShortSegment",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "4028b2a70aacf991",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "deleteShortSegment",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "f72db92a729b9787",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "markShortBound in",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "50ecef1d84bf26e2",
+  "ui": {
+   "activeShortSegmentId": "00000007-0000",
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setBackdrop",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "d3bb92472dc1aa2a",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setCameraLook",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "421ee39b383d17e1",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "addLookLayer",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "26187985daa9076e",
+  "ui": {
+   "selectedClipIds": [
+    "00000007-0000"
+   ],
+   "dirty": true
+  },
+  "result": "f9f49b221cee62e6",
+  "undoRestores": true
+ },
+ {
+  "name": "setTransitionSfx",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "6a06625352aab01c",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setRisers",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "bbf46b27152abb90",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setRisers no commit",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "bbf46b27152abb90",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "setSnap",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "b69c8813faf14044",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "saveNoteDraft",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "7fae07284f1449e4",
+  "ui": {
+   "noteSel": "00000007-0000",
+   "dirty": true,
+   "noteDraft": 0
+  },
+  "result": "f9f49b221cee62e6",
+  "undoRestores": true
+ },
+ {
+  "name": "editNotes status (no step)",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "14f564d9fa8ca0ea",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "editNotes update",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "ce1475fbc7d2a648",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setNoteImage",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "editTemplates create",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "7fc46372ce1a8cab",
+  "ui": {
+   "dirty": true
+  },
+  "result": "f9f49b221cee62e6",
+  "undoRestores": true
+ },
+ {
+  "name": "editTemplates delete",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "2bd28e64330b1783",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: clip drag (20 moves)",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "acd47e8804b5d556",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: head trim drag",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "f38961ab99a16434",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: end trim drag",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "ac8aa510318494af",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: slip drag",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "b373a35bca6d3068",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: opacity slider",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "48787c553a7722d1",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: position slider on a snapshotting action",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "bba4e685b9d569bb",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: speed slider",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "7a9a076fde060740",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: volume slider",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "4959df0e86f37232",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: idle pause splits the drag",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "727db6927ab6a163",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: held still before the first move",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "727db6927ab6a163",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: armed, nothing changed",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: armed, a change that changes nothing",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "no-op snapshot edit (fades unchanged, step asked for)",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: held arrow key (3 nudges)",
+  "steps": 3,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "9f1cc49ff754a854",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: beginGesture then silent moves",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "727db6927ab6a163",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: typing merges within 1.2 s",
+  "steps": 2,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "d84242087f8eb108",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: nested undoable",
+  "steps": 3,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "9d6e2181f8c192fe",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: undoable while a drag is open",
+  "steps": 2,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "5e9cc727453efc79",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: slow undoable (idle inside)",
+  "steps": 2,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "ea59a0d530e50cf2",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: shape add is one step",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "24cc3528651473d5",
+  "ui": {
+   "selectedCaptionIds": [
+    "00000007-0000"
+   ],
+   "dirty": true
+  },
+  "result": "f9f49b221cee62e6",
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: skipAhead steps",
+  "steps": 2,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "0d2b52733e92f2e7",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "packed: moveClip",
+  "steps": 1,
+  "redoKept": false,
+  "before": "eb24f2f5eb2274bb",
+  "after": "7063a29d80ef9a1f",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "packed: setClipHead trim in",
+  "steps": 0,
+  "redoKept": true,
+  "before": "eb24f2f5eb2274bb",
+  "after": "1b3176322ebcc214",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "packed: setClipHead grows from the tail",
+  "steps": 0,
+  "redoKept": true,
+  "before": "eb24f2f5eb2274bb",
+  "after": "ee669230220b13df",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "packed: trimClipEnd shorter",
+  "steps": 0,
+  "redoKept": true,
+  "before": "eb24f2f5eb2274bb",
+  "after": "932329988aba86ee",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "packed: trimClipEnd longer",
+  "steps": 0,
+  "redoKept": true,
+  "before": "eb24f2f5eb2274bb",
+  "after": "b293a69b21ef816f",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "packed: deleteClips",
+  "steps": 1,
+  "redoKept": false,
+  "before": "eb24f2f5eb2274bb",
+  "after": "ca20f37cd1f274d7",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "packed: deleteClips ripple",
+  "steps": 1,
+  "redoKept": false,
+  "before": "eb24f2f5eb2274bb",
+  "after": "f7262f29d08e761b",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "packed: setClipSpeed",
+  "steps": 0,
+  "redoKept": true,
+  "before": "eb24f2f5eb2274bb",
+  "after": "6f2b3ca022839566",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "packed: addClipAt drop",
+  "steps": 1,
+  "redoKept": false,
+  "before": "eb24f2f5eb2274bb",
+  "after": "8238785220316500",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "packed: moveClipToTrack onto it",
+  "steps": 0,
+  "redoKept": true,
+  "before": "eb24f2f5eb2274bb",
+  "after": "183774740d5a26bd",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": false
+ },
+ {
+  "name": "packed: splitAtPlayhead",
+  "steps": 1,
+  "redoKept": false,
+  "before": "eb24f2f5eb2274bb",
+  "after": "03ee79d30579935c",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "packed: rippleDelete",
+  "steps": 1,
+  "redoKept": false,
+  "before": "eb24f2f5eb2274bb",
+  "after": "6c884a2d6f318114",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "begin: head trim drag",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "f38961ab99a16434",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "begin: end trim drag",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "ac8aa510318494af",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "begin: slip drag",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "b373a35bca6d3068",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "begin: a code window in the middle of a trim drag",
+  "steps": 2,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "06ae402780f2d007",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: moves that change nothing keep the drag open",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "727db6927ab6a163",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: moves that change nothing keep a snapshotting drag open",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "16b5b73ee2bf9689",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: an empty code window inside a drag",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "727db6927ab6a163",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: a code window after a drag left open and idle",
+  "steps": 4,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "04acf603641d2268",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "silence preview: a title",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "274010da68bd70fc",
+  "ui": {
+   "selectedCaptionIds": [
+    "00000007-0000"
+   ],
+   "dirty": true,
+   "silencePreview": null
+  },
+  "result": "f9f49b221cee62e6",
+  "undoRestores": true
+ },
+ {
+  "name": "silence preview: a shape",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "f31ad50f8ed340cd",
+  "ui": {
+   "selectedCaptionIds": [
+    "00000007-0000"
+   ],
+   "dirty": true
+  },
+  "result": "f9f49b221cee62e6",
+  "undoRestores": true
+ },
+ {
+  "name": "silence preview: a clip dragged",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "ebc3771342e46ecf",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "silence preview: a cut",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "0cbe07bcdc1b699b",
+  "ui": {
+   "dirty": true,
+   "silencePreview": null
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "runBatch",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "acb203fec85ddb05",
+  "ui": {
+   "dirty": true
+  },
+  "result": "0c59907d961eda3d",
+  "undoRestores": true
+ },
+ {
+  "name": "runBatch that fails",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "result": "e953ee97626b8f0f",
+  "undoRestores": true
+ },
+ {
+  "name": "adoptCandidate",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "9c71efd6b82a03ca",
+  "ui": {
+   "dirty": true
+  },
+  "result": "d8ed8ca27d83a63d",
+  "undoRestores": true
+ },
+ {
+  "name": "setProjectLook",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "5b88e89fa74bb1b0",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setCodeParams",
+  "steps": 1,
+  "redoKept": false,
+  "before": "10831351058f2018",
+  "after": "605790b26d7d1963",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "setCodeEdits",
+  "steps": 1,
+  "redoKept": false,
+  "before": "10831351058f2018",
+  "after": "1f02b051065db779",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "markTimes",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "01bd984444cbd650",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "markTimes none",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "renameTrack",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "fdf6fcf612ebc438",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "unlinkClips",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "dddca69d720c5192",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "addAdjustmentLayer",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "3f9a15c4da1a7e08",
+  "ui": {
+   "selectedClipIds": [
+    "00000007-0000"
+   ],
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "rippleTrimToPlayhead right, linked pair",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "728ddafb9ec1d3b1",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "rippleTrimToPlayhead left, linked pair",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "a5454ffc519338c5",
+  "ui": {
+   "currentTime": 0,
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "rippleTrimToPlayhead right, every track",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "cd8907c4b3acc45a",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "closeGapAtPlayhead its track, link on",
+  "steps": 1,
+  "redoKept": false,
+  "before": "b8394df80b902d26",
+  "after": "3278c3385e731402",
+  "ui": {
+   "currentTime": 20
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "deleteBetweenCuts its track",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "d1118dc42f22114a",
+  "ui": {
+   "cutMarks": [],
+   "cutTrackId": null,
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "deleteClips ripple its track",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "c471011d8bcff898",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "copySelection + pasteClipboard",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "d5d89521fba1b9dc",
+  "ui": {
+   "selectedClipIds": [
+    "00000007-0000"
+   ],
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "copyKeyframeStamp + pasteKeyframeAtPlayhead",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "e8d387243b0beb5f",
+  "ui": {
+   "dirty": true
+  },
+  "result": "ba8ae74a568d42bd",
+  "undoRestores": true
+ },
+ {
+  "name": "copyShortSegment + pasteShortSegment",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "c5077d6d2d056f27",
+  "ui": {
+   "activeShortSegmentId": "00000007-0000",
+   "dirty": true
+  },
+  "result": "b5bea41b6c623f7c",
+  "undoRestores": true
+ },
+ {
+  "name": "keyframeClips",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "ce6e4107931ddf40",
+  "ui": {
+   "dirty": true
+  },
+  "result": "d4735e3a265e16ee",
+  "undoRestores": true
+ },
+ {
+  "name": "toggleKeyframeAtPlayhead on",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "03b3545f90528327",
+  "ui": {
+   "dirty": true
+  },
+  "result": "6b86b273ff34fce1",
+  "undoRestores": true
+ },
+ {
+  "name": "toggleKeyframeAtPlayhead off",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "6401469a83692bdc",
+  "ui": {
+   "dirty": true
+  },
+  "result": "1bad6b8cf97131fc",
+  "undoRestores": true
+ },
+ {
+  "name": "setPropValues static",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "1b7baea7621a73e7",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setPropValues keyed",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "fe965ce755519f8c",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setPropValues no commit",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "1b7baea7621a73e7",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setPropValues merged nudges",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "f0237cd8620ca2fa",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "moveKeyframeGroup",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "c87b52f84f250fc8",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "gesture: dragKeyframes",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "c87b52f84f250fc8",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "deleteKeyframes",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "6401469a83692bdc",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "deleteKeyframeGroup",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "6401469a83692bdc",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "readKeyframeGroup + insertKeyframeGroup",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "29fb2364fd21adc4",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "rippleKeyframes",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "0adf78b4cf71d1cd",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setKeyframeEasing",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "aa5bb3de86c0cb76",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "editMaskGeom",
+  "steps": 1,
+  "redoKept": false,
+  "before": "5078ec0eb379f9f5",
+  "after": "549f35aae9dbe6f6",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "addMaskKeyframe",
+  "steps": 1,
+  "redoKept": false,
+  "before": "5078ec0eb379f9f5",
+  "after": "c0110f7f4321d79c",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "deleteMaskKeyframe",
+  "steps": 1,
+  "redoKept": false,
+  "before": "c0110f7f4321d79c",
+  "after": "5078ec0eb379f9f5",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "addMaskPoint",
+  "steps": 2,
+  "redoKept": false,
+  "before": "5078ec0eb379f9f5",
+  "after": "1f422f4989514c4f",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "renameTracker",
+  "steps": 1,
+  "redoKept": false,
+  "before": "8d90d2d27bfffd73",
+  "after": "6aa0fcfda3b82e4b",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "dragTracker",
+  "steps": 1,
+  "redoKept": false,
+  "before": "8d90d2d27bfffd73",
+  "after": "057e0ddae7424e34",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "deleteTrackerKeyframe",
+  "steps": 1,
+  "redoKept": false,
+  "before": "057e0ddae7424e34",
+  "after": "d0c1bd8013a1d14c",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "setClipTracker",
+  "steps": 1,
+  "redoKept": false,
+  "before": "8d90d2d27bfffd73",
+  "after": "0b0bc6c81e594493",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "deleteTracker",
+  "steps": 1,
+  "redoKept": false,
+  "before": "0b0bc6c81e594493",
+  "after": "3278c3385e731402",
+  "ui": {
+   "selectedTrackerId": null
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "rotate90",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "9bc6c86137e603bd",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipChroma",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "eaa68bf32154621f",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipChroma off",
+  "steps": 1,
+  "redoKept": false,
+  "before": "eaa68bf32154621f",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "setClipLut",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "f6792fc13f26205b",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipLutAmount",
+  "steps": 1,
+  "redoKept": false,
+  "before": "f6792fc13f26205b",
+  "after": "46bbd0de951366c2",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "setClipTone",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "e65726aaaad5df55",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipFx",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "70789597f6c0431f",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "toggleFxKey on",
+  "steps": 1,
+  "redoKept": false,
+  "before": "e3c956717b0aea73",
+  "after": "70dec9a74b4a36bc",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "toggleFxKey off",
+  "steps": 1,
+  "redoKept": false,
+  "before": "70dec9a74b4a36bc",
+  "after": "e3c956717b0aea73",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "addProjectLut",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "1888d922546c4109",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "updateProjectLut (no step)",
+  "steps": 0,
+  "redoKept": false,
+  "before": "87ec703e4d163257",
+  "after": "3eb1708778a34b93",
+  "ui": {},
+  "undoRestores": false
+ },
+ {
+  "name": "setClipIdle",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "9fa609e3123ec85c",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipSpeedCurve",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "76375dacd2d13392",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "dragVolumeKeyframe",
+  "steps": 1,
+  "redoKept": false,
+  "before": "282c418ed1cbf7d1",
+  "after": "ca535594541c736b",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "deleteVolumeKeyframe",
+  "steps": 1,
+  "redoKept": false,
+  "before": "282c418ed1cbf7d1",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "clearVolumeKeyframes",
+  "steps": 1,
+  "redoKept": false,
+  "before": "5d949393abcb675e",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "applyCleanedAudio",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "e10bd0b27961b37a",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "restoreOriginalAudio",
+  "steps": 1,
+  "redoKept": false,
+  "before": "e10bd0b27961b37a",
+  "after": "3ad160bcc4a5fba3",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "clearAutoDucking",
+  "steps": 1,
+  "redoKept": false,
+  "before": "f7a61e052c228064",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "result": "6b86b273ff34fce1",
+  "undoRestores": true
+ },
+ {
+  "name": "clearAmbientFx",
+  "steps": 1,
+  "redoKept": false,
+  "before": "d4c89da7c050cbc4",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "clearAllMotionFx",
+  "steps": 1,
+  "redoKept": false,
+  "before": "b8267c69a747af7c",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "rerollMotionFx",
+  "steps": 1,
+  "redoKept": false,
+  "before": "b8267c69a747af7c",
+  "after": "469802bbeb830cd9",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "removeClipMotionLayer",
+  "steps": 1,
+  "redoKept": false,
+  "before": "b8267c69a747af7c",
+  "after": "0d895aaa7d50593b",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "editClipMoves",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "dad4effa23f86cc3",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "editClipMoves no commit",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "dad4effa23f86cc3",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipLook",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "1cd2ea82ab2f6536",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setLayerLook",
+  "steps": 1,
+  "redoKept": false,
+  "before": "26187985daa9076e",
+  "after": "0a67747f15558466",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "setLookOver",
+  "steps": 1,
+  "redoKept": false,
+  "before": "26187985daa9076e",
+  "after": "a0e1ba7304534f98",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "deleteCaptionKeyframe",
+  "steps": 1,
+  "redoKept": false,
+  "before": "f06757799e54e315",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "clearCaptionKeyframes",
+  "steps": 1,
+  "redoKept": false,
+  "before": "f06757799e54e315",
+  "after": "4cf511e8ecfc746e",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "setCaptionWordEnd",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "004415029ae37805",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "insertTemplate",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "ea3beb6667467446",
+  "ui": {
+   "dirty": true
+  },
+  "result": "f9f49b221cee62e6",
+  "undoRestores": true
+ },
+ {
+  "name": "dragShorts parks the window",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "d398a360582ef55f",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "dragShorts keyed",
+  "steps": 1,
+  "redoKept": false,
+  "before": "8e01c3cb36dd0007",
+  "after": "3ff368dd6e813ca8",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "setClipSpeedCurve off",
+  "steps": 1,
+  "redoKept": false,
+  "before": "76375dacd2d13392",
+  "after": "b8374dc81489a017",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "setClipSpeedCurve again at once (same step)",
+  "steps": 0,
+  "redoKept": false,
+  "before": "76375dacd2d13392",
+  "after": "6bdca14fea70dea7",
+  "ui": {},
+  "undoRestores": false
+ },
+ {
+  "name": "setClipKeepPitch off",
+  "steps": 1,
+  "redoKept": false,
+  "before": "84f793177b7c7317",
+  "after": "1893eb861c0dc6b4",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "setClipKeepPitch on (as it is)",
+  "steps": 0,
+  "redoKept": false,
+  "before": "84f793177b7c7317",
+  "after": "84f793177b7c7317",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "deleteShortsKeyframe",
+  "steps": 1,
+  "redoKept": false,
+  "before": "8e01c3cb36dd0007",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "suggestShortSegments",
+  "steps": 1,
+  "redoKept": false,
+  "before": "f72db92a729b9787",
+  "after": "20ca68dda1f6f3c0",
+  "ui": {},
+  "result": "6b86b273ff34fce1",
+  "undoRestores": true
+ },
+ {
+  "name": "suggestShortSegments no room",
+  "steps": 0,
+  "redoKept": true,
+  "before": "3278c3385e731402",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "result": "5feceb66ffc86f38",
+  "undoRestores": true
+ },
+ {
+  "name": "setTrackMagnet on gathers",
+  "steps": 1,
+  "redoKept": false,
+  "before": "b8394df80b902d26",
+  "after": "eb24f2f5eb2274bb",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "setTrackMagnet off",
+  "steps": 1,
+  "redoKept": false,
+  "before": "eb24f2f5eb2274bb",
+  "after": "71060fcefa695929",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setTrackMagnet as it is",
+  "steps": 0,
+  "redoKept": true,
+  "before": "eb24f2f5eb2274bb",
+  "after": "eb24f2f5eb2274bb",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "setClipsAgentLock on",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "fd58ada260f9ebf1",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipsAgentLock off",
+  "steps": 1,
+  "redoKept": false,
+  "before": "62cc43e258f44446",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "setClipsLabel on",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "6b8b12923310283b",
+  "ui": {
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "setClipsLabel off",
+  "steps": 1,
+  "redoKept": false,
+  "before": "83191a94d4f5a69c",
+  "after": "3278c3385e731402",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "setClipsLabel same (no-op)",
+  "steps": 0,
+  "redoKept": false,
+  "before": "83191a94d4f5a69c",
+  "after": "83191a94d4f5a69c",
+  "ui": {},
+  "undoRestores": true
+ },
+ {
+  "name": "duplicateSelection linked",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "f4233bafefcbf05e",
+  "ui": {
+   "selectedClipIds": [
+    "00000007-0000",
+    "00000009-0000"
+   ],
+   "dirty": true
+  },
+  "undoRestores": true
+ },
+ {
+  "name": "runBatch clip.duplicate",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "21590f7a8f14d19b",
+  "ui": {
+   "dirty": true
+  },
+  "result": "bc769f3cd246a897",
+  "undoRestores": true
+ },
+ {
+  "name": "runBatch clip.duplicate at",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "4cfdd5256555c937",
+  "ui": {
+   "dirty": true
+  },
+  "result": "0a62ba35869a44c5",
+  "undoRestores": true
+ },
+ {
+  "name": "runBatch clip.add by clip id",
+  "steps": 1,
+  "redoKept": false,
+  "before": "3278c3385e731402",
+  "after": "590931f7efd395dd",
+  "ui": {
+   "dirty": true
+  },
+  "result": "e8bf014dafb800cc",
+  "undoRestores": true
+ }
+]

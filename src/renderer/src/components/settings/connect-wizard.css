@@ -1,0 +1,67 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The connection wizard (SIHIRBAZ-PLAN.md): the mock-up's sixth tab
+   (tasarim\maket-ajan: .wiz, .step, .checks, .cmd) in design values only.
+   A step: its number in a 22 px disc, its words, its one button on the
+   right; a line between steps. Done: an accent disc with a tick; the step to
+   do now: a light disc. */
+.wiz { display: flex; flex-direction: column; }
+/* The wizard's five steps want more height than the other pages: the
+   window grows on this page, up to the screen less its margin. */
+.ui-dialog.settings-window:has(.wiz) { height: min(880px, calc(100vh - 2 * var(--space-4))); }
+.wiz-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); margin-bottom: var(--space-2); }
+.wiz-h { flex: 1 1 auto; font-size: var(--fs-13); font-weight: var(--fw-semibold); color: var(--text); white-space: nowrap; }
+.wiz-head .ui-seg { flex: none; }
+.wiz-foundline { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); min-height: 24px; margin-bottom: var(--space-2); }
+.wiz-found { color: var(--text-3); font-size: var(--fs-12); }
+.wiz-found.is-ok { color: var(--text-2); }
+
+.wiz-step {
+  display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: var(--space-2) 10px; align-items: start;
+  padding: 11px 0; border-top: var(--border-w) solid var(--bg-raised);
+  border-radius: var(--r-ctl);
+}
+.wiz-step.is-flash { background: var(--fill-on); }
+.wiz-n {
+  width: 22px; height: 22px; border-radius: var(--r-pill); display: grid; place-items: center;
+  background: var(--bg-raised); color: var(--text-2); font-size: var(--fs-11); font-weight: var(--fw-medium);
+}
+.wiz-step.is-ok .wiz-n { background: var(--accent); color: var(--on-accent); }
+.wiz-step.is-now .wiz-n { background: var(--text); color: var(--bg-app); }
+.wiz-body { min-width: 0; display: flex; flex-direction: column; }
+.wiz-title { font-size: var(--fs-13); font-weight: var(--fw-semibold); color: var(--text); line-height: 22px; }
+.wiz-text { margin: 2px 0 0; color: var(--text-3); font-size: var(--fs-12); line-height: 1.45; }
+.wiz-act { display: flex; justify-content: flex-end; padding-top: 1px; }
+.wiz-wide { grid-column: 2 / -1; min-width: 0; margin-top: -6px; }
+.wiz-cmd {
+  margin-top: 6px; padding: var(--space-1) var(--space-2); border-radius: var(--r-ctl);
+  background: var(--bg-well); color: var(--text-2);
+  font-family: var(--font-mono); font-size: var(--fs-11); line-height: 1.5;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  cursor: text; user-select: all;
+}
+.wiz-cmd.is-prompt { font-family: inherit; font-size: var(--fs-12); white-space: normal; user-select: text; }
+.wiz-res { display: flex; align-items: center; gap: 6px; margin-top: 5px; font-size: var(--fs-12); }
+.wiz-res .ui-icon, .wiz-row .ui-icon { flex: none; }
+.wiz-res.is-ok, .wiz-row.is-ok > .ui-icon { color: var(--accent-text); }
+.wiz-res.is-bad, .wiz-row.is-bad > .ui-icon { color: var(--danger-text); }
+.wiz-res.is-none, .wiz-row.is-none > .ui-icon { color: var(--text-3); }
+.wiz-res.is-ok span, .wiz-res.is-none span { color: var(--text-2); }
+.wiz-res.is-bad span { color: var(--danger-text); }
+
+.wiz-checks { display: grid; gap: var(--space-1); margin-top: 6px; font-size: var(--fs-12); }
+.wiz-row { display: flex; align-items: center; gap: var(--space-2); min-height: 24px; }
+.wiz-row-text { min-width: 0; color: var(--text-2); }
+.wiz-row.is-none .wiz-row-text { color: var(--text-3); }
+.wiz-row .wiz-fix { margin-left: auto; flex: none; }
+
+/* "If it did not work": quiet, folded; the settings page fills its ghost
+   buttons (settings.css), this one stays a line of text. */
+.wiz-ifnot { margin-top: var(--space-1); }
+.settings-body .ui-btn.ui-btn-ghost.wiz-ifnot-btn { background: transparent; color: var(--text-3); padding-left: 0; padding-right: var(--space-1); }
+.settings-body .ui-btn.ui-btn-ghost.wiz-ifnot-btn:hover:not(:disabled) { background: transparent; color: var(--text); }
+.wiz-ifnot-list { margin: 0; padding: 0 0 0 var(--space-4); color: var(--text-3); font-size: var(--fs-12); line-height: 1.5; }
+.wiz-ifnot-list li { margin: 2px 0; }
+
+/* Below the wizard: the details, folded. */
+.wiz-more { border-top: var(--border-w) solid var(--bg-raised); padding-top: var(--space-2); }

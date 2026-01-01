@@ -1,0 +1,233 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The agent over the timeline (D22, worker C; the mock-up tasarim\maket-ajan,
+   screens 1 and 2): the agent's one line under the toolbar (the agent bar 30,
+   the review strip 34), the flag on the ruler (18), the trail under it (a
+   4 px line), the marks of a draft on the lanes, "After" on the timeline
+   itself. Design values only; the agent's colour is its program's (--agent
+   and its family: ui/tokens.css). Everything reads without motion: only the
+   dot's pulse and the flag's slide move, and both stop when the system asks
+   for less motion. */
+
+/* ---- the row under the toolbar ------------------------------------------------ */
+.timeline:has(> .agent-over) { grid-template-rows: auto auto 1fr; }
+.agent-over { container: agentover / inline-size; min-width: 0; padding: 0 var(--space-2) var(--space-2); }
+.agent-bar, .agent-rev {
+  display: flex; align-items: center; gap: var(--space-2); min-width: 0;
+  padding: 0 var(--space-2) 0 var(--space-3); border-radius: var(--r-clip);
+  /* (The mock-up's values: the agent's colour at 14 % over the panel, its edge at 55 %.) */
+  background: color-mix(in srgb, var(--agent) 14%, var(--bg-panel)); box-shadow: inset 0 0 0 var(--border-w) color-mix(in srgb, var(--agent) 55%, transparent);
+  color: var(--text); font-size: var(--fs-12); white-space: nowrap;
+}
+.agent-bar { height: 30px; }
+.agent-rev { height: 34px; gap: var(--space-1); }
+.agent-bar.is-done { background: var(--bg-raised); box-shadow: inset 0 0 0 var(--border-w) var(--line); }
+.agent-bar-who, .agent-rev-who { flex: none; color: var(--agent-text); font-weight: var(--fw-semibold); }
+.agent-bar.is-done .agent-bar-who { color: var(--text); }
+.agent-bar-what, .agent-rev-text { flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
+.agent-rev-text { margin: 0 var(--space-1); }
+.agent-rev-text.is-warn { color: var(--agent-text); }
+.agent-rev-text.is-danger { color: var(--danger-text); }
+.agent-bar-num, .agent-rev-count { flex: none; color: var(--text-2); font-family: var(--font-mono); font-size: var(--fs-11); font-variant-numeric: tabular-nums; }
+.agent-rev-count { min-width: 36px; text-align: center; color: var(--text); }
+.agent-rev-title { display: inline-flex; align-items: center; gap: var(--space-2); flex: none; margin-right: var(--space-1); }
+.agent-rev-nav { display: inline-flex; align-items: center; flex: none; }
+.agent-rev-sep { flex: none; width: var(--border-w); height: 14px; margin: 0 var(--space-1); background: var(--line); }
+.agent-rev-note { flex: none; color: var(--text-2); font-size: var(--fs-11); }
+.agent-rev-note.is-warn { color: var(--agent-text); }
+.agent-rev .ui-btn, .agent-bar .ui-btn, .agent-rev .ui-seg { flex: none; }
+/* Accept and reject of the one change: the accent and the danger tone, soft. */
+.agent-rev .agent-rev-yes { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
+.agent-rev .agent-rev-yes:hover:not(:disabled) { background: color-mix(in srgb, var(--accent) 24%, transparent); }
+.agent-rev .agent-rev-no { background: color-mix(in srgb, var(--danger) 14%, transparent); color: var(--danger); }
+.agent-rev .agent-rev-no:hover:not(:disabled) { background: color-mix(in srgb, var(--danger) 22%, transparent); }
+/* "Decide that one first": a link in the strip's own colour. */
+.agent-rev .agent-rev-first { color: var(--agent-text); }
+.agent-rev .agent-rev-first .ui-btn-label { text-decoration: underline; text-underline-offset: 3px; }
+.agent-rev .agent-rev-skip .ui-btn-label { text-decoration: underline dotted; text-underline-offset: 3px; color: var(--text-2); }
+/* A narrow timeline (1366 and less): the two buttons of the one change keep
+   their signs and drop their words; the notes go (their words are in the tip
+   of the title and in the list). */
+@container agentover (max-width: 1180px) {
+  .agent-rev .agent-rev-yes .ui-btn-label, .agent-rev .agent-rev-no .ui-btn-label { display: none; }
+  .agent-rev-sep { display: none; }
+}
+@container agentover (max-width: 980px) {
+  .agent-rev-note { display: none; }
+  .agent-rev-text { min-width: 80px; }
+}
+@container agentover (max-width: 760px) {
+  .agent-bar-num:not([data-testid='agent.bar.time']), .agent-bar .agent-rev-sep { display: none; }
+}
+
+/* The list of what is not applied. */
+.agent-rev-dropped { display: flex; flex-direction: column; gap: var(--space-2); margin: var(--space-2) 0 0; padding: 0; list-style: none; max-height: 320px; overflow: auto; }
+.agent-rev-dropped > li { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) var(--space-2); font-size: var(--fs-12); color: var(--text-2); }
+.agent-rev-dropped-what { flex: none; color: var(--text); font-weight: var(--fw-medium); }
+.agent-rev-dropped-why { flex: 1 1 200px; min-width: 0; overflow-wrap: anywhere; }
+/* What the agent was told, under "Details": its own words, small. */
+.agent-rev-dropped-raw { flex: 1 1 100%; padding: var(--space-1) var(--space-2); border-radius: var(--r-ctl); background: var(--bg-app); color: var(--text-3); font-family: var(--font-mono); font-size: var(--fs-11); overflow-wrap: anywhere; }
+
+/* The Agent tab: the working agent's selector takes the card's width; a
+   step's time and tokens stay on its line. */
+.agent-working { display: flex; flex-direction: column; gap: var(--space-1); }
+.agent-working .ui-select { width: 100%; }
+.agent-step .agent-mono { flex: none; white-space: nowrap; }
+
+/* ---- the dot: how the agent stands --------------------------------------------- */
+.agent-dot { position: relative; flex: none; display: inline-block; width: 8px; height: 8px; border-radius: var(--r-pill); background: var(--agent); }
+.agent-dot.is-live::after {
+  content: ''; position: absolute; inset: 0; border-radius: var(--r-pill); background: var(--agent);
+  animation: agent-halo var(--agent-pulse) var(--ease) infinite; will-change: transform, opacity;
+}
+.agent-dot.is-waiting, .agent-dot.is-idle { background: transparent; box-shadow: inset 0 0 0 2px var(--agent-line); }
+.agent-dot.is-waiting { box-shadow: inset 0 0 0 2px var(--agent); }
+.agent-dot.is-done { background: var(--agent-line); }
+.agent-bar.is-done .agent-dot { background: var(--text-3); }
+.agent-chip { display: inline-flex; }
+.agent-chip .ui-chip-text { display: inline-flex; align-items: center; gap: var(--space-2); }
+
+/* ---- the ruler: the flag and a draft's pins ------------------------------------- */
+.agent-flag {
+  position: absolute; top: 3px; z-index: var(--z-sticky); display: inline-flex; align-items: center; gap: 3px;
+  height: 18px; padding: 0 var(--space-2) 0 var(--space-1); border-radius: var(--r-ctl) var(--r-pill) var(--r-pill) var(--r-ctl);
+  background: var(--agent); color: var(--on-agent); font-size: var(--fs-11); font-weight: var(--fw-semibold); line-height: 18px; white-space: nowrap;
+  pointer-events: none; transition: left var(--dur-slow) var(--ease);
+}
+/* Its line down over the lanes. */
+.agent-flag::after {
+  content: ''; position: absolute; left: 0; top: 18px; width: 2px; height: 320px;
+  background: linear-gradient(var(--agent), transparent 85%); opacity: 0.7; pointer-events: none;
+}
+.agent-pin {
+  position: absolute; bottom: 1px; z-index: var(--z-sticky); width: 10px; height: 10px; margin-left: -5px; padding: 0;
+  border: 2px solid var(--agent); border-radius: var(--r-pill); background: var(--agent-soft); cursor: pointer;
+}
+.agent-pin.is-new { border-style: dashed; }
+.agent-pin.is-gone { background: color-mix(in srgb, var(--bg-app) 70%, transparent); border-color: var(--agent-line); }
+.agent-pin.is-focus { outline: 2px solid var(--text); outline-offset: 1px; }
+
+/* ---- the trail: a thin row under the ruler -------------------------------------- */
+.agent-trail { position: sticky; top: 24px; z-index: var(--z-sticky); flex: none; height: 8px; background: var(--bg-well); }
+.agent-trail.has-film { height: 22px; }
+.agent-trail-head { position: sticky; left: 0; float: left; width: var(--tl-head-w); height: 100%; background: var(--bg-panel); z-index: var(--z-timeline); }
+.agent-trail-part { position: absolute; bottom: 2px; height: 4px; border-radius: var(--r-pill); background: var(--agent); opacity: 0.3; }
+.agent-trail-part.is-wrote { opacity: 1; }
+.agent-trail-part:hover, .agent-trail-part:focus-visible { opacity: 1; box-shadow: 0 0 0 1px var(--agent-text); }
+.agent-trail-film { position: sticky; left: calc(var(--tl-head-w) + var(--space-2)); z-index: var(--z-timeline); display: inline-flex; gap: var(--space-1); height: 100%; align-items: flex-start; padding-top: 1px; }
+
+/* ---- the marks of a draft on the lanes ------------------------------------------- */
+.agent-marks { position: absolute; inset: 0; pointer-events: none; }
+.agent-mark { position: absolute; box-sizing: border-box; border-radius: var(--r-clip); pointer-events: none; }
+/* A frame in the agent's colour: a setting, a trim, a moved clip (After). */
+.agent-mark.is-frame, .agent-mark.is-touched, .agent-mark.is-seam, .agent-mark.is-join { box-shadow: inset 0 0 0 2px var(--agent); }
+.agent-mark.is-touched { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--agent) 80%, transparent); }
+.agent-mark-pen { position: absolute; right: 3px; bottom: 3px; display: inline-flex; padding: 1px; border-radius: var(--r-ctl); background: var(--agent); color: var(--on-agent); }
+/* The old place of what moves: faded. */
+.agent-mark.is-was { background: color-mix(in srgb, var(--bg-app) 62%, transparent); box-shadow: inset 0 0 0 var(--border-w) color-mix(in srgb, var(--agent) 45%, transparent); }
+/* (After, over the draft's own clips: an outline, so no clip's name is dimmed.) */
+.agent-mark[data-shape='box'].is-was { background: none; box-shadow: none; border: var(--border-w) dashed color-mix(in srgb, var(--agent) 55%, transparent); }
+/* Where it goes, and what is new: dashed. */
+.agent-mark.is-ghost, .agent-mark.is-new { border: 2px dashed var(--agent); background: color-mix(in srgb, var(--agent) 14%, transparent); }
+/* What goes: hatched across, framed. */
+.agent-mark.is-gone {
+  background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--bg-app) 62%, transparent) 0 3px, transparent 3px 8px);
+  box-shadow: inset 0 0 0 2px var(--agent);
+}
+.agent-mark.is-box.is-gone, .agent-mark[data-shape='box'].is-gone { border: 2px dashed var(--agent-line); box-shadow: none; }
+/* A trim: the end that goes. A split: a dashed line through the clip. */
+.agent-mark-region {
+  position: absolute; top: 0; bottom: 0;
+  background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--agent) 55%, transparent) 0 2px, color-mix(in srgb, var(--bg-app) 45%, transparent) 2px 7px);
+  box-shadow: inset 1px 0 0 var(--agent), inset -1px 0 0 var(--agent);
+}
+.agent-mark-seam { position: absolute; top: -2px; bottom: -2px; width: 0; border-left: 2px dashed var(--agent-text); }
+/* A cut: a hatched band over every lane (Before); the join it leaves (After). */
+.agent-mark[data-shape='band'] { top: 0; bottom: 0; border-radius: 0; }
+.agent-mark[data-shape='band'].is-gone {
+  background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--agent) 38%, transparent) 0 2px, transparent 2px 7px);
+  box-shadow: inset 1px 0 0 var(--agent), inset -1px 0 0 var(--agent);
+}
+.agent-mark[data-shape='band'].is-seam { border-left: 2px solid var(--agent); min-width: 0; box-shadow: none; }
+/* A lane: its row framed, the badge beside its head. */
+.agent-mark.is-row { left: 0; right: 0; border-radius: 0; box-shadow: inset 0 2px 0 var(--agent), inset 0 -2px 0 var(--agent); }
+.agent-mark.is-row.is-new { border: 0; box-shadow: inset 0 0 0 var(--border-w) var(--agent); border-top: 2px dashed var(--agent); border-bottom: 2px dashed var(--agent); background: color-mix(in srgb, var(--agent) 8%, transparent); }
+.agent-mark.is-row.is-gone { box-shadow: inset 0 2px 0 var(--agent-line), inset 0 -2px 0 var(--agent-line); }
+/* A subtitle or a title. */
+.agent-mark.is-chip { border-radius: var(--r-ctl); }
+.agent-mark.is-chip.is-dot { box-shadow: inset 0 0 0 var(--border-w) var(--agent); }
+.agent-mark.is-chip.is-new { border-width: var(--border-w); }
+.agent-mark.is-chip.is-gone { box-shadow: inset 0 0 0 var(--border-w) var(--agent); }
+.agent-mark-dot { display: block; width: 7px; height: 7px; border-radius: var(--r-pill); background: var(--agent); box-shadow: 0 0 0 2px var(--bg-lane); }
+/* The item in focus (the review strip's arrows; a press on a badge). The old
+   place of a move is not lit: where it goes is. */
+.agent-mark.is-focus { outline: 2px solid var(--text); outline-offset: 2px; z-index: var(--z-sticky); }
+.agent-mark.is-was.is-focus { outline: 0; }
+.agent-mark[data-shape='band'].is-focus { outline-offset: 0; }
+.agent-mark.is-row.is-focus { outline-offset: -2px; }
+
+/* The badge: a short word in the agent's colour. */
+.agent-mark-badge {
+  position: absolute; top: 4px; right: var(--space-1); z-index: var(--z-sticky); display: inline-flex; align-items: center; max-width: 220px;
+  height: 16px; padding: 0 var(--space-2); border: 0; border-radius: var(--r-pill);
+  background: var(--agent); color: var(--on-agent); font-size: var(--fs-11); font-weight: var(--fw-semibold); line-height: 16px; white-space: nowrap;
+  pointer-events: auto; cursor: pointer;
+}
+.agent-mark-badge-text { overflow: hidden; text-overflow: ellipsis; }
+.agent-mark-badge.is-start { left: var(--space-1); right: auto; }
+.agent-mark-badge.is-mid { top: 50%; right: 50%; transform: translate(50%, -50%); }
+.agent-mark-badge.is-sticky { position: sticky; left: calc(var(--tl-head-w) + var(--space-2)); right: auto; top: auto; margin-top: 4px; }
+/* On the join of two clips: half over each. */
+.agent-mark-badge.is-join { top: 50%; right: 0; transform: translate(50%, -50%); background: var(--agent-soft); color: var(--agent-text); box-shadow: inset 0 0 0 var(--border-w) var(--agent); border: var(--border-w) dashed var(--agent); }
+.agent-mark-badge.is-chipdot { top: -3px; right: -3px; height: auto; padding: 0; background: transparent; }
+.agent-mark[data-shape='chipBox'].is-new .agent-mark-badge.is-chipdot { top: 0; right: auto; left: 0; height: 100%; padding: 0 var(--space-1); background: var(--agent); max-width: 100%; }
+.agent-mark-badge.is-film { position: static; }
+.agent-mark-badge.is-film.is-focus { outline: 2px solid var(--text); outline-offset: 1px; }
+/* It would lie on a name: a dot; still on a name: the bottom corner; still: gone. */
+.agent-mark-badge.is-compact { width: 10px; height: 10px; padding: 0; box-shadow: 0 0 0 2px color-mix(in srgb, var(--bg-app) 70%, transparent); }
+.agent-mark-badge.is-compact .agent-mark-badge-text { display: none; }
+.agent-mark-badge.is-compact.is-mid { transform: none; }
+/* (On a join it stays on the join: a dot in the agent's colour, half over each clip.) */
+.agent-mark-badge.is-compact.is-join { background: var(--agent); border: 0; }
+.agent-mark-badge.is-low { top: auto; bottom: 3px; }
+.agent-mark-badge.is-out { display: none; }
+
+/* ---- "After": the timeline shows the draft ---------------------------------------- */
+/* Read-only: nothing on the lanes takes a press; the frame says whose state it is. */
+.tl-scroll.is-agent-after .tl-track, .tl-scroll.is-agent-after .tl-caption-lane, .tl-scroll.is-agent-after .tl-addtrack, .tl-scroll.is-agent-after .tl-marker { pointer-events: none; }
+.tl-scroll.is-agent-after { box-shadow: inset 0 0 0 2px var(--agent-line); }
+.agent-rev.is-after { box-shadow: inset 0 0 0 var(--border-w) var(--agent); }
+
+/* (Motion off: html.motion-off, ui/motion.ts: the user's setting, or the system's when it is followed.) */
+html.motion-off .agent-dot.is-live::after { animation: none; opacity: 0; }
+html.motion-off .agent-flag { transition: none; }
+
+/* ---- tokens and progress (Dalga 3, worker T; TOKEN-PLAN.md) ------------------------ */
+/* The bar's "≈ N tokens" is a button: pressed, the card under it says what
+   the number is made of. It looks like the other numbers of the bar. */
+.agent-tok-btn {
+  height: 22px; padding: 0 var(--space-1); border-radius: var(--r-ctl); background: transparent;
+  text-decoration: underline dotted; text-underline-offset: 3px; cursor: pointer;
+}
+.agent-tok-btn:hover, .agent-tok-btn[aria-expanded='true'] { background: var(--bg-hover); color: var(--text); }
+.agent-tok-card {
+  position: fixed; z-index: var(--z-pop); display: flex; flex-direction: column; gap: var(--space-1);
+  width: 300px; padding: var(--space-3); border-radius: var(--r-card); background: var(--bg-raised); box-shadow: var(--shadow-pop);
+  color: var(--text); font-size: var(--fs-12); white-space: normal;
+}
+.agent-tok-title { margin-bottom: var(--space-1); color: var(--text); font-weight: var(--fw-semibold); }
+.agent-tok-row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); color: var(--text-2); }
+.agent-tok-row.is-total { margin-top: var(--space-1); padding-top: var(--space-1); border-top: var(--border-w) solid var(--line); color: var(--text); font-weight: var(--fw-semibold); }
+.agent-tok-n { flex: none; font-family: var(--font-mono); font-size: var(--fs-11); font-variant-numeric: tabular-nums; color: var(--text); }
+.agent-tok-note { margin-top: var(--space-2); color: var(--text-3); font-size: var(--fs-11); line-height: 1.4; }
+/* The progress: one short phrase, in the bar's second colour. */
+.agent-bar-progress { flex: 0 1 auto; min-width: 0; max-width: 260px; overflow: hidden; text-overflow: ellipsis; color: var(--text-2); font-size: var(--fs-11); }
+@container agentover (max-width: 980px) {
+  .agent-bar-progress { max-width: 160px; }
+}
+/* The Agent tab's finished jobs: who and what on one line, the numbers on the next. */
+.agent-job { display: flex; flex-direction: column; gap: 2px; padding: var(--space-1) 0; border-top: var(--border-w) solid var(--line); }
+.agent-card-title + .agent-job { border-top: 0; }
+.agent-job-kind { color: var(--text); font-size: var(--fs-12); }
+.agent-job-bits { display: flex; flex-wrap: wrap; white-space: normal; }
+.agent-job-bit { white-space: pre; }

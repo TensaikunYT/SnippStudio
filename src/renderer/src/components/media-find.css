@@ -1,0 +1,18 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The media panel's search, order and "in the timeline" badge (MediaBin.tsx,
+   REF-AB item 5). Design values only (src/test/ui-tokens.test.ts). */
+.bin-find { display: flex; align-items: center; gap: var(--space-1); padding: 0 var(--space-2) var(--space-2); }
+.bin-find .bin-search { flex: 1; min-width: 0; }
+.bin-find .bin-sort { flex: 0 1 auto; min-width: 0; max-width: 50%; }
+/* The badge: over the picture's top-left corner; in the list, the mark alone. */
+.bin-used {
+  position: absolute; top: var(--space-1); left: var(--space-1); z-index: var(--z-base);
+  display: inline-flex; align-items: center; gap: 2px; height: 16px; padding: 0 var(--space-1);
+  border-radius: var(--r-pill); background: color-mix(in srgb, var(--bg-app) 78%, transparent); color: var(--text-2);
+  font-size: var(--fs-11); pointer-events: none;
+}
+.bin-used-word { display: none; }
+.bin-list.grid .bin-used { top: var(--space-2); left: var(--space-2); height: 20px; padding: 0 var(--space-2); }
+.bin-list.grid .bin-used-word { display: inline; color: var(--text); }
+.bin-nomatch { grid-column: 1 / -1; }

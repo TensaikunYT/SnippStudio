@@ -1,0 +1,29 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later
+   Copyright (C) 2026 SnippStudio contributors
+   The timeline's search (KOLAY-PLAN.md, item 2): a card under the toolbar's
+   search button, the field and the hits (an icon, the name, the time).
+   Values only from tokens.css. */
+.tsr-anchor { display: inline-flex; }
+.tsr-card {
+  position: fixed; z-index: var(--z-pop); display: flex; flex-direction: column; gap: var(--space-2);
+  width: 340px; max-width: calc(100vw - 2 * var(--space-3)); padding: var(--space-2); border-radius: var(--r-card);
+  background: var(--bg-raised); box-shadow: var(--shadow-pop); color: var(--text); font-size: var(--fs-12);
+}
+.tsr-card .ui-input { width: 100%; }
+.tsr-filter { display: flex; align-items: center; gap: var(--space-1); flex-wrap: wrap; }
+.tsr-list { display: flex; flex-direction: column; max-height: 280px; overflow-y: auto; }
+.tsr-none { padding: var(--space-2); color: var(--text-3); }
+.tsr-hit {
+  display: flex; align-items: center; gap: var(--space-2); min-height: var(--ctl-sm); padding: 0 var(--space-2);
+  border-radius: var(--r-ctl); color: var(--text-2); text-align: left; cursor: pointer;
+}
+.tsr-hit:hover { background: var(--fill-hover); color: var(--text); }
+.tsr-hit.is-active { background: var(--fill-strong); color: var(--text); }
+.tsr-hit > svg { flex: none; }
+.tsr-name { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tsr-time { flex: none; font-family: var(--font-mono); font-size: var(--fs-11); font-variant-numeric: tabular-nums; color: var(--text-3); }
+/* The labels' filter: six round swatches; the one on has a ring. */
+.tsr-swatch { width: 16px; height: 16px; border-radius: var(--r-pill); cursor: pointer; box-shadow: inset 0 0 0 var(--border-w) var(--line-strong); }
+.tsr-swatch:hover { filter: brightness(1.12); }
+.tsr-swatch.is-on { box-shadow: 0 0 0 2px var(--bg-raised), 0 0 0 4px var(--text); }
+.tsr-swatch:focus-visible { box-shadow: var(--focus-ring); }

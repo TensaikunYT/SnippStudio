@@ -1,0 +1,43 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The grid of transition kinds (Inspector, left panel → Transitions) and
+   their pictures (transition-preview.tsx: drawn by the program's own
+   renderer; DENEME-2, item 6). Moved here from timeline/transitions.css,
+   whose CSS demo it replaces. Values from ui/tokens.css only. */
+.ct-grid { display: grid; gap: var(--space-3); margin-bottom: var(--space-2); }
+.ct-group-label { padding: 0 0 var(--space-2); color: var(--text-3); font-size: var(--fs-11); font-weight: var(--fw-medium); }
+.ct-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 2px var(--space-1); }
+.ct-tile {
+  min-width: 0; min-height: var(--ctl); display: flex; align-items: center; gap: var(--space-2); padding: var(--space-1);
+  border-radius: var(--r-ctl); background: transparent; color: var(--text-2); font-size: var(--fs-11); line-height: 1.2; text-align: left; cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.ct-tile:hover { background: var(--fill-hover); color: var(--text); }
+.ct-tile.is-on { color: var(--text); }
+.ct-tile[draggable='true'] { cursor: grab; }
+/* Its two lines, never cut mid-word ("Yumuşak çekim ra": phase 11b, U5). */
+.ct-tile-name { min-width: 0; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; white-space: normal; overflow-wrap: normal; hyphens: auto; }
+
+/* The picture: a small frame with the clip's corner; the chosen kind wears
+   the selection's gold round it (v3.1), a hair away from the picture. */
+.ct-tile .tp-canvas {
+  flex: none; display: block; width: 40px; height: 22px; border-radius: var(--r-ctl); background: var(--well);
+  transition: box-shadow var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease);
+}
+.ct-tile:hover .tp-canvas { filter: brightness(1.08); }
+.ct-tile.is-on .tp-canvas { box-shadow: 0 0 0 2px var(--bg-panel), 0 0 0 3px var(--select); }
+
+/* Arayüz v4 / DENEME-2: in the left panel's Transitions page a kind is a
+   card: its picture over its name, three or so to a row; no fill of its own,
+   the picture is the card. */
+.dock-body .ct-tiles { grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: var(--space-3) var(--space-2); }
+.dock-body .ct-tile { flex-direction: column; align-items: stretch; gap: var(--gap-card); padding: 0; text-align: center; }
+.dock-body .ct-tile:hover { background: transparent; }
+.dock-body .ct-tile .tp-canvas { width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: var(--r-clip); }
+.dock-body .ct-tile.is-on .tp-canvas { box-shadow: 0 0 0 2px var(--bg-panel), 0 0 0 4px var(--select); }
+
+/* (The Effects page's moves are cards of this grid too since 22 November,
+   L13: fx-tab.tsx. A button under them says a long name on two lines rather
+   than with an ellipsis in a narrow panel: "Yumuşak kaydırmayı uygula".) */
+.dock-effects .insp-row > .ui-btn { height: auto; min-height: var(--ctl); padding-top: var(--space-1); padding-bottom: var(--space-1); white-space: normal; line-height: 1.25; }
+.dock-effects .insp-row > .ui-btn .ui-btn-label { overflow: visible; text-overflow: clip; }

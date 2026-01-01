@@ -1,0 +1,63 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The tool rows' own parts: a tool's button (ToolButton) and the timeline
+   toolbar's order, its Tools menu and its settings list (CustomToolbar).
+   SnippStudio phase 3c.4a moved these rules out of styles.css; the visual
+   polish (GORSEL-PLAN.md) made the tools icons alone and took the copies that
+   timeline.css still had into this one sheet. Design values only
+   (src/test/ui-tokens.test.ts); the buttons are the building blocks. */
+
+/* ---- a tool: its icon alone in a row, its words in a menu ----------------------- */
+.tb-tool.has-icon { min-width: var(--ctl); padding: 0 var(--space-1); }
+.tb-tool.has-icon .tb-label { display: none; }
+/* The words' wrapper (Button's .ui-btn-label) takes no room of its own: with
+   the words hidden it was an empty flex item, and the button's gap before it
+   pushed the icon off the middle of its hover square (DENEME-1, P4). */
+.tb-tool > .ui-btn-label:has(> .tb-label:only-child) { display: contents; }
+.tb-tool .tb-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+/* A count it carries (silences, marks, clips) stays beside the icon. */
+/* (Apart from the tool's name: "Keyframe 6", not "Keyframe6".) */
+.tb-tool .tb-label + .tb-count { margin-left: var(--space-1); }
+.tb-tool .tb-count { font-family: var(--font-mono); font-size: var(--fs-11); color: var(--text-2); }
+/* In a menu the tool is a row: icon, words, left aligned. */
+.tb-more-menu .tb-tool, .preview-more-pop .tb-tool { width: 100%; justify-content: flex-start; padding: 0 var(--space-2); }
+.tb-more-menu .tb-tool .tb-label, .preview-more-pop .tb-tool .tb-label { display: inline; }
+/* A state written in words (the heavy parts made ahead) keeps them. */
+.tb-tool.prerender-chip .tb-label { display: inline; }
+
+/* ---- the timeline toolbar's customisable row --------------------------------------- */
+.tb-item { display: inline-flex; align-items: center; gap: var(--space-1); border-radius: var(--r-ctl); }
+.tb-item[draggable='true'] { cursor: grab; }
+.tb-item:active { cursor: grabbing; }
+.tb-item.drop-target { outline: 2px dashed var(--accent); }
+.tl-toolbar .tb-item[draggable='true'] { cursor: default; }
+.tb-gear-slot { display: inline-flex; }
+.tl-toolbar .tb-gear-slot { margin-left: auto; }
+.tb-gear { opacity: 0.6; }
+.tb-gear:hover, .tb-gear:focus-visible { opacity: 1; }
+
+/* A surface that opens over the row: its tone and the one shadow. */
+.tb-menu {
+  position: fixed; z-index: var(--z-pop); display: grid; gap: 2px; min-width: 170px; padding: var(--space-1);
+  border-radius: var(--r-card); background: var(--bg-raised); box-shadow: var(--shadow-pop);
+}
+.tb-menu > .ui-btn { width: 100%; justify-content: flex-start; }
+/* The settings list anchors to the toolbar rather than the pointer. */
+.tb-menu.tb-settings { position: absolute; left: auto; right: var(--space-3); top: auto; bottom: 40px; min-width: 216px; max-height: min(52vh, 360px); overflow-y: auto; }
+.tb-settings-head { padding: var(--space-1) var(--space-2); color: var(--text-2); font-size: var(--fs-11); font-weight: var(--fw-medium); }
+.tb-settings-list { display: flex; flex-direction: column; gap: 2px; padding: 0 var(--space-1); }
+.tb-settings-list .ui-check { padding: var(--space-1); border-radius: var(--r-ctl); }
+.tb-settings-list .ui-check:hover { background: var(--bg-hover); }
+.tb-reset.ui-btn { width: 100%; margin-top: var(--space-1); }
+
+/* The Tools menu: the tools the row has no room for, as a menu's rows. */
+.tb-more { position: relative; flex: 0 0 auto; }
+.tb-more-menu {
+  position: absolute; bottom: calc(100% + var(--space-2)); left: 0; z-index: var(--z-pop); display: grid; gap: 2px;
+  width: 224px; max-height: min(52vh, 360px); overflow-y: auto; padding: var(--space-1);
+  border-radius: var(--r-card); background: var(--bg-raised); box-shadow: var(--shadow-pop);
+}
+.tb-more-heading { padding: var(--space-1) var(--space-2) var(--space-2); color: var(--text-3); font-size: var(--fs-11); font-weight: var(--fw-medium); }
+.tl-toolbar .tb-more-item { display: flex; flex-wrap: wrap; gap: var(--space-1); border-radius: var(--r-ctl); }
+.tl-toolbar .tb-more-item .ui-btn { flex: 1 1 auto; width: 100%; justify-content: flex-start; }
+.tl-toolbar .tb-more-item .ui-btn.active { color: var(--accent-text); }

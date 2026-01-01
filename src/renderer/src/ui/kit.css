@@ -1,0 +1,445 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The building blocks' look (SnippStudio phase 3a.2). Values from
+   ui/tokens.css only (src/test/ui-tokens.test.ts: no colour, type size,
+   corner, layer or duration written here as a literal). Every selector
+   starts with a .ui- class, and the states are written specific enough
+   (.ui-btn.ui-btn-x:hover:not(:disabled)) to win over styles.css's global
+   button / input / select rules, which the old panels still need.
+   The focus ring is ui/base.css's one rule; nothing here draws another. */
+
+.ui-icon { flex: none; display: inline-block; vertical-align: middle; }
+.ui-kbd { font-family: var(--font-mono); font-size: var(--fs-11); font-weight: var(--fw-regular); color: var(--text-3); white-space: nowrap; }
+
+/* ---- Buttons ---------------------------------------------------------------- */
+/* Quiet, with no edge (DENEME-2; DENEME-1 drew a light edge round every
+   button and the user found it toy-like). What can be pressed is told by a
+   fill, the pointer and the press: the plain kind (the default) is its icon
+   and words at rest and takes a light veil under the pointer; the secondary
+   kind is a veil a step lighter than its surface at rest, a stronger one
+   under the pointer; the primary kind is the one filled with the accent: the
+   main action, one on a screen. Held, a button's fill eases off a little and
+   it gives a little (scale). A tool that is on keeps a veil and its icon
+   turns green. The veils are the text colour over the surface (tokens.css),
+   so a button reads the same on a panel, a card or a dialog. The border
+   stays transparent (the size does not move; the focus ring is the
+   box-shadow, ui/base.css). */
+.ui-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  height: var(--ctl); min-width: 0; padding: 0 var(--space-3);
+  border: var(--border-w) solid transparent; border-radius: var(--r-ctl);
+  font-family: var(--font); font-size: var(--fs-12); font-weight: var(--fw-medium); line-height: 1;
+  white-space: nowrap; cursor: pointer; user-select: none;
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
+}
+/* v3: a press is felt, the button gives a little under it. */
+.ui-btn:active:not(:disabled) { transform: scale(0.97); }
+.ui-btn.ui-size-sm { height: var(--ctl-sm); padding: 0 var(--space-2); font-size: var(--fs-12); gap: var(--space-1); }
+.ui-btn.is-icon-only { width: var(--ctl); padding: 0; }
+.ui-btn.ui-size-sm.is-icon-only { width: var(--ctl-sm); }
+.ui-btn .ui-btn-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.ui-btn .ui-btn-end { margin-right: calc(var(--space-1) * -1); color: var(--text-3); }
+
+.ui-btn.ui-btn-primary { background: var(--accent); color: var(--on-accent); }
+.ui-btn.ui-btn-primary:hover:not(:disabled) { background: var(--accent-text); }
+.ui-btn.ui-btn-primary:active:not(:disabled) { background: var(--accent-press); }
+.ui-btn.ui-btn-primary .ui-btn-end { color: var(--on-accent); }
+.ui-btn.ui-btn-secondary { background: var(--fill-hover); color: var(--text); }
+.ui-btn.ui-btn-secondary:hover:not(:disabled) { background: var(--fill-strong); }
+.ui-btn.ui-btn-secondary:active:not(:disabled) { background: var(--fill-hover); }
+.ui-btn.ui-btn-ghost { background: transparent; color: var(--text-2); }
+.ui-btn.ui-btn-ghost:hover:not(:disabled) { background: var(--fill-hover); color: var(--text); }
+.ui-btn.ui-btn-ghost:active:not(:disabled) { background: var(--fill-press); color: var(--text); }
+.ui-btn.ui-btn-danger { background: transparent; color: var(--danger-text); }
+.ui-btn.ui-btn-danger:hover:not(:disabled), .ui-btn.ui-btn-danger:active:not(:disabled) { background: var(--danger-soft); }
+/* A tool that is switched on: a veil, the full text colour and the icon in
+   the green (DENEME-2: no line; DENEME-1 had the green's soft fill and line). */
+.ui-btn.is-on, .ui-btn.is-on:hover:not(:disabled) { background: var(--fill-strong); color: var(--text); }
+/* DENEME-4, item 17: a switchable tool that is off steps back (it comes to
+   full strength under the pointer); one that is on is filled and bright. */
+.ui-btn[aria-pressed='false']:not(:disabled) { opacity: 0.66; }
+.ui-btn[aria-pressed='false']:hover:not(:disabled) { opacity: 1; }
+.ui-btn.is-on > .ui-icon:first-child { color: var(--accent-text); }
+.ui-btn.ui-btn-primary.is-on, .ui-btn.ui-btn-primary.is-on:hover:not(:disabled) { background: var(--accent-press); color: var(--on-accent); }
+.ui-btn.ui-btn-primary.is-on > .ui-icon:first-child { color: var(--on-accent); }
+.ui-btn:disabled, .ui-btn:disabled:hover { opacity: 0.4; cursor: default; }
+
+/* ---- Fields ------------------------------------------------------------------ */
+.ui-input, .ui-select-el {
+  height: var(--ctl); min-width: 0; padding: 0 var(--space-2);
+  border: var(--border-w) solid transparent; border-radius: var(--r-ctl);
+  background: var(--field); color: var(--text);
+  font-family: var(--font); font-size: var(--fs-12); font-weight: var(--fw-regular);
+  box-shadow: none; user-select: text;
+  transition: border-color var(--dur-fast) var(--ease);
+}
+.ui-input.ui-size-sm, .ui-select.ui-size-sm .ui-select-el { height: var(--ctl-sm); font-size: var(--fs-12); }
+.ui-input:hover:not(:disabled), .ui-select-el:hover:not(:disabled) { border-color: var(--line-strong); }
+.ui-input:focus, .ui-select-el:focus { border-color: var(--accent); background: var(--field); box-shadow: none; }
+.ui-input::placeholder { color: var(--text-3); }
+.ui-input.ui-textarea { height: auto; min-height: calc(var(--ctl) * 2); padding-top: var(--space-1); padding-bottom: var(--space-1); resize: vertical; line-height: 1.45; }
+.ui-input.is-invalid { border-color: var(--danger); }
+.ui-input.is-mono, .ui-input.ui-number { font-family: var(--font-mono); font-size: var(--fs-12); }
+.ui-input.ui-number { width: 72px; text-align: right; }
+.ui-input:disabled, .ui-select-el:disabled { opacity: 0.45; cursor: default; }
+
+.ui-select { position: relative; display: inline-flex; min-width: 0; }
+.ui-select-el { appearance: none; -webkit-appearance: none; width: 100%; padding-right: calc(var(--space-2) + 18px); color-scheme: dark; cursor: pointer; }
+.ui-select-el option { background: var(--bg-raised); color: var(--text); }
+.ui-select-arrow { position: absolute; right: var(--space-2); top: 50%; transform: translateY(-50%); color: var(--text-3); pointer-events: none; }
+
+/* A label and its control on one row. */
+.ui-field { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
+.ui-field-row { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+.ui-field-label { flex: 0 0 88px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-2); font-size: var(--fs-12); font-weight: var(--fw-medium); }
+.ui-field-control { flex: 1; min-width: 0; display: flex; align-items: center; }
+.ui-field-control > .ui-input, .ui-field-control > .ui-select { flex: 1; }
+.ui-field-control > .ui-input.ui-number { flex: 0 0 auto; }
+/* The look tour (rule 2): a choice in a field fills the field, so a window's
+   choices are one width and one look. */
+.ui-field-control > .ui-seg { flex: 1; }
+.ui-field-hint { padding-left: calc(88px + var(--space-3)); color: var(--text-3); font-size: var(--fs-12); }
+
+/* ---- Slider ----------------------------------------------------------------- */
+.ui-slider { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+.ui-slider-label { flex: 0 0 88px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-2); font-size: var(--fs-12); font-weight: var(--fw-medium); }
+.ui-slider .ui-slider-value { flex: 0 0 72px; }
+.ui-slider.is-disabled .ui-slider-label { opacity: 0.45; }
+input.ui-range { -webkit-appearance: none; appearance: none; flex: 1; min-width: 0; height: var(--ctl); margin: 0; padding: 0; border: 0; background: transparent; cursor: pointer; }
+/* At rest a slider is grey (the accent is not for a control that waits); it
+   takes the accent while it is held. */
+input.ui-range::-webkit-slider-runnable-track { height: 4px; border-radius: var(--r-pill); background: linear-gradient(to right, var(--text-3) var(--fill, 0%), var(--line-strong) var(--fill, 0%)); }
+input.ui-range:active::-webkit-slider-runnable-track, input.ui-range.is-held::-webkit-slider-runnable-track { background: linear-gradient(to right, var(--accent) var(--fill, 0%), var(--line-strong) var(--fill, 0%)); }
+input.ui-range::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -5px; border: 2px solid var(--bg-panel); border-radius: var(--r-pill); background: var(--text); box-shadow: none; transition: background-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+input.ui-range:hover::-webkit-slider-thumb { background: var(--text); transform: scale(1.1); }
+input.ui-range:active::-webkit-slider-thumb, input.ui-range.is-held::-webkit-slider-thumb { background: var(--accent); transform: scale(1.1); }
+input.ui-range:disabled { opacity: 0.45; cursor: default; }
+input.ui-range:disabled::-webkit-slider-thumb { background: var(--text-3); }
+/* Arayüz v4: the value is a small mono pill beside the track (no edge until
+   it is pointed at or typed in); it is as wide as what it shows. */
+.ui-slider .ui-slider-value.ui-input {
+  flex: 0 0 auto; field-sizing: content; width: auto; min-width: 48px; max-width: 104px; height: 24px; padding: 0 var(--space-2);
+  border-color: transparent; border-radius: var(--r-ctl); background: var(--field); color: var(--text); font-size: var(--fs-12); text-align: right;
+}
+.ui-slider .ui-slider-value.ui-input:hover:not(:disabled) { border-color: var(--line-strong); }
+.ui-slider .ui-slider-value.ui-input:focus { border-color: var(--accent); background: var(--field); }
+/* In the panels (the Inspector, the left panel's pages) a slider is two rows:
+   its label and its value on the first, the whole width of the track under
+   them (a longer track, a finer hand). The toolbars keep the one row. */
+.ui-sliders-stacked .ui-slider { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'label value' 'track track'; align-items: center; column-gap: var(--space-2); row-gap: 0; }
+.ui-sliders-stacked .ui-slider-label { grid-area: label; font-size: var(--fs-12); }
+.ui-sliders-stacked .ui-slider .ui-slider-value.ui-input { grid-area: value; justify-self: end; }
+.ui-sliders-stacked input.ui-range { grid-area: track; width: 100%; height: 20px; }
+.ui-sliders-stacked input.ui-range::-webkit-slider-runnable-track { height: 3px; }
+.ui-sliders-stacked input.ui-range::-webkit-slider-thumb { width: 12px; height: 12px; margin-top: -4.5px; }
+
+/* ---- Switch and checkbox ------------------------------------------------------ */
+.ui-switch-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); min-height: var(--ctl); color: var(--text); font-size: var(--fs-12); font-weight: var(--fw-medium); cursor: pointer; }
+.ui-switch-row.is-disabled { opacity: 0.45; cursor: default; }
+.ui-switch {
+  position: relative; flex: none; width: var(--switch-w); height: var(--switch-h); padding: 0;
+  border: 0; border-radius: var(--r-pill); background: var(--line-strong); cursor: pointer;
+  transition: background-color var(--dur-mid) var(--ease);
+}
+.ui-switch.ui-switch:hover:not(:disabled) { background: var(--text-3); }
+.ui-switch.is-on, .ui-switch.is-on:hover:not(:disabled) { background: var(--accent); }
+.ui-switch-knob {
+  position: absolute; top: 2px; left: 2px; width: calc(var(--switch-h) - 4px); height: calc(var(--switch-h) - 4px);
+  border-radius: var(--r-pill); background: var(--text-2);
+  transition: transform var(--dur-mid) var(--ease), background-color var(--dur-mid) var(--ease);
+}
+.ui-switch.is-on .ui-switch-knob { transform: translateX(calc(var(--switch-w) - var(--switch-h))); background: var(--on-accent); }
+.ui-switch:disabled { opacity: 0.45; cursor: default; }
+
+.ui-check { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--ctl-sm); color: var(--text); font-size: var(--fs-12); font-weight: var(--fw-medium); cursor: pointer; }
+.ui-check.is-disabled { opacity: 0.45; cursor: default; }
+.ui-check-box { position: relative; flex: none; display: inline-flex; align-items: center; justify-content: center; width: var(--check); height: var(--check); }
+/* The system's own box, drawn (it keeps the keyboard, the reader and the one focus ring);
+   the check icon lies over it. Square: several may be ticked, and a round box reads as
+   "one of these" (22 Nov: it was a clip's corner, which made a 16 px box a circle). */
+input.ui-check-input {
+  -webkit-appearance: none; appearance: none; position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; padding: 0;
+  border: var(--border-w) solid var(--line-strong); border-radius: calc(var(--r-ctl) / 2); background: var(--well); cursor: inherit;
+  transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+input.ui-check-input:hover { border-color: var(--text-3); }
+input.ui-check-input:checked, input.ui-check-input:indeterminate, input.ui-check-input:checked:hover { background: var(--accent); border-color: var(--accent); }
+input.ui-check-input:checked::after { content: none; }
+.ui-check-mark { position: relative; color: var(--on-accent); opacity: 0; pointer-events: none; }
+input.ui-check-input:checked ~ .ui-check-mark, input.ui-check-input:indeterminate ~ .ui-check-mark { opacity: 1; }
+
+/* ---- Segmented ----------------------------------------------------------------- */
+/* Parts share the row while their words fit; when they do not, the
+   row wraps and a part goes under the others, never into its neighbour
+   (DENEME-1, P3: "Lies over" in a narrow Inspector). */
+.ui-seg { display: flex; flex-wrap: wrap; gap: 2px; padding: 2px; border-radius: var(--r-card); background: var(--well); min-width: 0; }
+.ui-seg.is-disabled { opacity: 0.45; }
+.ui-seg-part {
+  flex: 1 1 auto; display: inline-flex; align-items: center; justify-content: center; gap: var(--space-1);
+  min-width: 0; height: var(--seg-h); padding: 0 var(--space-2);
+  border: var(--border-w) solid transparent; border-radius: var(--r-ctl); background: transparent; color: var(--text-2);
+  font-family: var(--font); font-size: var(--fs-12); font-weight: var(--fw-medium); cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+/* DENEME-2: told by tone alone, no line: the chosen part is a raised step in its well. */
+.ui-seg-part.ui-seg-part:hover:not(:disabled) { background: var(--fill-hover); color: var(--text); }
+.ui-seg-part.is-on, .ui-seg-part.is-on:hover:not(:disabled) { background: var(--bg-hover); color: var(--text); }
+.ui-seg-part:disabled { opacity: 0.45; cursor: default; }
+/* Longer than the whole row on its own: cut with an ellipsis (its name is in the tip). */
+.ui-seg-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ui-seg.is-disabled .ui-seg-part:disabled { opacity: 1; }
+
+/* ---- Tabs ------------------------------------------------------------------------ */
+/* The chosen tab is told by a tone, not a line under it: a light fill and the
+   full text colour (the Agent tab's in amber, the agent's own). The row has
+   the tab height; a tab is a control inside it. */
+.ui-tabs { display: flex; align-items: center; gap: 2px; min-width: 0; min-height: var(--tab-h); }
+.ui-tab {
+  position: relative; display: inline-flex; align-items: center; gap: var(--space-1);
+  height: var(--ctl); padding: 0 var(--space-3);
+  border: var(--border-w) solid transparent; border-radius: var(--r-ctl); background: transparent; color: var(--text-2);
+  font-family: var(--font); font-size: var(--fs-13); font-weight: var(--fw-regular); cursor: pointer;
+  transition: color var(--dur-mid) var(--ease), background-color var(--dur-mid) var(--ease), border-color var(--dur-mid) var(--ease);
+}
+.ui-tab.ui-tab:hover:not(:disabled) { background: var(--fill-hover); color: var(--text); }
+.ui-tab.is-on, .ui-tab.is-on:hover:not(:disabled) { background: var(--bg-hover); color: var(--text); font-weight: var(--fw-medium); }
+.ui-tab.is-agent.is-on, .ui-tab.is-agent.is-on:hover:not(:disabled) { background: var(--agent-soft); color: var(--agent-text); }
+.ui-tab.is-agent:not(.is-on) { color: var(--agent-text); }
+.ui-tab-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 16px; height: 16px; padding: 0 var(--space-1); border-radius: var(--r-pill); background: var(--bg-hover); color: var(--text-2); font-family: var(--font-mono); font-size: var(--fs-11); }
+.ui-tab:disabled { opacity: 0.4; cursor: default; }
+
+/* ---- Menu (one surface) ------------------------------------------------------------ */
+/* A surface that opens over others: its own tone and the one shadow (whose
+   first ring is the surface's edge), no drawn border. */
+.ui-menu-layer { position: fixed; z-index: var(--z-pop); }
+.ui-menu {
+  display: flex; flex-direction: column; gap: 1px; min-width: 200px; max-width: 360px; padding: var(--space-1);
+  border-radius: var(--r-card); background: var(--bg-raised);
+  box-shadow: var(--shadow-pop);
+}
+.ui-menu-slot { display: contents; }
+.ui-menu-sep { height: var(--space-2); margin: 0; background: transparent; }
+.ui-menu-item {
+  display: flex; align-items: center; gap: var(--space-2); width: 100%; height: var(--ctl-sm); padding: 0 var(--space-2);
+  border: 0; border-radius: var(--r-ctl); background: transparent; color: var(--text); text-align: left;
+  font-family: var(--font); font-size: var(--fs-13); font-weight: var(--fw-regular); cursor: pointer;
+}
+.ui-menu-item.ui-menu-item:hover:not(:disabled) { background: transparent; border-color: transparent; }
+.ui-menu-item { transition: background-color var(--dur-fast) var(--ease); }
+/* (v3: a menu's row stays 28, --ctl-sm, as TASARIM.md's Menu row says: a menu is read, not aimed at.) */
+.ui-menu-item.is-active, .ui-menu-item.is-active:hover:not(:disabled) { background: var(--bg-hover); }
+.ui-menu-item.is-danger { color: var(--danger-text); }
+.ui-menu-item.is-disabled { color: var(--text-3); cursor: default; }
+.ui-menu-item.is-disabled.is-active { background: transparent; }
+.ui-menu-icon { flex: 0 0 14px; display: inline-flex; color: var(--text-2); }
+.ui-menu-item.is-danger .ui-menu-icon { color: var(--danger-text); }
+/* A colour before the words (a clip's label colours). */
+.ui-menu-swatch { flex: none; width: 10px; height: 10px; border-radius: var(--r-pill); box-shadow: inset 0 0 0 var(--border-w) var(--line-strong); }
+.ui-menu-label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---- Dialog -------------------------------------------------------------------------- */
+.ui-dialog-backdrop { position: fixed; inset: 0; z-index: var(--z-dialog); display: flex; align-items: center; justify-content: center; padding: var(--space-4); background: var(--scrim); }
+.ui-dialog {
+  display: flex; flex-direction: column; max-height: 100%; min-width: 0; outline: none;
+  border-radius: var(--r-card); background: var(--bg-panel);
+  box-shadow: var(--shadow-pop); color: var(--text); font-family: var(--font); font-size: var(--fs-13);
+}
+.ui-dialog-sm { width: 360px; }
+.ui-dialog-md { width: 480px; }
+.ui-dialog-lg { width: 640px; }
+.ui-dialog-head { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-2) var(--space-2) var(--space-4); }
+.ui-dialog-title { flex: 1; min-width: 0; margin: 0; font-size: var(--fs-15); font-weight: var(--fw-semibold); color: var(--text); }
+.ui-dialog-body { padding: var(--space-1) var(--space-4) var(--space-4); overflow: auto; color: var(--text-2); line-height: 1.5; }
+.ui-dialog-actions { display: flex; justify-content: flex-end; gap: var(--space-2); padding: var(--space-2) var(--space-4) var(--space-4); }
+
+/* ---- Tooltip --------------------------------------------------------------------------- */
+.ui-tooltip-layer { position: fixed; z-index: var(--z-tooltip); pointer-events: none; }
+.ui-tooltip {
+  display: inline-flex; align-items: center; gap: var(--space-2); max-width: 280px; padding: var(--space-1) var(--space-2);
+  border-radius: var(--r-ctl); background: var(--text); color: var(--bg-app); box-shadow: var(--shadow-pop);
+  font-family: var(--font); font-size: var(--fs-12); font-weight: var(--fw-regular); line-height: 1.35;
+}
+.ui-tooltip .ui-kbd { color: var(--line); }
+.ui-tooltip .ui-tooltip-head { font-weight: var(--fw-semibold); }
+
+/* ---- Toasts ------------------------------------------------------------------------------ */
+.ui-toasts {
+  position: fixed; left: 50%; bottom: var(--space-4); z-index: var(--z-toast); transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: var(--space-2); pointer-events: none;
+}
+.ui-toast {
+  display: flex; align-items: center; gap: var(--space-2); min-width: 280px; max-width: 520px;
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
+  border-radius: var(--r-card); background: var(--bg-raised);
+  box-shadow: var(--shadow-pop); color: var(--text); font-family: var(--font); font-size: var(--fs-13);
+  pointer-events: auto; animation: ui-toast-in var(--dur-mid) var(--ease);
+}
+.ui-toast.is-error { background: var(--danger-soft); }
+.ui-toast-icon { color: var(--danger-text); }
+.ui-toast-text { flex: 1; min-width: 0; line-height: 1.4; }
+@keyframes ui-toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ---- Chips --------------------------------------------------------------------------------- */
+/* A chip is a tone (its family's soft fill and text), never an edge. */
+.ui-chip {
+  --chip-bg: var(--bg-hover); --chip-fg: var(--text-2);
+  display: inline-flex; align-items: center; gap: var(--space-1); height: 22px; padding: 0 var(--space-2); max-width: 100%;
+  border: 0; border-radius: var(--r-pill); background: var(--chip-bg); color: var(--chip-fg);
+  font-family: var(--font); font-size: var(--fs-12); font-weight: var(--fw-medium); white-space: nowrap;
+}
+.ui-chip-accent { --chip-bg: var(--accent-soft); --chip-fg: var(--accent-text); }
+.ui-chip-agent { --chip-bg: var(--agent-soft); --chip-fg: var(--agent-text); }
+.ui-chip-note { --chip-bg: var(--note-soft); --chip-fg: var(--note-text); }
+/* A code film's state chips (phase 5d.2: "slow", "unstable"). */
+.codefilm-badges { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); margin: var(--space-1) 0 0 var(--space-1); vertical-align: middle; }
+.codefilm-badge { display: inline-flex; border-radius: var(--r-pill); }
+.ui-chip-danger { --chip-bg: var(--danger-soft); --chip-fg: var(--danger-text); }
+.ui-chip.is-on { --chip-bg: var(--line-strong); --chip-fg: var(--text); }
+.ui-chip-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.ui-chip.is-button { padding: 0; }
+.ui-chip-press { display: inline-flex; align-items: center; gap: var(--space-1); height: 100%; padding: 0 var(--space-2); border: 0; border-radius: var(--r-pill); background: transparent; color: inherit; font: inherit; cursor: pointer; }
+.ui-chip-press.ui-chip-press:hover:not(:disabled) { background: transparent; border-color: transparent; color: var(--text); }
+.ui-chip .ui-chip-remove.ui-btn { width: 18px; height: 18px; margin-right: calc(var(--space-1) * -1); border-color: transparent; border-radius: var(--r-pill); color: var(--chip-fg); }
+.ui-chip-pulse { width: 6px; height: 6px; border-radius: var(--r-pill); background: currentColor; animation: ui-pulse var(--agent-pulse) var(--ease) infinite; }
+@keyframes ui-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+html.motion-off .ui-chip-pulse, html.motion-off .ui-toast { animation: none; }
+
+/* Earlier versions of a project file (phase Ç2a.2, components/app/BackupsDialog.tsx) */
+.ui-versions { list-style: none; margin: var(--space-3) 0 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+.ui-versions-row { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+.ui-versions-when { flex: 1; min-width: 0; color: var(--text); font-size: var(--fs-13); }
+.ui-versions-size { color: var(--text-3); font-family: var(--font-mono); font-size: var(--fs-12); }
+
+/* Keyframes off a clip (phase Ç2c.1, decision 7: components/timeline/clip-block.tsx): one mark at that edge, never a diamond to take */
+.tl-clip .clip-kf-off { position: absolute; top: var(--space-1); width: var(--space-1); height: var(--space-3); border-radius: var(--r-pill); background: var(--text-2); opacity: 0.7; pointer-events: none; z-index: var(--z-tooltip); }
+.tl-clip .clip-kf-off.before { left: 0; }
+.tl-clip .clip-kf-off.after { right: 0; }
+
+/* Phase 5e: a code clip's own life on the timeline (components/timeline/CodeClipActivity.tsx). */
+.codeclip-writing { position: absolute; inset: 0; border: var(--border-w) dashed var(--agent-line); border-radius: var(--r-clip); pointer-events: none; }
+.codeclip-saved { position: absolute; inset: 0; border-radius: var(--r-clip); background: var(--agent-soft); pointer-events: none; opacity: 0; animation: codeclip-flash calc(var(--dur-slow) * 4) var(--ease) 1; }
+@keyframes codeclip-flash { from { opacity: 1; } to { opacity: 0; } }
+.codeclip-error { position: absolute; right: var(--space-1); bottom: var(--space-1); pointer-events: none; }
+
+/* Phase 5f: the code templates (components/CodeTemplates.tsx), a code clip's Parameters (components/inspector/CodeFilmParams.tsx), the project look (ProjectLook.tsx). */
+.code-tpl { display: flex; flex-direction: column; gap: var(--space-2); margin: 0 0 var(--space-4); padding: var(--space-3); border-radius: var(--r-card); background: var(--bg-raised); }
+.code-tpl-head { display: flex; align-items: center; gap: var(--space-2); color: var(--text); font-size: var(--fs-13); }
+.code-tpl-list { display: flex; flex-direction: column; gap: var(--space-1); }
+.code-tpl-row { display: flex; align-items: center; gap: var(--space-2); min-width: 0; color: var(--text-2); }
+.code-tpl-name { flex: 1; min-width: 0; color: var(--text); font-size: var(--fs-13); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.codefilm-params { display: flex; flex-direction: column; gap: var(--space-2); margin-top: var(--space-2); }
+.codefilm-params-body { display: flex; flex-direction: column; gap: var(--space-2); padding-left: var(--space-3); }
+.project-look { display: flex; flex-direction: column; gap: var(--space-2); }
+
+/* ---- Section (folds; phase 3c.1) ------------------------------------------------------- */
+.ui-section { margin-bottom: var(--space-3); }
+.ui-section-title { margin: 0; font-size: var(--fs-13); font-weight: var(--fw-semibold); }
+.ui-section-head.ui-section-head {
+  display: flex; align-items: center; gap: var(--space-2); width: 100%; height: var(--ctl); padding: 0 var(--space-1);
+  border: 0; border-radius: var(--r-ctl); background: transparent; color: var(--text); text-align: left;
+  font-family: var(--font); font-size: var(--fs-13); font-weight: var(--fw-semibold); cursor: pointer; user-select: none;
+}
+.ui-section-head.ui-section-head:hover { background: transparent; color: var(--text); }
+.ui-section-head.ui-section-head:hover .ui-section-chevron { color: var(--text); }
+.ui-section-chevron { color: var(--text-3); }
+.ui-section-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ui-section-count {
+  flex: none; padding: 0 var(--space-2); border-radius: var(--r-pill);
+  background: var(--bg-hover); color: var(--text-2); font-size: var(--fs-11); font-weight: var(--fw-medium); line-height: 1.6;
+}
+.ui-section-body { padding: var(--space-1) 0 0; }
+.ui-subsection { margin-top: var(--space-2); }
+.ui-subsection-head.ui-subsection-head {
+  display: flex; align-items: center; gap: var(--space-1); width: 100%; height: var(--ctl); padding: 0 var(--space-1);
+  border: 0; border-radius: 0; background: transparent; color: var(--text-2); text-align: left;
+  font-family: var(--font); font-size: var(--fs-12); font-weight: var(--fw-medium); cursor: pointer;
+}
+.ui-subsection-head.ui-subsection-head:hover, .ui-subsection.is-open > .ui-subsection-head { background: transparent; color: var(--text); }
+.ui-subsection-body { padding-bottom: var(--space-1); }
+.ui-section-hint { margin-bottom: var(--space-2); color: var(--text-3); font-size: var(--fs-12); line-height: 1.45; }
+
+/* ---- Card (arayüz v4: InspectorCard, UI-V4-PLAN.md) ------------------------------------
+   A section drawn as a card: an icon and its title (13, medium), what belongs
+   at its right (a diamond, a switch), the fold's chevron last and quiet.
+   Every top-level section inside .ui-cards (the Inspector's tabs) is one. */
+:is(.ui-section.is-card, .ui-cards .ui-section:not(.ui-section .ui-section)) {
+  margin: 0 0 var(--space-2); padding: 0 var(--space-3); border-radius: var(--r-card); background: var(--bg-panel);
+}
+:is(.ui-section.is-card, .ui-cards .ui-section:not(.ui-section .ui-section)) > .ui-section-title { min-height: 40px; gap: var(--space-1); }
+:is(.ui-section.is-card, .ui-cards .ui-section:not(.ui-section .ui-section)) > .ui-section-title > .ui-section-head.ui-section-head {
+  height: 40px; padding: 0; gap: var(--space-2); font-size: var(--fs-13); font-weight: var(--fw-semibold);
+}
+.ui-section-end { display: none; }
+:is(.ui-section.is-card, .ui-cards .ui-section:not(.ui-section .ui-section)) > .ui-section-title .ui-section-chevron { display: none; }
+:is(.ui-section.is-card, .ui-cards .ui-section:not(.ui-section .ui-section)) > .ui-section-title > .ui-section-end { display: inline-flex; flex: none; padding: var(--space-1); color: var(--text-3); cursor: pointer; }
+:is(.ui-section.is-card, .ui-cards .ui-section:not(.ui-section .ui-section)) > .ui-section-title:hover > .ui-section-end { color: var(--text); }
+:is(.ui-section.is-card, .ui-cards .ui-section:not(.ui-section .ui-section)) > .ui-section-body { padding: 0 0 var(--space-3); }
+.ui-section-icon { flex: none; color: var(--text-2); }
+.ui-section-aside { display: inline-flex; flex: none; align-items: center; gap: var(--space-1); color: var(--text-2); font-size: var(--fs-12); }
+/* What a card tab holds that is not a section (a part switch, a note) sits on a card of its own. */
+.ui-cards > :not(.ui-section) { margin: 0 0 var(--space-2); padding: var(--space-2) var(--space-3); border-radius: var(--r-card); background: var(--bg-panel); }
+/* A wrapper of sections (a tab's part) is not a card itself: its sections are. */
+.ui-cards > :not(.ui-section):has(.ui-section) { margin: 0; padding: 0; border-radius: 0; background: transparent; }
+.ui-cards .ui-slider-label, .ui-cards .ui-field-label, .ui-cards .ui-switch-row { font-size: var(--fs-12); }
+.ui-cards .ui-switch-row { color: var(--text-2); }
+/* A card's own small tabs (Tabs size sm): its parts, one at a time. */
+.ui-tabs.is-sm { min-height: 28px; margin: 0 0 var(--space-2); gap: var(--space-1); }
+.ui-tabs.is-sm > .ui-tab { height: 26px; padding: 0 var(--space-2); font-size: var(--fs-12); }
+.ui-tabs.is-sm > .ui-tab:not(.is-on) { color: var(--text-3); }
+
+/* ---- ScrubField (arayüz v4): "X 0" — the name inside the field is a handle. ---- */
+.ui-scrub { position: relative; display: inline-flex; flex: 1 1 0; min-width: 0; }
+.ui-scrub-handle {
+  position: absolute; left: 0; top: 0; bottom: 0; z-index: var(--z-base); display: flex; align-items: center; justify-content: center; width: 24px;
+  color: var(--text-3); font-family: var(--font-mono); font-size: var(--fs-12); cursor: ew-resize; user-select: none;
+}
+.ui-scrub-handle:hover { color: var(--text); }
+.ui-scrub > .ui-input.ui-scrub-value { flex: 1; width: 100%; min-width: 0; height: var(--ctl-sm); padding-left: 24px; border-color: transparent; background: var(--field); text-align: left; }
+.ui-scrub > .ui-input.ui-scrub-value:hover:not(:disabled) { border-color: var(--line-strong); }
+.ui-scrub > .ui-input.ui-scrub-value:focus { border-color: var(--accent); background: var(--field); }
+
+/* ---- Menu: group headings ---------------------------------------------------------------- */
+.ui-menu-head { padding: var(--space-2) var(--space-2) var(--space-1); color: var(--text-3); font-size: var(--fs-11); font-weight: var(--fw-medium); }
+.ui-menu-layer > .ui-menu { max-height: var(--menu-max, calc(100vh - 16px)); overflow-y: auto; }
+
+/* ---- A section's help (the visual polish, GORSEL-PLAN.md G8) ------------------------------ */
+/* While explanations are short (the default) a section's lines of help are in
+   the tooltip of the info mark beside its title (Section.tsx); a screen reader
+   still reads them in place. File → Long explanations puts them back. Warnings
+   and errors (.is-danger, .is-warning) and a state said in words (.is-state)
+   always stay. */
+html:not(.hints-long) .ui-section-body .hint:not(.is-danger):not(.is-warning):not(.is-state) {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+html.hints-long .ui-section-info { display: none; }
+/* A field's longer explanation (Field `more`, cila3): the same rule. Short: the
+   short line shows, the long one is in the info mark's tooltip (and read in
+   place); long: the long one shows instead of the short one. */
+html:not(.hints-long) .ui-field-more { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+html.hints-long .ui-field-short { display: none; }
+html.hints-long .ui-info-mark { display: none; }
+.ui-field-label-more { display: inline-flex; align-items: flex-start; gap: 2px; }
+.ui-field-label-more > label { min-width: 0; }
+.ui-field-label-more > .ui-info-mark { flex: none; margin-top: -3px; }
+.ui-section-title { display: flex; align-items: center; gap: var(--space-1); }
+.ui-section-title > .ui-section-head.ui-section-head { flex: 1; width: auto; min-width: 0; }
+.ui-section-info { display: inline-flex; padding: var(--space-1); border-radius: var(--r-pill); color: var(--text-3); cursor: help; }
+.ui-section-info:hover { color: var(--text); }
+
+/* An empty area (phase 9b): one sentence, one soft action under it. Inside a
+   centred hint that lets clicks through (.empty-hint), the button takes them. */
+.ui-empty { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); text-align: center; }
+.ui-empty > .ui-btn { pointer-events: auto; }
+
+/* The first-run tour (phase 9b): a raised bubble beside the part it names and
+   that part's outline (the focus ring's look). Not modal: nothing covers the
+   window, clicks reach it everywhere but on the bubble. */
+.tour-ring { position: fixed; z-index: var(--z-pop); border-radius: var(--r-card); box-shadow: var(--focus-ring); pointer-events: none; transition: left var(--dur-mid) var(--ease), top var(--dur-mid) var(--ease), width var(--dur-mid) var(--ease), height var(--dur-mid) var(--ease); }
+.tour-bubble { position: fixed; z-index: var(--z-pop); display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-3); border-radius: var(--r-card); background: var(--bg-raised); box-shadow: var(--shadow-pop); color: var(--text); }
+.tour-head { display: flex; align-items: baseline; gap: var(--space-2); }
+.tour-head > strong { flex: 1; min-width: 0; font-size: var(--fs-13); font-weight: 600; }
+.tour-count { color: var(--text-2); font-size: var(--fs-11); }
+.tour-body { margin: 0; color: var(--text-2); font-size: var(--fs-12); line-height: 1.5; }
+.tour-actions { display: flex; align-items: center; gap: var(--space-1); }
+.tour-spacer { flex: 1; }
+.tour-bubble .ui-btn.ui-btn-secondary { background: var(--bg-hover); } /* (the bubble is raised already: its own step up) */

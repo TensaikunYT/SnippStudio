@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- SnippStudio on macOS (phase 10b.5): what the hardened runtime must allow.
+     V8 and WebAssembly JIT (the speech model runs in WASM), and library
+     validation off (needed with an ad-hoc signature). No camera, microphone or network-server entitlement: the
+     agent server listens on 127.0.0.1 only and the app is not sandboxed. -->
+<plist version="1.0">
+<dict>
+  <key>com.apple.security.cs.allow-jit</key>
+  <true/>
+  <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+  <true/>
+  <key>com.apple.security.cs.disable-library-validation</key>
+  <true/>
+</dict>
+</plist>

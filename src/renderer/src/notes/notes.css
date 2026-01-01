@@ -1,0 +1,109 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* Work notes (SnippStudio phase 1): the N lane, the drawing layer over the
+   preview, the Notes tab. Built from ui/tokens.css and ui/panel.css alone
+   (src/test/ui-tokens.test.ts checks that no colour is written here). */
+
+/* A note's status as a colour, wherever it is shown. */
+.st-open { --note: var(--note-open); }
+.st-agent { --note: var(--note-agent); }
+.st-ready { --note: var(--note-ready); }
+.st-approved { --note: var(--note-approved); }
+.st-still { --note: var(--note-still); }
+.pn-pill.st-open, .pn-pill.st-agent, .pn-pill.st-ready, .pn-pill.st-approved, .pn-pill.st-still { --pill: var(--note); }
+
+/* The tab's count of notes waiting to be sent. */
+.inspector .tabs button { position: relative; }
+.inspector .tabs button > .pn-badge { position: absolute; top: 2px; right: 2px; }
+
+/* ---- The N lane ---------------------------------------------------------- */
+.tl-note-lane { position: relative; height: var(--note-lane-h); border-bottom: var(--border-w) solid var(--bg-well); background: var(--bg-lane); cursor: pointer; }
+.tl-track-label.note-label { cursor: default; }
+.tl-track-label.note-label .tname { display: flex; align-items: center; gap: var(--space-1); min-width: 0; padding: 0 0 0 var(--space-2); color: var(--text); }
+.tl-track-label.note-label .tname .ui-icon { color: var(--note); }
+.tl-track-label.note-label .tname em { font-style: normal; }
+
+.tl-note-block { --note: var(--note-open); position: absolute; top: 3px; height: calc(var(--note-lane-h) - 7px); display: flex; align-items: center; gap: var(--space-1); box-sizing: border-box; padding: 0 var(--space-2); overflow: hidden; border: 1px solid var(--note); border-radius: var(--r-ctl); background: color-mix(in srgb, var(--note) 26%, var(--bg-panel)); color: var(--text); font-size: var(--fs-11); white-space: nowrap; cursor: grab; z-index: var(--z-sticky); }
+.tl-note-block:hover { background: color-mix(in srgb, var(--note) 38%, var(--bg-panel)); }
+.tl-note-block:active { cursor: grabbing; }
+.tl-note-block.selected { outline: 2px solid var(--text); outline-offset: -1px; z-index: var(--z-sticky); }
+.tl-note-block .num { font-family: var(--font-mono); font-weight: 600; color: var(--note); }
+.tl-note-block .lbl { min-width: 0; overflow: hidden; text-overflow: ellipsis; color: var(--text-2); }
+.tl-note-block.drawn .num::after { content: '✎'; margin-left: 2px; font-weight: 400; }
+/* A mark's status at a glance, not by colour alone (DENEME-2-PLAN-N.md, K3):
+   with the agent dashed and lighter, ready to review ringed, done faded (shown
+   only while the Notes tab's filter is "All"). */
+.tl-note-block.st-agent { border-style: dashed; }
+.tl-note-block.st-ready { box-shadow: 0 0 0 1px var(--bg-lane), 0 0 0 2px var(--note); }
+.tl-note-block.st-approved { opacity: 0.45; }
+.tl-note-block.st-approved:hover, .tl-note-block.st-approved.selected { opacity: 0.8; }
+/* One frame: a pin, its number over it. */
+.tl-note-block.pin { padding: 0; justify-content: center; border-radius: var(--r-card); background: var(--note); }
+.tl-note-block.pin .num { color: var(--on-accent); font-size: var(--fs-11); }
+.tl-note-block.pin.st-agent { background: color-mix(in srgb, var(--note) 30%, var(--bg-panel)); }
+.tl-note-block.pin.st-agent .num { color: var(--text); }
+.tl-note-block.pin.drawn .num::after { content: none; }
+.tl-note-block .grip { position: absolute; top: 0; bottom: 0; width: 6px; cursor: ew-resize; z-index: var(--z-sticky); }
+.tl-note-block .grip.l { left: 0; }
+.tl-note-block .grip.r { right: 0; }
+/* The note being written. */
+.tl-note-block.draft { --note: var(--accent); border-style: dashed; background: color-mix(in srgb, var(--accent) 18%, transparent); z-index: var(--z-sticky); }
+.tl-note-block.draft.pin { background: var(--accent); }
+/* What the agent changed: hatched, behind the blocks. */
+.tl-note-touched { position: absolute; top: 0; bottom: 0; border-left: 1px solid var(--note-ready); border-right: 1px solid var(--note-ready); background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--note-ready) 34%, transparent) 0 4px, transparent 4px 8px); cursor: pointer; z-index: var(--z-base); }
+.tl-note-touched.on { background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--note-ready) 70%, transparent) 0 4px, transparent 4px 8px); }
+
+/* ---- Over the preview ------------------------------------------------------ */
+.preview-canvas-wrap canvas.note-draw-layer { pointer-events: none; z-index: var(--z-base); }
+.preview-canvas-wrap canvas.note-draw-layer.drawing { pointer-events: auto; cursor: crosshair; touch-action: none; }
+.note-draw-bar { position: absolute; left: 50%; transform: translateX(-50%); z-index: var(--z-sticky); display: flex; align-items: center; gap: var(--space-2); max-width: calc(100% - var(--space-4)); padding: var(--space-2) var(--space-2); border-radius: var(--r-card); background: color-mix(in srgb, var(--bg-raised) 94%, transparent); box-shadow: var(--shadow-pop); color: var(--text); font-size: var(--fs-11); white-space: nowrap; }
+.note-draw-bar { top: var(--space-2); }
+.note-draw-title { color: var(--note-open); font-weight: 600; }
+.note-swatches { display: inline-flex; align-items: center; gap: var(--space-1); }
+.note-swatch { width: 16px; height: 16px; min-width: 16px; padding: 0; border-radius: var(--r-pill); background: var(--swatch); }
+.note-swatch.on, .note-swatch:hover { box-shadow: 0 0 0 2px var(--bg-raised), 0 0 0 3px var(--text); }
+/* The review bar (DENEME-2-PLAN-N.md, K1): its own strip under the picture,
+   above the transport, never over the film; B's "before" frame cannot cover
+   it. One row: what the note is on the left, the buttons on the right; in a
+   narrow window the buttons go onto a second row, never cut. */
+.note-review-bar { flex: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-1) var(--space-3); margin: var(--space-1) var(--space-2) 0; padding: var(--space-1) var(--space-2); border-radius: var(--r-ctl); background: var(--bg-raised); box-shadow: inset 3px 0 0 var(--note-ready); color: var(--text); font-size: var(--fs-11); }
+.note-review-what { display: flex; flex-direction: column; gap: 2px; flex: 1 1 180px; min-width: 0; white-space: nowrap; }
+.note-review-what > span { overflow: hidden; text-overflow: ellipsis; }
+.note-review-text { overflow: hidden; text-overflow: ellipsis; color: var(--text); font-size: var(--fs-12); }
+.note-review-text.reply { color: var(--text-2); font-size: var(--fs-11); }
+.note-review-bar .pn-row { flex: 0 1 auto; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-1); white-space: nowrap; }
+.note-review-bar .note-review-why { width: 220px; max-width: 100%; }
+
+/* The preview toolbar's "Note" button: an icon and a short word; in a very
+   narrow toolbar the word gives way (the tip and aria-label keep it). */
+@container ptb (max-width: 520px) { .preview-toolbar .pv-point .ui-btn-label { display: none; } }
+
+/* ---- The Notes tab ---------------------------------------------------------- */
+.notes-panel .pn-head select { max-width: 118px; }
+/* Phase 11c: the head wraps onto a second row instead of cutting its buttons'
+   words (11b's "Point" button made it wider than the default Inspector). */
+.notes-panel > .pn-head { flex-wrap: wrap; row-gap: var(--space-2); }
+.notes-panel > .pn-head > * { flex-shrink: 0; }
+.notes-panel > .pn-head > strong { white-space: nowrap; }
+.note-composer-title { font-size: var(--fs-12); color: var(--note-open); }
+.note-card { border-left: 3px solid var(--note); }
+.note-card.st-approved { opacity: 0.72; }
+.note-shot { display: block; width: 62%; border-radius: var(--r-ctl); background: var(--bg-app); cursor: zoom-in; }
+.note-shot.big { width: 100%; cursor: zoom-out; }
+.note-agent-off { flex: 1; min-width: 0; color: var(--warn); }
+
+/* Phase 3c.1: the panel's controls are the building blocks. */
+.notes-panel .pn-wide.ui-btn { width: 100%; }
+.notes-panel .pn-time.ui-input { width: 76px; }
+.notes-panel .pn-delete.ui-btn:hover:not(:disabled) { color: var(--danger-text); }
+.notes-panel .ui-seg { align-self: flex-start; }
+
+/* Phase 3c.Y (K3): the empty lane is dragged like the ruler (its cursor);
+   with Shift held a press marks a range (a crosshair). The label carries the
+   "+" button. */
+.tl-note-lane.is-marking { cursor: crosshair; }
+.tl-track-label.note-label { display: flex; flex-direction: row; align-items: center; justify-content: space-between; }
+.tl-track-label.note-label .note-lane-add { height: calc(var(--note-lane-h) - 4px); width: calc(var(--note-lane-h) - 4px); min-height: 0; padding: 0; }
+/* One-frame notes too close to tell apart: one mark with their count (ONIZLEME-UYGULA-PLAN.md, K6). */
+.tl-note-block.group { cursor: pointer; justify-content: center; padding: 0; }
+.tl-note-block.group .num { color: var(--text); }

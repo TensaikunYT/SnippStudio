@@ -1,0 +1,312 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The Inspector (SnippStudio phase 3c.3): the right-hand panel's frame and the
+   few layouts its tabs share. Values come from ui/tokens.css only
+   (src/test/ui-tokens.test.ts); the controls themselves are the building
+   blocks (ui/kit.css). */
+
+/* ---- frame -------------------------------------------------------------------- */
+.inspector {
+  display: flex; flex-direction: column; gap: var(--gap-card); min-height: 0; min-width: 0; overflow: hidden;
+  /* Arayüz v4: the column is the ground; its tabs, its body and the command
+     box are cards on it, and in the card tabs every part is a card. */
+  background: transparent;
+}
+.inspector > .insp-tabs, .inspector > .body, .inspector > .agent-box { flex-shrink: 0; border-radius: var(--r-card); background: var(--bg-panel); }
+.inspector > .insp-tabs { padding-bottom: var(--space-2); }
+.inspector .body {
+  /* Reaching the end of this panel must not start scrolling whatever is
+     behind it. Placed (22 November, L1): what is hidden for the eye inside it
+     (a section's help, a screen reader's words) stays in this panel's own
+     scroll area, not the page's. */
+  position: relative; overscroll-behavior: contain; overflow-y: auto; flex: 1 1 0; min-height: 0; padding: var(--space-2) var(--pad-panel) var(--pad-panel);
+}
+.inspector > .body.ui-cards { padding: 0; background: transparent; }
+/* Up to seven tabs share the column instead of scrolling it: with all seven
+   (a template block and the agent both there) the words go one size down. */
+.insp-tabs .ui-tabs { padding: var(--space-2) var(--space-2) 0; }
+.insp-tabs .ui-tab { flex: 1 1 auto; justify-content: center; min-width: 0; padding: 0 var(--space-1); gap: var(--space-1); font-size: var(--fs-13); white-space: nowrap; }
+.insp-tabs .ui-tabs:has(.ui-tab:nth-child(6)) .ui-tab { font-size: var(--fs-12); }
+.insp-tabs .ui-tabs:has(.ui-tab:nth-child(7)) .ui-tab { padding: 0 2px; font-size: var(--fs-11); }
+/* A section a timeline shortcut asked for: it flashes once. */
+.inspector .ui-section.flash { animation: insp-flash 1.2s var(--ease); }
+@keyframes insp-flash { 0%, 60% { background: var(--accent-soft); } 100% { background: transparent; } }
+html.motion-off .inspector .ui-section.flash { animation: none; outline: var(--border-w) solid var(--accent-line); }
+
+/* The parts not on the building blocks yet (phase 3c.4's dialogs' own controls
+   that sit in this panel) keep the panel's control height. */
+.inspector select:not(.ui-select-el),
+.inspector input:not(.ui-input):not([type='range']):not([type='checkbox']):not([type='color']):not([type='file']) { height: var(--ctl); }
+
+/* ---- rows --------------------------------------------------------------------- */
+.inspector .ui-slider, .inspector .ui-field, .inspector .ui-switch-row { margin: var(--space-1) 0; }
+.inspector .ui-slider-label, .inspector .ui-field-label { flex-basis: 96px; }
+.inspector .ui-field-row { gap: var(--space-2); }
+.inspector .ui-field-control > .ui-seg { flex: 1; }
+.inspector .ui-seg { margin: var(--space-1) 0; }
+/* (DENEME-1, P3: the parts keep their words' width and the row wraps when
+   they do not fit; flex: 1 1 0 here squeezed them into each other.) */
+.inspector .ui-seg-part { flex: 1 1 auto; min-width: 0; padding: 0 var(--space-1); }
+.inspector .hint.is-danger { color: var(--danger-text); }
+.inspector .hint.is-warning { color: var(--text); background: var(--fill-hover); border-radius: var(--r-ctl); padding: var(--space-1) var(--space-2); margin: var(--space-2) 0; }
+.inspector .compact-hint { margin: var(--space-1) 0 var(--space-2); font-size: var(--fs-11); }
+
+/* Buttons side by side, sharing the row. */
+.insp-row { display: flex; align-items: center; gap: var(--space-2); margin: var(--space-2) 0; min-width: 0; }
+.insp-row > .ui-btn, .insp-row > .insp-grow { flex: 1 1 0; min-width: 0; }
+.insp-row > .ui-btn .ui-btn-label { overflow: hidden; text-overflow: ellipsis; }
+.insp-row.is-tight > .ui-btn, .insp-row > .ui-btn.insp-fixed, .insp-row > .ui-btn.is-icon-only { flex: 0 0 auto; }
+.insp-row > .ui-input { flex: 1; min-width: 0; }
+/* A row of buttons whose words may not share a narrow panel: each takes its
+   own width and the row wraps (the dock's Captions page). */
+.insp-row.is-wrap { flex-wrap: wrap; }
+.insp-row.is-wrap > .ui-btn { flex: 1 0 auto; }
+/* Buttons in a grid (presets, moves, clip actions). */
+.insp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: var(--space-1); margin: var(--space-2) 0; }
+.insp-grid > .ui-btn { min-width: 0; padding: 0 var(--space-1); }
+.insp-grid > .ui-btn .ui-btn-label { overflow: hidden; text-overflow: ellipsis; }
+/* The speed row's presets (core polish B): eight speeds, four to a line. */
+.insp-speed-presets { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-1); margin: var(--space-1) 0 var(--space-2); }
+.insp-speed-presets > .ui-btn { min-width: 0; padding: 0 var(--space-1); }
+/* The curve's shapes are words, not numbers: two to a row, whole (audit G11). */
+.insp-speed-presets.is-shapes { grid-template-columns: repeat(2, 1fr); }
+/* The speed curve (core polish C): a log graph, its silent bands shaded. */
+.insp-curve { margin: var(--space-2) 0 var(--space-1); min-width: 0; }
+.insp-curve-graph { display: block; background: var(--bg-raised); border-radius: var(--r-card); cursor: crosshair; touch-action: none; }
+.insp-curve-silent { fill: var(--bg-app); }
+.insp-curve-grid { stroke: var(--line); stroke-width: 1; }
+.insp-curve-one { stroke: var(--line-strong); stroke-width: 1; }
+.insp-curve-label { fill: var(--text-3); font-size: var(--fs-11); pointer-events: none; }
+.insp-curve-line { fill: none; stroke: var(--accent); stroke-width: 2; pointer-events: none; }
+.insp-curve-point { fill: var(--bg-panel); stroke: var(--accent-text); stroke-width: 2; cursor: grab; }
+.insp-curve-point.is-on { fill: var(--accent); outline: none; }
+/* The keyboard's focus is a ring of its own, not the selection's fill (audit item 14). */
+.insp-curve-point:focus { outline: none; }
+.insp-curve-point:focus-visible { stroke: var(--text); stroke-width: 3; }
+.insp-chips { display: flex; flex-wrap: wrap; gap: var(--space-1); }
+/* Rows of a list (look layers, word lists): plain buttons, left aligned. */
+.insp-list { display: flex; flex-direction: column; gap: 2px; margin: var(--space-2) 0; }
+.insp-list > .ui-btn { justify-content: flex-start; }
+/* A small heading inside a section. */
+.insp-group { margin: var(--space-3) 0 var(--space-1); color: var(--text-3); font-size: var(--fs-11); font-weight: var(--fw-medium); }
+/* A label over a control that needs the whole width. */
+.insp-stack { display: flex; flex-direction: column; gap: var(--space-1); margin: var(--space-2) 0; }
+.insp-stack-label { color: var(--text-2); font-size: var(--fs-13); }
+.insp-stack > .ui-input, .insp-stack > .ui-select { width: 100%; }
+/* A boxed remark with its own buttons. */
+.insp-note { margin: var(--space-2) 0; padding: var(--space-2); border-radius: var(--r-card); background: var(--bg-raised); color: var(--text-2); font-size: var(--fs-12); line-height: 1.45; }
+.insp-note.is-warning { background: var(--fill-hover); color: var(--text); }
+/* A field and the small button that belongs to it. */
+.insp-with-button { display: flex; align-items: center; gap: var(--space-1); }
+.insp-with-button > .ui-field { flex: 1; min-width: 0; }
+/* A label and a value that is only read. */
+.insp-readout { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); min-height: var(--ctl-sm); margin: var(--space-1) 0; }
+.insp-readout-label { color: var(--text-2); font-size: var(--fs-13); }
+.insp-readout-value { color: var(--text); font-family: var(--font-mono); font-size: var(--fs-12); text-align: right; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Colour pickers. */
+.insp-colour-row { display: flex; align-items: center; gap: var(--space-1); flex: 1; justify-content: flex-end; }
+input.insp-colour { width: 44px; height: var(--ctl-sm); padding: 0; border-radius: var(--r-ctl); background: var(--bg-app); cursor: pointer; }
+input.insp-colour::-webkit-color-swatch-wrapper { padding: 2px; }
+input.insp-colour::-webkit-color-swatch { border: 0; border-radius: var(--r-clip); }
+.insp-swatches { display: flex; flex-wrap: wrap; gap: var(--space-1); margin: var(--space-1) 0; }
+.insp-swatches > button { width: 20px; height: 20px; padding: 0; border-radius: var(--r-pill); background: var(--swatch); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text) 18%, transparent); cursor: pointer; }
+.insp-swatches > button.is-on { box-shadow: 0 0 0 2px var(--bg-panel), 0 0 0 3px var(--accent); }
+
+/* ---- a property and its keyframe diamond ----------------------------------------- */
+/* A value and its diamond: the diamond beside the value's pill (arayüz v4:
+   the slider is two rows, label and value over the track). */
+.insp-prop { display: flex; align-items: flex-start; gap: var(--space-1); }
+.ui-sliders-stacked .insp-prop > .insp-key.ui-btn, .ui-sliders-stacked .insp-prop > .insp-keynav { margin-top: var(--space-1); }
+/* ---- arayüz v4: the clip's head line, the position row, the tool rows --------------- */
+.insp-clip-head { display: flex; align-items: center; gap: var(--space-2); min-height: 40px; color: var(--text-2); }
+.ui-cards > .insp-clip-head { padding-top: 0; padding-bottom: 0; }
+.insp-clip-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); font-size: var(--fs-13); font-weight: var(--fw-semibold); }
+.insp-clip-kind { flex: none; padding: 0 var(--space-2); border-radius: var(--r-pill); background: var(--bg-raised); color: var(--text-2); font-size: var(--fs-11); line-height: 20px; }
+.insp-pos { margin: var(--space-2) 0; }
+.insp-pos-label { display: block; margin-bottom: var(--space-1); color: var(--text-2); font-size: var(--fs-12); }
+.insp-pos-fields { display: flex; align-items: center; gap: var(--space-1); }
+.insp-pos-fields > .insp-key.ui-btn, .insp-pos-fields > .insp-keynav { flex: none; }
+/* A row of icon tools (Place and flip, Freeze and reverse, the keyframe
+   steps): centred in its card, its groups kept apart by a gap (DENEME-2,
+   Ek 3; the user: "şu butonları ortala"). */
+.insp-tools, .insp-icons { justify-content: center; }
+.insp-tools { flex-wrap: wrap; gap: 2px; margin-top: var(--space-3); padding: 2px; border-radius: var(--r-ctl); background: var(--well); }
+.insp-tools .tb-label { display: none; }
+.insp-tools-gap { flex: 0 0 var(--space-3); }
+/* A row of two or three tools says their names (22 November: the Speed
+   card's freeze and reverse were two bare icons). */
+.insp-tools.is-named .tb-tool.has-icon { flex: 1 1 0; padding: 0 var(--space-2); gap: var(--space-1); }
+.insp-tools.is-named .tb-tool.has-icon .tb-label { display: inline; }
+.insp-prop-body { flex: 1; min-width: 0; }
+/* The diamond (key-diamond.tsx; DENEME-1, P7): hollow and quiet without
+   keys; filled gold with keys; on a key, a gold-tinted square behind it too.
+   The keyed row's label and value pill take a light gold. */
+.insp-key.ui-btn { color: var(--text-3); }
+.insp-key.ui-btn.is-keyed, .insp-key.ui-btn.is-keyed:hover:not(:disabled) { color: var(--select); }
+.insp-key.ui-btn.is-keyed .ui-icon path { fill: currentColor; }
+.insp-key.ui-btn.is-at, .insp-key.ui-btn.is-at:hover:not(:disabled) { background: color-mix(in srgb, var(--select) 22%, transparent); }
+.insp-prop.is-keyed .ui-slider-label, .insp-pos.is-keyed .insp-pos-label { color: color-mix(in srgb, var(--select) 70%, var(--text-2)); }
+.insp-prop.is-keyed .ui-slider-value.ui-input { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--select) 45%, transparent); }
+
+/* ---- keyframe lists ---------------------------------------------------------------- */
+.insp-kf-list { display: flex; flex-direction: column; gap: 2px; margin-top: var(--space-2); }
+.insp-kf-row { display: flex; align-items: center; gap: var(--space-1); min-height: var(--ctl-sm); padding: 0 var(--space-1); border-radius: var(--r-ctl); background: var(--bg-app); }
+.insp-kf-row.is-sub { margin-left: var(--space-4); background: transparent; }
+.insp-kf-time { flex: 0 0 48px; color: var(--text-2); font-family: var(--font-mono); font-size: var(--fs-11); }
+.insp-kf-time.is-wide { flex: 1; }
+.insp-kf-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); font-size: var(--fs-11); }
+.insp-kf-row.is-multi .insp-kf-name { color: var(--text); font-weight: var(--fw-medium); }
+.insp-kf-row.is-sub .insp-kf-name { flex: 0 0 56px; }
+.insp-kf-value { flex: 1; color: var(--text-2); font-family: var(--font-mono); font-size: var(--fs-11); }
+.insp-kf-row .ease-icon { width: 14px; height: 14px; flex: 0 0 auto; color: var(--text-3); }
+.insp-kf-easing.ui-select { flex: 0 0 84px; }
+
+/* ---- picture moves ----------------------------------------------------------------- */
+.insp-move-row { display: flex; align-items: center; gap: var(--space-1); margin: var(--space-1) 0; }
+.insp-move-row > .ui-input.ui-number { flex: 0 0 56px; width: 56px; }
+.insp-move-row > .ui-select { flex: 1; min-width: 0; }
+.insp-move-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fs-12); font-weight: var(--fw-medium); }
+
+/* ---- the Project tab ---------------------------------------------------------------- */
+/* Its three parts stay in reach while the panel scrolls. */
+.insp-parts { position: sticky; top: calc(var(--pad-panel) * -1); z-index: var(--z-sticky); margin: calc(var(--pad-panel) * -1) calc(var(--pad-panel) * -1) var(--space-3); padding: var(--space-2); background: var(--bg-panel); }
+.insp-parts .ui-seg { margin: 0; }
+/* Arayüz v4: in the card tabs the part switch is a card that stays at the top. */
+.inspector > .body.ui-cards > .insp-parts { top: 0; margin: 0 0 var(--gap-card); padding: var(--space-2); border-radius: var(--r-card); }
+/* The switcher's height (its padding, the segmented control: seg-h + 2 x 2px,
+   its border). What is scrolled into view under it (a focused field, a section
+   asked for) stops below it instead of under it. */
+.inspector .body:has(> .insp-parts) {
+  --insp-parts-h: calc(var(--space-2) * 2 + var(--seg-h) + 4px + var(--border-w));
+  scroll-padding-top: var(--insp-parts-h);
+}
+.insp-queue-n { flex: 0 0 16px; color: var(--text-3); font-family: var(--font-mono); font-size: var(--fs-11); }
+.insp-queue-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fs-12); }
+.ui-input.ui-textarea.insp-chapters, .ui-input.ui-textarea.insp-wide { display: block; width: 100%; margin: var(--space-1) 0; }
+.ui-input.ui-textarea.insp-chapters { font-family: var(--font-mono); font-size: var(--fs-12); }
+
+/* ---- the Subs tab ------------------------------------------------------------------- */
+.insp-cap-row { display: flex; align-items: center; gap: var(--space-1); margin: 2px 0; }
+.insp-cap-row > .ui-input.insp-cap-time { flex: 0 0 52px; width: 52px; padding: 0 var(--space-1); text-align: right; }
+.insp-cap-row > .ui-input.insp-cap-text { flex: 1; min-width: 0; }
+/* A text of one's own: its editor is set off from the subtitle sections under it. */
+.ui-section.insp-own-text { margin-bottom: var(--space-4); padding: var(--space-2); border-radius: var(--r-card); background: var(--bg-raised); }
+
+/* Long names (and their Turkish) take a second line instead of being cut. */
+.inspector .ui-slider-label, .inspector .ui-field-label { white-space: normal; overflow: visible; line-height: 1.2; font-size: var(--fs-12); overflow-wrap: anywhere; }
+
+/* ---- the template block ---------------------------------------------------------------- */
+.insp-move-row.is-now { border-radius: var(--r-ctl); background: var(--accent-soft); }
+.insp-kf-time.is-auto { flex: 0 0 auto; }
+.insp-kf-time.is-bad { color: var(--danger-text); }
+.insp-event { padding: var(--space-1) 0; }
+.insp-event > .ui-btn { justify-content: flex-start; }
+.tpl-inspector > .ui-select { width: 100%; margin-bottom: var(--space-2); }
+.tpl-item-fields > .ui-input { width: 100%; }
+.tpl-inspector { display: flex; flex-direction: column; gap: var(--space-1); }
+.tpl-inspector .hint.is-danger { color: var(--danger-text); }
+.tpl-item { margin-bottom: var(--space-2); padding: var(--space-2); border-radius: var(--r-card); background: var(--bg-raised); }
+.tpl-item-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-1); }
+.tpl-item-label { color: var(--text-2); font-size: var(--fs-11); font-weight: var(--fw-semibold); }
+.tpl-item-tools { display: flex; gap: 2px; }
+.tpl-item-body { display: flex; gap: var(--space-2); align-items: flex-start; }
+.tpl-item-fields { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-1); }
+.tpl-item-nums { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.tpl-item-nums label { display: flex; align-items: center; gap: var(--space-1); color: var(--text-2); font-size: var(--fs-11); }
+/* A picture's tile: the picture itself is the button. */
+.tpl-pic { flex: 0 0 auto; width: 52px; height: 52px; padding: 0; overflow: hidden; display: grid; place-items: center; border-radius: var(--r-ctl); background: var(--bg-hover); color: var(--text-2); cursor: pointer; }
+.tpl-pic img, .tpl-pic-grid img { width: 100%; height: 100%; object-fit: cover; }
+.tpl-pic.empty { color: var(--text-2); }
+.tpl-pic-menu { width: 236px; }
+.tpl-pic-menu > .ui-btn { display: flex; width: 100%; justify-content: flex-start; }
+.tpl-pic-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-1); max-height: 220px; overflow-y: auto; padding: 2px; }
+.ctx-menu .tpl-pic-grid button { width: auto; height: 46px; padding: 0; overflow: hidden; border-radius: var(--r-ctl); background: var(--bg-app); color: var(--text-2); font-size: var(--fs-11); cursor: pointer; }
+.ctx-menu .tpl-pic-grid button.on { box-shadow: inset 0 0 0 2px var(--accent); }
+/* A palette's swatch wears the palette's own colours (set inline). */
+.tpl-palettes { display: grid; grid-template-columns: repeat(auto-fill, minmax(34px, 1fr)); gap: var(--space-2); padding: 2px var(--space-1) var(--space-1) 0; }
+.tpl-palettes button { position: relative; height: var(--ctl-sm); padding: 0; border: 2px solid; border-radius: var(--r-ctl); cursor: pointer; transition: transform var(--dur-fast) var(--ease); }
+.tpl-palettes button:hover { transform: translate(-1px, -1px); }
+.tpl-palettes button.on { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tpl-palettes .dot { position: absolute; left: 5px; top: 50%; width: 10px; height: 10px; margin-top: -5px; border: 1.5px solid; border-radius: var(--r-pill); }
+.tpl-palettes .bar { position: absolute; left: 18px; right: 5px; top: 50%; height: 3px; margin-top: -1.5px; border-radius: var(--r-pill); opacity: 0.85; }
+.tpl-ending { margin: var(--space-2) 0; padding: var(--space-1) var(--space-2); border-radius: var(--r-card); background: var(--bg-raised); }
+.tpl-ending .insp-row > .ui-input.ui-number { flex: 0 0 64px; width: 64px; }
+
+/* ---- the chess board's fields ------------------------------------------------------------ */
+.chess-board { display: block; margin: var(--space-1) auto var(--space-2); border: 3px solid var(--bg-app); border-radius: var(--r-ctl); cursor: pointer; }
+.chess-status { margin-top: var(--space-1); color: var(--text-2); font-size: var(--fs-11); text-align: center; }
+.chess-moves { display: flex; flex-wrap: wrap; gap: 2px; margin: var(--space-2) 0; max-height: 120px; overflow-y: auto; }
+.chess-moves button { padding: 2px var(--space-2); border-radius: var(--r-ctl); background: var(--bg-raised); color: var(--text); font-size: var(--fs-11); font-weight: var(--fw-semibold); cursor: pointer; }
+.chess-moves button em { margin-right: 3px; font-style: normal; font-weight: var(--fw-medium); opacity: 0.5; }
+.chess-moves button.on { background: var(--accent); color: var(--on-accent); }
+.chess-moves button.bad { background: var(--danger-soft); color: var(--danger-text); text-decoration: line-through; }
+.chess-fields .hint > .ui-btn { display: inline-flex; vertical-align: baseline; }
+
+/* The built-in looks ("cila" part D): small pictures in a grid; pointing at
+   one shows it in the preview. */
+.insp-looks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3) var(--space-2); margin: var(--space-2) 0; }
+/* DENEME-2: a look is a card in the transitions' language: the picture is
+   the card (no box round it), its name under it; the clip's look wears the
+   selection's gold round its picture. */
+.insp-look-tile { display: flex; flex-direction: column; gap: var(--gap-card); min-width: 0; padding: 0; border-radius: var(--r-clip); background: transparent; color: var(--text-2); font: inherit; font-size: var(--fs-11); text-align: left; cursor: pointer; }
+.insp-look-tile:hover:not(:disabled) { background: transparent; color: var(--text); }
+.insp-look-tile:hover:not(:disabled) > canvas { filter: brightness(1.08); }
+/* No clip to give a look to (the left panel's Filters page): the tiles are
+   pictures to look at, at full strength, not dimmed buttons. */
+.insp-look-tile:disabled, .insp-look-tile:disabled:hover { opacity: 1; background: transparent; cursor: default; }
+.insp-look-tile:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.insp-look-tile.is-picked { color: var(--text); }
+.insp-look-tile > canvas { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: var(--r-clip); transition: box-shadow var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease); }
+.insp-look-tile.is-picked > canvas { box-shadow: 0 0 0 2px var(--bg-panel), 0 0 0 4px var(--select); }
+/* Its name on up to two lines, never cut ("Kontrastlı siyah-beyaz"). */
+.insp-look-name { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; white-space: normal; line-height: 1.25; }
+
+/* An empty tab says what to do, in the middle of the space it has (the visual polish). */
+.insp-empty { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); padding: var(--space-5) var(--space-4); color: var(--text-2); font-size: var(--fs-13); line-height: 1.5; text-align: center; }
+/* With nothing selected the empty card fills the column (no ground showing
+   under it like a hole). */
+.inspector > .body.ui-cards:has(> .insp-empty) { display: flex; flex-direction: column; }
+.ui-cards > .insp-empty { padding: var(--space-5) var(--space-4); flex: 1 1 auto; justify-content: center; border-radius: var(--r-card); background: var(--bg-panel); }
+.insp-empty-title { color: var(--text); font-size: var(--fs-13); font-weight: var(--fw-semibold); }
+.insp-empty-hint { max-width: 240px; color: var(--text-3); font-size: var(--fs-12); }
+/* v3: an empty tab says what to do under a quiet mark, not in a corner. */
+.insp-empty-mark { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: var(--r-pill); background: var(--bg-raised); color: var(--text-3); }
+
+/* ---- REF-AB, worker I (REF-AB-PLAN-I.md) --------------------------------------------- */
+/* A value's ‹ ◇ ›: the diamond between two narrow arrows; an arrow with no
+   key that way is quiet (disabled). */
+.insp-keynav { display: inline-flex; align-items: center; flex: none; }
+.insp-keynav > .insp-keystep.ui-btn { width: 14px; color: var(--text-3); }
+.insp-keynav > .insp-keystep.ui-btn:disabled { opacity: 0.35; }
+.insp-keynav > .insp-keystep.ui-btn:not(:disabled):hover { color: var(--text); }
+/* A card's reset at its title's right: quiet when there is nothing to reset. */
+.insp-reset.ui-btn { color: var(--text-3); }
+.insp-reset.ui-btn:disabled { opacity: 0.35; }
+/* The scale's lock mark (item 3). */
+.insp-lock { display: flex; align-items: center; justify-content: flex-end; gap: var(--space-1); margin: 0 0 var(--space-1); color: var(--text-3); font-size: var(--fs-11); }
+/* The ready speed curves (item 4): a drawing over a name, four or so to a row. */
+.insp-shapes { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: var(--space-2) var(--space-1); margin: var(--space-2) 0; }
+.insp-shape { min-width: 0; display: flex; flex-direction: column; align-items: center; gap: var(--space-1); padding: 0; background: transparent; color: var(--text-2); font-size: var(--fs-11); line-height: 1.2; text-align: center; cursor: pointer; }
+.insp-shape:hover { color: var(--text); }
+.insp-shape.is-on { color: var(--text); }
+.insp-shape-art { display: flex; align-items: center; justify-content: center; width: 100%; height: 34px; border-radius: var(--r-ctl); background: var(--well); transition: box-shadow var(--dur-fast) var(--ease); }
+.insp-shape-art.is-icon { color: var(--text-2); }
+.insp-shape.is-on .insp-shape-art { box-shadow: 0 0 0 2px var(--bg-panel), 0 0 0 3px var(--select); }
+.insp-shape-one { stroke: var(--line-strong); stroke-width: 1; stroke-dasharray: 2 2; }
+.insp-shape-line { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-linecap: round; }
+.insp-shape-name { min-width: 0; max-width: 100%; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; white-space: normal; overflow-wrap: normal; }
+/* The length row (item 4): its name, the footage's length at 1x, the field. */
+.insp-length { display: flex; align-items: center; gap: var(--space-2); margin: var(--space-1) 0; }
+.insp-length-label { flex: 1; min-width: 0; color: var(--text-2); font-size: var(--fs-12); font-weight: var(--fw-medium); }
+.insp-length-from { flex: none; color: var(--text-3); font-family: var(--font-mono); font-size: var(--fs-12); }
+.insp-length > .ui-input { flex: 0 0 88px; }
+/* The clip animations' grid (item 9): a search, the kinds, the pictures. */
+.insp-search { display: flex; align-items: center; gap: var(--space-1); margin: var(--space-2) 0 var(--space-1); color: var(--text-3); }
+.insp-search > .ui-input { flex: 1; min-width: 0; }
+.insp-anim-kinds { margin: var(--space-1) 0 var(--space-2); }
+.insp-anims { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: var(--space-2) var(--space-1); margin: var(--space-2) 0; }
+.insp-anim { min-width: 0; display: flex; flex-direction: column; align-items: stretch; gap: var(--space-1); padding: 0; background: transparent; color: var(--text-2); font-size: var(--fs-11); line-height: 1.2; text-align: center; cursor: pointer; }
+.insp-anim:hover, .insp-anim.is-on { color: var(--text); }
+.insp-anim .tp-canvas { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: var(--r-clip); background: var(--well); transition: box-shadow var(--dur-fast) var(--ease); }
+.insp-anim.is-on .tp-canvas { box-shadow: 0 0 0 2px var(--bg-panel), 0 0 0 3px var(--select); }
+.insp-anim-name { min-width: 0; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; white-space: normal; overflow-wrap: normal; }

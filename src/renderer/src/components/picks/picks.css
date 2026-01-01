@@ -1,0 +1,33 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The left panel's search, favourites and recents (components/picks/,
+   REF-AB item 6). Design values only (src/test/ui-tokens.test.ts). */
+/* One row: the search takes the room, the three lists beside it. Favourites
+   and recents are their pictures alone (a bookmark, a clock); their words
+   stay for a screen reader and are in their tooltips. In the narrow panel
+   three worded parts were cut ("Favoriler" 53 px in 39). */
+.pick-bar { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) 0; }
+.pick-bar .pick-search { flex: 1 1 0; min-width: 0; }
+.pick-bar .ui-seg { flex: none; }
+.pick-bar .ui-seg-part { justify-content: center; }
+.pick-bar .ui-seg-part:has(svg) .ui-seg-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.pick-empty { padding: var(--space-4) var(--space-2); }
+/* A thing's bookmark: on its card's corner, seen under the pointer, the
+   focus or when on (then filled). */
+.pick-card { position: relative; min-width: 0; }
+.pick-card > .pick-mark { position: absolute; top: var(--space-1); right: var(--space-1); z-index: var(--z-sticky); }
+.pick-mark.ui-btn { background: color-mix(in srgb, var(--bg-app) 72%, transparent); color: var(--text-2); opacity: 0; transition: opacity var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
+.pick-card:hover > .pick-mark, .pick-mark.ui-btn:focus-visible, .pick-mark.is-fav.ui-btn, .pick-row .pick-mark.ui-btn { opacity: 1; }
+.pick-mark.is-fav.ui-btn { color: var(--accent-text); }
+.pick-mark.is-fav svg { fill: currentColor; }
+.pick-row .pick-mark.ui-btn:not(.is-fav) { background: transparent; color: var(--text-3); }
+/* A form's part with its bookmark at the end of its title line. */
+.pick-row { display: flex; align-items: center; gap: var(--space-1); }
+.pick-row > :first-child { flex: 1; min-width: 0; }
+.shape-kind-grid > .pick-row > .ui-btn:first-child { justify-content: flex-start; }
+/* The Transitions page with its bookmarks: the tile fills its card. */
+.ct-tiles > .pick-card > .ct-tile { width: 100%; }
+.insp-looks > .pick-card > .insp-look-tile { width: 100%; }
+/* A move's row on the Effects page: its bookmark at the row's end, always seen. */
+.insp-row > .pick-mark.ui-btn { flex: none; margin-left: auto; opacity: 1; }
+.insp-row > .pick-mark.ui-btn:not(.is-fav) { background: transparent; color: var(--text-3); }

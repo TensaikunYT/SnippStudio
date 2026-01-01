@@ -1,0 +1,7 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:transparent}*{box-sizing:border-box}body{font-family:Segoe UI,Arial,sans-serif;color:#fff}.a{position:absolute}.card{background:rgba(15,20,30,.82);border:2px solid rgba(255,255,255,.25);border-radius:18px;box-shadow:0 8px 30px rgba(0,0,0,.4)}</style>
+<div id=c class="a card" style="left:120px;top:90px;padding:28px 48px"><div style="font-size:34px;letter-spacing:6px;color:#f5b942">NİSAN</div><div id=y style="font-size:120px;font-weight:800;line-height:1">1986</div><div id=l style="height:6px;background:#f5b942;margin-top:12px;width:0"></div><div id=p style="font-size:30px;margin-top:10px;opacity:0">Pripyat · Sovyet Ukrayna'sı</div></div>
+<script>
+var DUR=5.8,q=function(i){return document.getElementById(i)},E=function(x){return Math.max(0,Math.min(1,x))},S=function(t,a,b){return 1-Math.pow(1-E((t-a)/(b-a)),3)};
+function draw(t){var a=S(t,.2,.9),o=1-S(t,5.2,5.8);q('c').style.opacity=a*o;q('c').style.transform='translateX('+(-60*(1-a))+'px)';q('y').textContent=Math.round(1900+86*S(t,.4,2));q('l').style.width=(100*S(t,1.8,2.8))+'%';q('p').style.opacity=S(t,2.6,3.4)}
+var ext=false;window.renderOut=function(t){ext=true;draw(t)};window.READY=true;var t0=performance.now();(function L(){if(!ext)draw(((performance.now()-t0)/1000)%DUR);requestAnimationFrame(L)})();
+</script>

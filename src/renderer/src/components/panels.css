@@ -1,0 +1,42 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The side panels of phase 3c.1 (the transcript, the template suggestions,
+   Shorts, the renders list, the project home). Moved out of styles.css;
+   design values only (src/test/ui-tokens.test.ts). */
+
+/* ---- The transcript (components/TranscriptPanel.tsx) ---------------------------------- */
+/* overflow-x: clip, not hidden: hidden made this a scroll box of its own, and the
+   selection bar below could not stick to the panel that really scrolls. */
+.transcript-root { display: flex; flex-direction: column; gap: var(--space-2); height: 100%; min-height: 0; max-width: 100%; overflow-x: clip; }
+.transcript-tools { display: flex; align-items: center; gap: var(--space-2); }
+.transcript-tools > .ui-input { flex: 1; }
+.transcript-matchinfo { color: var(--text-3); font-size: var(--fs-11); white-space: nowrap; }
+.transcript-row { display: flex; align-items: center; gap: var(--space-2); }
+.transcript-grow.ui-btn { flex: 1; min-width: 0; }
+.transcript-hint { padding: 0 2px; }
+/* The selection's bar sits above the words; with the panel scrolled down to them
+   it was above the view, under the sticky Project part switcher (inspector.css
+   .insp-parts, its height as inspector.css says), and could not be clicked. It
+   sticks just under the switcher instead, and what is scrolled into view stops
+   below both. */
+.inspector .body:has(> .insp-parts):has(.transcript-selbar) {
+  --insp-parts-h: calc(var(--space-2) * 2 + var(--seg-h) + 4px + var(--border-w));
+  scroll-padding-top: calc(var(--insp-parts-h) + var(--ctl-sm) + var(--space-2));
+}
+.inspector .transcript-selbar {
+  position: sticky; z-index: var(--z-sticky); background: var(--bg-panel);
+  top: calc(var(--insp-parts-h, 0px) - var(--pad-panel));
+}
+/* Reaching the end of this panel must not start scrolling whatever is behind it. */
+.transcript-text { flex: 1; min-height: 200px; max-width: 100%; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; padding-right: var(--space-1); user-select: none; }
+.transcript-para { max-width: 100%; overflow-x: hidden; margin-bottom: var(--space-3); font-size: var(--fs-14); line-height: 2; overflow-wrap: anywhere; white-space: normal; }
+.transcript-time {
+  display: inline-block; margin-right: var(--space-2); padding: 0 var(--space-2); border-radius: var(--r-pill);
+  background: var(--bg-raised); color: var(--text-2); font-family: var(--font-mono); font-size: var(--fs-11); cursor: pointer;
+}
+.transcript-time:hover { background: var(--bg-hover); color: var(--text); }
+.transcript-word { display: inline; margin: 0 1px; padding: 2px 3px; border-radius: var(--r-clip); cursor: pointer; touch-action: none; }
+.transcript-word:hover { background: var(--bg-hover); }
+.transcript-word.on { background: var(--accent-soft); color: var(--accent-text); }
+.transcript-word.hit { outline: var(--border-w) solid var(--line-strong); background: var(--fill-strong); }
+.transcript-word.sel, .transcript-word.filler { background: var(--danger-soft); color: var(--danger-text); text-decoration: line-through; }

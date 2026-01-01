@@ -1,0 +1,110 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later
+   Copyright (C) 2026 SnippStudio contributors
+   The watch-and-note mode (IZLE-PLAN.md; the agent mock-up's 7th screen):
+   the film, a 34 px strip, one line of controls; on the right a 280 px list
+   with the one primary button at its foot. Design values only. */
+
+/* The editor under the layer: kept as it is, out of sight and out of reach. */
+.app.is-watch > .main,
+.app.is-watch > .splitter,
+.app.is-watch > .timeline { visibility: hidden; }
+/* The top bar keeps one primary button on the screen (IZLE-PLAN.md, K7). */
+.app.is-watch .topbar .tb-export,
+.app.is-watch .topbar .canvas-menu,
+.app.is-watch .topbar .renders-menu { display: none; }
+
+.watch {
+  position: fixed; inset: 48px 0 0 0; z-index: var(--z-timeline);
+  display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: var(--space-2);
+  padding: 0 var(--gap-card) var(--gap-card); background: var(--bg-app);
+  animation: watch-in var(--dur-mid) var(--ease);
+}
+@keyframes watch-in { from { opacity: 0; } to { opacity: 1; } }
+html.motion-off .watch { animation: none; }
+
+.watch-stage { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; min-height: 0; }
+.watch-screen {
+  position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column;
+  border-radius: var(--r-card); background: var(--bg-panel); overflow: hidden;
+}
+.watch-screen .preview-canvas-wrap { margin: 0; border-radius: 0; background: var(--bg-well); }
+/* The drawing's own toolbar is the Notes tab's: here the pin, and the pen below (K6). */
+.watch-screen .note-draw-bar { display: none; }
+.watch-stage > .agent-over { padding: 0; }
+
+/* The strip. */
+.watch-strip { position: relative; flex: none; height: 34px; border-radius: var(--r-clip); background: var(--bg-panel); cursor: pointer; touch-action: none; }
+.watch-strip-film { position: absolute; left: 10px; right: 10px; top: 14px; height: 8px; border-radius: var(--r-pill); background: var(--grey-4); }
+.watch-strip-range { position: absolute; top: 14px; height: 8px; border-radius: var(--r-pill); background: var(--accent-line); pointer-events: none; }
+.watch-strip-range.is-approved { background: var(--grey-5); }
+.watch-strip-range.is-agent, .watch-strip-range.is-ready { background: var(--agent-line); }
+.watch-strip-range.is-still { background: var(--danger-line); }
+.watch-strip-range.is-draft { background: transparent; box-shadow: inset 0 0 0 var(--border-w) var(--accent); }
+.watch-strip-trail { position: absolute; top: 25px; height: 3px; border-radius: var(--r-pill); background: var(--agent); opacity: 0.35; pointer-events: none; }
+.watch-strip-trail.is-wrote { opacity: 1; }
+.watch-pin {
+  position: absolute; top: 3px; width: 14px; height: 14px; margin-left: -7px; padding: 0; border: none;
+  border-radius: 50% 50% 50% 2px; transform: rotate(-45deg); transform-origin: 50% 50%;
+  background: var(--accent); cursor: pointer;
+}
+.watch-pin.is-agent { background: var(--note-agent); }
+.watch-pin.is-ready { background: var(--note-ready); }
+.watch-pin.is-still { background: var(--note-still); }
+.watch-pin.is-approved { background: var(--grey-6); }
+.watch-pin.is-on { box-shadow: 0 0 0 2px var(--bg-panel), 0 0 0 3px var(--text); }
+.watch-pin:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.watch-strip-head { position: absolute; top: 4px; bottom: 4px; width: 1px; background: var(--text); pointer-events: none; }
+.watch-strip-head::before { content: ''; position: absolute; top: 0; left: -4px; border: 4.5px solid transparent; border-top-color: var(--text); }
+
+/* The line of controls. */
+.watch-controls { display: flex; align-items: center; gap: var(--space-2); flex: none; min-width: 0; height: var(--ctl-sm); }
+.watch-clock { font-family: var(--font-mono); font-size: var(--fs-12); font-variant-numeric: tabular-nums; color: var(--text-3); white-space: nowrap; }
+.watch-keys { margin-left: auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fs-12); color: var(--text-3); }
+
+/* The list. */
+.watch-list { display: flex; flex-direction: column; gap: var(--gap-card); min-height: 0; padding: 10px; border-radius: var(--r-card); background: var(--bg-panel); }
+.watch-list-head { display: flex; align-items: center; justify-content: space-between; flex: none; font-size: var(--fs-13); }
+.watch-list-head strong { font-weight: var(--fw-semibold); }
+.watch-count { color: var(--text-3); font-size: var(--fs-12); font-variant-numeric: tabular-nums; }
+.watch-list-body { display: flex; flex-direction: column; gap: var(--gap-card); flex: 1; min-height: 0; overflow-y: auto; }
+.watch-empty { color: var(--text-3); font-size: var(--fs-12); padding: var(--space-2) 0; }
+.watch-note { position: relative; flex: none; border-radius: var(--r-clip); background: var(--bg-well); }
+.watch-note.is-on { box-shadow: inset 0 0 0 var(--border-w) var(--accent); }
+.watch-note.is-approved { opacity: 0.55; }
+.watch-note-go {
+  display: flex; flex-direction: column; gap: 2px; width: 100%; min-width: 0; padding: var(--space-2) 9px;
+  border: none; background: transparent; color: var(--text); text-align: left; white-space: normal; font-size: var(--fs-13); cursor: pointer; border-radius: var(--r-clip);
+}
+.watch-note-go:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.watch-note-head { display: flex; align-items: center; gap: 6px; min-width: 0; padding-right: var(--space-5); color: var(--text-3); font-size: var(--fs-12); }
+.watch-num {
+  display: inline-grid; place-items: center; flex: none; width: 16px; height: 16px; border-radius: var(--r-pill);
+  background: var(--accent); color: var(--on-accent); font-size: var(--fs-11); font-weight: var(--fw-semibold);
+}
+.watch-note.is-agent .watch-num { background: var(--note-agent); color: var(--on-agent); }
+.watch-note.is-ready .watch-num { background: var(--note-ready); color: var(--on-agent); }
+.watch-note.is-still .watch-num { background: var(--note-still); color: var(--on-agent); }
+.watch-note.is-approved .watch-num { background: var(--grey-6); color: var(--text); }
+.watch-time { flex: none; font-family: var(--font-mono); font-size: var(--fs-11); font-variant-numeric: tabular-nums; }
+.watch-tag { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.watch-note-text { display: block; max-width: 100%; overflow-wrap: anywhere; line-height: 1.4; }
+.watch-note-x { position: absolute; top: var(--space-1); right: var(--space-1); opacity: 0; }
+.watch-note:hover .watch-note-x, .watch-note:focus-within .watch-note-x { opacity: 1; }
+/* Toasts over the film, not over the strip. */
+.app.is-watch .ui-toasts { bottom: 96px; left: calc(50% - 144px); }
+.watch-primary { flex: none; width: 100%; justify-content: center; }
+
+/* The note's box over the film. */
+.watch-bubble {
+  position: absolute; z-index: var(--z-pop); display: flex; flex-direction: column; gap: 7px;
+  padding: var(--space-2); border-radius: var(--r-card); background: var(--bg-panel); box-shadow: var(--shadow-pop);
+}
+.watch-bubble textarea.ui-textarea { resize: none; }
+.watch-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+
+/* The drawing tools and the colours beside the pin (cila3, 1c). */
+.watch-tools { display: inline-flex; align-items: center; gap: var(--space-1); flex: none; }
+.watch-swatches { flex: none; padding: 0 var(--space-1); }
+.watch-swatches .note-swatch { width: 14px; height: 14px; min-width: 14px; border: none; cursor: pointer; }
+.watch-swatches .note-swatch.on, .watch-swatches .note-swatch:hover { box-shadow: 0 0 0 2px var(--bg-app), 0 0 0 3px var(--text); }
+.watch-swatches .note-swatch:focus-visible { outline: none; box-shadow: var(--focus-ring); }

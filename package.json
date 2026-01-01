@@ -1,0 +1,50 @@
+{
+  "name": "snipp",
+  "version": "1.1.0",
+  "description": "A local video editor for Windows that works with the AI agent you already use: timeline, on-device subtitles, code clips, export up to 4K.",
+  "private": true,
+  "overrides": {
+    "sharp": "0.35.4"
+  },
+  "type": "module",
+  "main": "out/main/index.js",
+  "author": "SnippStudio contributors",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "typecheck": "tsc --noEmit",
+    "start": "electron-vite preview",
+    "dist": "node scripts/package/dist.mjs",
+    "dist:dir": "node scripts/package/dist.mjs --dir",
+    "dist:mac": "node scripts/package/dist.mjs --platform=mac",
+    "dist:linux": "node scripts/package/dist.mjs --platform=linux",
+    "test": "tsc -p tsconfig.test.json && node scripts/run-tests.mjs",
+    "check:clean": "node scripts/qa/clean-bundle.mjs out",
+    "e2e": "node scripts/e2e/run.mjs",
+    "e2e:halka": "node scripts/e2e/run.mjs --ring",
+    "perf": "node scripts/perf/run.mjs",
+    "fuzz": "node scripts/fuzz.mjs",
+    "mutate": "node scripts/mutate.mjs"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^3.5.2",
+    "@mediabunny/mp3-encoder": "1.50.8",
+    "mediabunny": "^1.6.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^5.2.0",
+    "electron": "^43.8.12",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^5.0.0",
+    "lucide-static": "^1.72.0",
+    "typescript": "^5.7.2",
+    "vite": "^7.3.6",
+    "ws": "^8.21.1"
+  }
+}

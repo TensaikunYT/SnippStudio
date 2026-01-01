@@ -1,0 +1,341 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* Snipp's design values, defined once (SnippStudio phase 3a: values v2).
+   The one source is the design notes (tasarim\TASARIM.md, beside the
+   repository, not published); every value of
+   its tables is here under the same name, and src/test/ui-tokens.test.ts
+   compares the two. Colours, type, sizes, corners, gaps, motion and layers
+   live here and nowhere else: every stylesheet of the renderer reads them
+   (src/test/ui-tokens.test.ts lists them all). The old names (--bg, --panel,
+   --border, --text-dim, --accent2, --sp-*, --fs-xs…) went in phase 3c.4b. */
+:root {
+  /* ---- Colours (TASARIM.md, "Renkler") ---------------------------------- */
+  /* One neutral grey ramp of nine steps (the visual polish, GORSEL-PLAN.md G9;
+     since 20 November the old Snipp's untinted greys, at the user's request):
+     no pure black, no pure white. Every surface, line and text grey below is
+     one of these. (v3.1 put a black stage under the ground; DENEME-1 took
+     it out.)
+     DENEME-1 (21 November, user: "capcutın arayüzündeki grilere … bak"):
+     CapCut's greys, no black. The ground is the darkest step now; the stage
+     (the timeline under its lanes, the ruler) sits just under a panel, so
+     the timeline reads as part of its card, not a dark gap in it. */
+  --grey-0: #1C1C1E;
+  --grey-1: #222224;
+  --grey-2: #262628;
+  --grey-3: #363639;
+  --grey-4: #404044;
+  --grey-5: #4A4A50;
+  --grey-6: #5A5A62;
+  --grey-7: #B0B0B8;
+  --grey-8: #C6C6CE;
+  --grey-9: #F0F0F3;
+
+  /* Surfaces: the ground, the stage, a panel, a control or card, under the
+     pointer. */
+  --bg-well: var(--grey-1);
+  --bg-app: var(--grey-0);
+  --bg-panel: var(--grey-2);
+  --bg-raised: var(--grey-3);
+  --bg-hover: var(--grey-4);
+
+  /* Lines (fields, the timeline's grid). */
+  --line: var(--grey-5);
+  --line-strong: var(--grey-6);
+
+  /* Text. --text-3 is as light as it may get (4.5:1 on every surface). */
+  --text: var(--grey-9);
+  --text-2: var(--grey-8);
+  --text-3: var(--grey-7);
+
+  /* The one accent: the main action, a switch or box that is on, focus, a
+     slider's fill, and (DENEME-1) the edge of a button that is on, pressed
+     or under the pointer. It is not the selection (--select).
+     DENEME-1: VideoHub's green (its ui/style.css: #b6f067, light #c9f78a,
+     ink #142208), at the user's request. */
+  --accent: #B6F067;
+  --accent-text: #C9F78A;
+  --accent-soft: #25301B;
+  --accent-line: #4A6A2A;
+  --on-accent: #142208;
+  /* The filled button while it is pressed: one step darker. */
+  --accent-press: #9FD94F;
+  /* DENEME-2 (21 November; the user: the edges DENEME-1 drew round every
+     button looked like a toy's): no button carries an edge. What can be
+     pressed is told by a fill: a plain button is bare at rest (its icon and
+     words), a light veil under the pointer, a little less while held (and it
+     gives a little); a secondary button is a step lighter than its surface;
+     a tool that is on keeps a veil and its icon turns green. The veils are
+     the text colour over whatever the button stands on, so they read the
+     same on a panel, a card or a dialog. */
+  --fill-hover: color-mix(in srgb, var(--text) 9%, transparent);
+  --fill-strong: color-mix(in srgb, var(--text) 15%, transparent);
+  --fill-press: color-mix(in srgb, var(--text) 5%, transparent);
+  --fill-on: color-mix(in srgb, var(--text) 11%, transparent);
+  /* DENEME-2, Ek 4 (the user: "bu butonlar zaten beyazken niye arkaları siyah
+     olmuş"): a field to type in, a select, the clock's pill and a value pill
+     stand on the same light surface as the controls round them (a veil a
+     step above the surface), with no edge until pointed at; a group's well
+     (a segmented choice, a row of tools) is only a little recessed, never
+     black. (They were --bg-app, the darkest step, under a strong edge.) */
+  --field: color-mix(in srgb, var(--text) 8%, transparent);
+  --well: color-mix(in srgb, var(--bg-app) 55%, transparent);
+
+  /* Everything the agent owns, and nothing else. v3.1: an orange, so the
+     selection's gold and the agent are never mistaken for each other. */
+  --agent: #F08A3C;
+  --agent-text: #F7B07A;
+  --agent-soft: #2B1A0E;
+  --agent-line: #6A3A16;
+  --on-agent: #241004;
+
+  /* The selection (v3.1): a warm gold frame around cold content, and a soft
+     blue laid over the selected clip (used at a fraction, color-mix). */
+  --select: #E8CC5C;
+  --select-soft: #3D6BE0;
+
+  /* Marks and ranges on the timeline (markers, Shorts parts, the loop):
+     the purple family, the adjustment layer's too. */
+  --mark: #9B76D0;
+  --mark-text: #C9B2EE;
+
+  /* Deleting, errors. */
+  --danger: #FF8A8A;
+  --danger-text: #FCA5A5;
+  --danger-soft: #2B1717;
+  --danger-line: #7A2E2E;
+
+  /* The note lane. */
+  --note: #60A5FA;
+  --note-soft: #17324F;
+  --note-line: #2B5C94;
+  --note-text: #BBD9FB;
+
+  /* Clips: fill / edge / text, and the waveform (v3.1: each kind its own,
+     mid-saturated tone; video is a neutral slate, its pictures colour it). */
+  --clip-video-fill: #3A3F52;
+  --clip-video-line: #5A6280;
+  --clip-video-text: #E4E7F0;
+  --clip-code-fill: #7A5A9E;
+  --clip-code-line: #9A7CC0;
+  --clip-code-text: #F4EEFB;
+  --clip-image-fill: #82673F;
+  --clip-image-line: #A3855A;
+  --clip-image-text: #FFF6E8;
+  /* Sound (okunur, 23 November): a dark blue-grey ground under a bright cyan
+     wave, so where there is sound and where there is none reads at a glance. */
+  --clip-audio-fill: #1E3440;
+  --clip-audio-line: #3F6A80;
+  --clip-audio-text: #DDF3FA;
+  --clip-wave: #A0D8F5;
+  /* Subtitles on their lane: a muted rose of their own (v3.1). */
+  --clip-caption-fill: #7E4C68;
+  --clip-caption-line: #9E6A88;
+  --clip-caption-text: #FCEFF6;
+
+  /* The one shadow, for surfaces that open over others (menu, dialog, tooltip):
+     its first ring is the surface's edge (no border is drawn). */
+  --shadow-pop: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 12px 32px rgba(0, 0, 0, 0.55);
+  /* The dim layer behind a dialog. */
+  --scrim: rgba(0, 0, 0, 0.55);
+
+  /* ---- Type (TASARIM.md, "Yazı") ---------------------------------------- */
+  --font: 'Inter UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+  --fs-11: 11px;
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-15: 15px;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+
+  /* ---- Sizes (TASARIM.md, "Ölçüler") ------------------------------------ */
+  --ctl: 28px;
+  --ctl-sm: 24px;
+  /* The known exceptions. */
+  --tab-h: 34px;
+  --seg-h: 24px;
+  --switch-w: 34px;
+  --switch-h: 20px;
+  --check: 16px;
+  --play: 36px;
+  /* Corners: a control, a card or menu, a clip; a chip is half its height. */
+  --r-ctl: 6px;
+  --r-card: 12px;
+  --r-clip: 8px;
+  --r-pill: 999px;
+  /* Gaps. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --pad-panel: 12px;
+  --border-w: 1px;
+  /* Focus: a 1 px accent edge and a 2 px halo outside it. */
+  --focus-halo: rgba(182, 240, 103, 0.28);
+  --focus-ring: 0 0 0 1px var(--accent), 0 0 0 3px var(--focus-halo);
+
+  /* Layers. No other z-index value in any sheet (src/test/ui-tokens.test.ts).
+     A part that is its own stacking context (isolation: the timeline's
+     lanes, a clip, the preview's picture) uses them for their order inside
+     it; its sheet says which is which. */
+  --z-base: 0;
+  --z-sticky: 10;
+  --z-timeline: 20;
+  --z-pop: 100;
+  --z-dialog: 200;
+  --z-toast: 300;
+  --z-tooltip: 400;
+
+  /* ---- Motion (TASARIM.md, "Hareket") ----------------------------------- */
+  --dur-fast: 120ms;
+  --dur-mid: 180ms;
+  --dur-slow: 240ms;
+  --ease: cubic-bezier(.2,.8,.2,1);
+  /* The agent's pictures. */
+  --agent-sweep: 2.2s;
+  --agent-pulse: 1.4s;
+  --agent-looked: 1.5s;
+  --agent-stagger: 40ms;
+  --agent-read-min: 600ms;
+  /* Tooltips wait before they show. */
+  --tooltip-delay: 400ms;
+
+  /* ---- Values of single places (not in TASARIM.md's tables) ------------- */
+  /* A caution that is not the agent's (the meter's loud zone, a code value
+     out of range, a transition cut short): TASARIM.md keeps amber for the
+     agent, so this is its own, quieter yellow. */
+  --warn: #dfb96c;
+  /* A work note's status: the note's blue; amber while the agent has it and
+     for what it changed; the accent once you approved; red if it is still there. */
+  --note-open: var(--note);
+  --note-agent: var(--agent);
+  --note-ready: var(--agent-text);
+  --note-approved: var(--accent);
+  --note-still: var(--danger);
+  /* The timeline's fixed geometry: the head column (= TIMELINE_HEADER_W in
+     types.ts) and the note lane. */
+  --tl-head-w: 110px;
+  --note-lane-h: 24px;
+  /* v3 (21 November, tarifler/UI-YENI.md): the editor is cards on the ground.
+     The gap between two cards and between a card and the window's edge; the
+     stage the preview's picture stands on (PreviewCanvas reads it); a
+     timeline lane, a half step above its card, so the clips sit on rails. */
+  --gap-card: 6px;
+  /* 21 November (user: "siyah gri şey çok kötü gözüküyor"): the preview's
+     picture stands on its own card, not on a black stage (black frame on
+     near-black read as a broken box), and the lanes sit only a little above
+     the stage, so the timeline is no longer black and grey stripes. */
+  --bg-stage: var(--bg-panel);
+  /* DENEME-1: CapCut's track tone, a half step above the panel. */
+  --bg-lane: #2B2B2E;
+  /* The output level meter: green, then --warn, then --danger. */
+  --level-ok: #5DBB63;
+  /* A clip's coloured label (KOLAY-PLAN.md, item 3): a line along its top
+     edge, the swatches of its menu and of the timeline search. Not the
+     selection's yellow, not the agent's amber. */
+  --label-red: #E5484D;
+  --label-orange: #F2843A;
+  --label-yellow: #D9C02B;
+  --label-green: #46B266;
+  --label-blue: #3E8EF7;
+  --label-purple: #B276F0;
+}
+
+/* Less motion (Settings → General → Animations: off, or following a system
+   that asks for less; ui/motion.ts puts the class on <html>): the pulse, the
+   sweep and the slides stop; states still read by colour and words. */
+html.motion-off {
+  --dur-fast: 0ms;
+  --dur-mid: 0ms;
+  --dur-slow: 0ms;
+  --agent-sweep: 0s;
+  --agent-pulse: 0s;
+  --agent-stagger: 0ms;
+}
+
+/* The agent's colour comes from its program (D22, worker C; TASARIM.md,
+   "Ajan program renkleri"): the page's root carries data-agent-program
+   (agent/program.ts). Claude Code keeps the orange the agent always had (the
+   values of :root above); Codex is silver, OpenCode pink, Antigravity sky
+   blue, any other program grey. Solid colours, each with the same five
+   names, so everything the agent owns takes them at once. No logo, no brand
+   mark: a colour and the program's name. (After the block above on purpose:
+   the :root values stay the ones TASARIM.md's colour table lists.) */
+:root[data-agent-program='codex'] {
+  --agent: #DDE2EA;
+  --agent-text: #EEF1F5;
+  --agent-soft: #36373B;
+  --agent-line: #6E7176;
+  --on-agent: #1B1D21;
+}
+:root[data-agent-program='opencode'] {
+  --agent: #FF7AC8;
+  --agent-text: #FFA9DB;
+  --agent-soft: #3B2A34;
+  --agent-line: #7C4565;
+  --on-agent: #2A0A1D;
+}
+:root[data-agent-program='antigravity'] {
+  --agent: #5CC8FF;
+  --agent-text: #9ADCFF;
+  --agent-soft: #26343B;
+  --agent-line: #38657C;
+  --on-agent: #06202E;
+}
+:root[data-agent-program='other'] {
+  --agent: #A4A4AE;
+  --agent-text: #C6C6CE;
+  --agent-soft: #303033;
+  --agent-line: #5A5A62;
+  --on-agent: #17171A;
+}
+
+/* The team mode (EKIP-PLAN.md; TASARIM.md, "Ekip renkleri"): when an agent's
+   subagents name themselves, each worker takes one of six colours derived
+   from its program's (the same hue light and dark, its neighbours), in the
+   order they were first seen. Readable under --on-agent (4.5:1), seen on a
+   lane and on a video clip (3:1), and kept away from the accent green, the
+   gold selection and the clips' colours (test: ekip.test.ts). */
+:root {
+  --agent-w1: #FD9F31;
+  --agent-w2: #FFD4B9;
+  --agent-w3: #F2716B;
+  --agent-w4: #D49A95;
+  --agent-w5: #DA7211;
+  --agent-w6: #FEAD99;
+}
+:root[data-agent-program='codex'] {
+  --agent-w1: #E8D5F8;
+  --agent-w2: #B194AE;
+  --agent-w3: #E3B8B7;
+  --agent-w4: #BCB1D3;
+  --agent-w5: #FED2D0;
+  --agent-w6: #C99F9E;
+}
+:root[data-agent-program='opencode'] {
+  --agent-w1: #F99DFB;
+  --agent-w2: #F27168;
+  --agent-w3: #FDCFE6;
+  --agent-w4: #CA6FA3;
+  --agent-w5: #C9AAD6;
+  --agent-w6: #FEAAAE;
+}
+:root[data-agent-program='antigravity'] {
+  --agent-w1: #19B9FA;
+  --agent-w2: #13ECFC;
+  --agent-w3: #7587F3;
+  --agent-w4: #97B7F8;
+  --agent-w5: #099AEC;
+  --agent-w6: #19CFDD;
+}
+:root[data-agent-program='other'] {
+  --agent-w1: #B393AA;
+  --agent-w2: #FBD5C3;
+  --agent-w3: #BAB1D4;
+  --agent-w4: #E1BBA9;
+  --agent-w5: #E6D6F9;
+  --agent-w6: #C7A291;
+}

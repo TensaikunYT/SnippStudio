@@ -1,0 +1,612 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The timeline (SnippStudio phase 3c.2): its toolbar, ruler, lanes, clips,
+   transitions and every mark drawn over them. Moved out of styles.css into this
+   one sheet; design values only (ui/tokens.css; src/test/ui-tokens.test.ts
+   lists it). The note lane is in notes/notes.css, the agent's layer in
+   components/agent/agent.css.
+
+   GEOMETRY IS FIXED. Lane heights (ruler 24, note 24, subtitles 24, graphics 30,
+   add-track strips 24, video 58, sound 44), the header column (--tl-head-w,
+   110 = TIMELINE_HEADER_W in types.ts), the clip's box (4 px in from the lane's
+   top and bottom), the 11 px trim edges and the toolbar's height (30 + its
+   line) are what the drag, snap and marquee code measures against:
+   scripts/qa/timeline-geometry.mjs compares every box before and after a change.
+   Colours, type and marks may change; these numbers may not.
+
+   Order: the frame and the toolbar, the track heads (both written anew in
+   phase 3c.2), then the rest in the order it had in styles.css, which the
+   cascade still leans on in places (a later rule of the same weight wins):
+   the clip's motion button · ruler, lanes, subtitle chips · drop and snap
+   marks · clips and what is drawn on them · cut marks, playhead, Shorts bands ·
+   add-track strips, markers · transitions and their panel · fades, loop band ·
+   the transition block · the graphics lane. */
+
+/* ---- frame and toolbar ----------------------------------------------------------- */
+/* No line over it: the timeline is the ground's tone, its toolbar the panel's
+   (the 1 px the line took is padding, so nothing below moves). */
+.timeline { position: relative; display: grid; grid-template-rows: auto 1fr; min-height: 0; padding-top: var(--border-w); background: var(--bg-panel); }
+/* Sizes by its own width (a container query): the row wraps; it never scrolls
+   sideways. Its tools are icons alone, 28 square (toolbar.css); its height is
+   31 as it was (30 and the line it had), so the lanes stay where they were. */
+.tl-toolbar { container: tltb / inline-size; position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); min-height: 48px; padding: var(--space-2) var(--space-3); background: transparent; font-size: var(--fs-13); }
+/* v3: the tools the row shows are chips with their words (icon + word), the
+   way an editor's main tools should read; the rest stays in the Tools menu. */
+/* DENEME-4, item 16 (worker U): a step smaller: 12 px words, a tighter gap. */
+.tl-toolbar > .tb-item > .tb-tool.has-icon, .tl-clip-actions > .tb-tool, .tl-clip-actions .ui-btn.tb-tool { min-width: 0; padding: 0 var(--space-2); gap: var(--space-1); font-size: var(--fs-12); }
+.tl-toolbar > .tb-item > .tb-tool.has-icon > .ui-icon, .tl-clip-actions .ui-btn.tb-tool > .ui-icon { width: 14px; height: 14px; }
+.tl-toolbar > .tb-item > .tb-tool.has-icon .tb-label, .tl-clip-actions .tb-tool.has-icon .tb-label { display: inline; }
+/* DENEME-2 (worker U, the button language): the chips are plain buttons, an
+   icon and a word, bare at rest and veiled under the pointer; a tool that is
+   on keeps the veil and its icon is green (ui/kit.css .is-on). No raised
+   box, no line under it. */
+.tl-toolbar > .tb-item > .tb-tool.has-icon:not(.is-on) { color: var(--text-2); }
+.tl-toolbar > .tb-item > .tb-tool.has-icon:not(.is-on):hover:not(:disabled) { color: var(--text); }
+/* The selected clip's actions: a group of its own at the right, its name before it. */
+.tl-clip-actions { display: flex; align-items: center; gap: var(--space-1); margin-right: var(--space-2); padding: 0 0 0 var(--space-3); border-left: var(--border-w) solid var(--line); animation: tl-actions-in var(--dur-mid) var(--ease); }
+.tl-clip-actions > .ui-btn, .tl-clip-actions .ui-btn.tb-tool { color: var(--text-2); }
+.tl-clip-actions > .ui-btn:hover:not(:disabled), .tl-clip-actions .ui-btn.tb-tool:hover:not(:disabled) { color: var(--text); }
+@keyframes tl-actions-in { from { opacity: 0; transform: translateX(6px); } to { opacity: 1; transform: none; } }
+@container tltb (max-width: 1180px) { .tl-clip-actions .tb-tool.has-icon:not(.ui-btn-danger) .tb-label, .tl-clip-actions .ui-btn.tb-tool .ui-btn-label { display: none; } .tl-clip-actions .tb-tool:not(.ui-btn-danger), .tl-clip-actions .ui-btn.tb-tool { width: var(--ctl); padding: 0; } }
+@container tltb (max-width: 900px) { .tl-toolbar > .tb-item > .tb-tool.has-icon .tb-label { display: none; } .tl-toolbar > .tb-item > .tb-tool.has-icon { width: var(--ctl); padding: 0; } }
+.tl-toolbar-gap { flex: 1; }
+/* Zoom: the slider and its number, at the toolbar's height. */
+.tl-zoom { flex: 0 0 auto; }
+.tl-zoom .ui-slider { gap: var(--space-2); }
+.tl-zoom .ui-slider-label { flex: 0 0 auto; color: var(--text-3); font-size: var(--fs-12); }
+/* DENEME-3, item 13 (worker U; the user: the zoom "fazla büyük ve uzun"):
+   a short, thin track and a small handle; the number beside it stays. */
+.tl-zoom input.ui-range { flex: 0 0 88px; width: 88px; height: var(--ctl-sm); }
+.tl-zoom input.ui-range::-webkit-slider-runnable-track { height: 2px; }
+.tl-zoom input.ui-range::-webkit-slider-thumb { width: 10px; height: 10px; margin-top: -4px; border-width: 1px; }
+.tl-zoom .ui-slider .ui-slider-value { flex: 0 0 44px; width: 44px; height: var(--ctl-sm); }
+@container tltb (max-width: 1040px) {
+  .tl-zoom .ui-slider-label { display: none; }
+  .tl-zoom input.ui-range { flex-basis: 72px; width: 72px; }
+}
+@container tltb (max-width: 640px) {
+  .tl-zoom input.ui-range { display: none; }
+}
+
+/* ---- track heads -------------------------------------------------------------------- */
+/* A lane's name: readable at a glance (12, semibold), with what kind of lane it is. */
+.tl-track-label .tname { display: flex; align-items: center; gap: var(--space-1); max-width: 100%; color: var(--text); font-size: var(--fs-13); font-weight: var(--fw-semibold); white-space: nowrap; }
+.tl-track-label .tname em { overflow: hidden; font-style: normal; text-overflow: ellipsis; }
+.tl-track-label .tname .ui-icon { color: var(--text-3); }
+.tl-track-label input.tname { width: calc(100% - 12px); }
+/* A low lane (under 42 px: a sound lane at the small height, any lane dragged
+   low) has no room for two rows: its name and its controls share one (22
+   November, L7: the name was dropped, and at the small height, the default,
+   no sound lane said which it was). The name first, shortened with an
+   ellipsis if long; the controls two pixels smaller, at the right. */
+.tl-track-label.compact { flex-direction: row; justify-content: flex-start; gap: 2px; padding: 0 2px 0 10px; }
+.tl-track-label.compact .tname { display: block; flex: 0 1 auto; min-width: 0; max-width: none; overflow: hidden; text-overflow: ellipsis; font-size: var(--fs-12); }
+.tl-track-label.compact .ticons { flex: none; width: auto; margin-left: auto; gap: 1px; }
+.tl-track-label.compact .ticons .ui-btn.track-quick { width: 18px; height: 18px; }
+/* (Its name being typed: the field has the row.) */
+.tl-track-label.compact input.tname { flex: 1 1 auto; width: auto; }
+.tl-track-label.compact:has(input.tname) .ticons { display: none; }
+/* A readable row of direct track actions; the rest is in the menu behind the dots. */
+/* DENEME-4, item 16 (worker U): the lane head's buttons clearly small, 20 px
+   with 14 px icons, so a head stays tidy with many lanes. */
+.tl-track-label .ticons { display: flex; flex-wrap: nowrap; justify-content: center; gap: 2px; width: 100%; }
+.tl-track-label .ticons .ui-btn.track-quick { width: 20px; height: 20px; padding: 0; border-radius: var(--r-ctl); color: var(--text-3); }
+.tl-track-label .ticons .ui-btn.track-quick:hover:not(:disabled) { color: var(--text); }
+.tl-track-label .ticons .ui-btn.track-quick.is-on { background: var(--bg-hover); color: var(--text); }
+/* Hidden or muted: the lane is off, and its button says so in the danger tone. */
+.tl-track-label .ticons .ui-btn.track-quick.off { background: var(--danger-soft); color: var(--danger-text); }
+.tl-track-label .ticons .ui-btn.track-solo { font-size: var(--fs-11); font-weight: var(--fw-semibold); }
+
+/* ---- Motion quick button (hover-only, on the clip) ---- */
+/* (22 November, L8: a part of the clip's top row, .clip-top below: after the
+   name pill at the start, before the corner badges at the end; it used to be
+   placed on its own, over the name's first letters.) */
+.motion-quick { flex: none; z-index: var(--z-toast); pointer-events: auto; }
+/* Inset from the edge so the full-height trim handle stays grabbable. */
+.motion-quick.right:last-child { margin-right: 18px; }
+.motion-quick-btn { display: grid; place-items: center; width: 20px; height: 18px; padding: 0; border: var(--border-w) solid var(--line-strong); border-radius: var(--r-clip); background: color-mix(in srgb, var(--bg-app) 82%, transparent); color: var(--text-2); line-height: 1; opacity: 0; transition: opacity var(--dur-fast) var(--ease); }
+/* (son, item B) Only on the selected or hovered clip: at rest a clip with an
+   animation keeps just its bottom-corner wedge (.anim-badge), not a button on
+   every piece of a cut-up run. */
+.tl-clip:hover .motion-quick-btn, .tl-clip.selected .motion-quick-btn, .motion-quick-btn.open, .motion-quick-btn:focus-visible { opacity: 1; }
+.motion-quick-btn.on { border-color: var(--text-3); color: var(--text); }
+/* Its small panel (in <body>; FloatingMenu places it): In / Out / Idle, then the presets. */
+.motion-quick-menu { display: grid; gap: var(--space-1); min-width: 168px; max-height: min(60vh, 420px); overflow-y: auto; padding: var(--space-1); border: var(--border-w) solid var(--line-strong); border-radius: var(--r-card); background: var(--bg-raised); box-shadow: var(--shadow-pop); }
+.motion-quick-menu .mq-list { display: grid; gap: 1px; }
+.motion-quick-menu .ui-btn { justify-content: flex-start; }
+.motion-quick-menu .ctx-sep { height: 1px; margin: 2px 0; background: var(--line); }
+/* ---- ruler, lanes, clips ---------------------------------------------------------- */
+/* The lanes are one stacking context (phase 3c.4b), and so is each clip (its
+   isolation below): inside, the seven layers of tokens.css are used for their
+   order only, lowest first. In the lanes: a lifted clip, chip, block or note
+   and every mark drawn over the lanes (playhead, cut marks, bands, guides: in
+   their order in Timeline.tsx) --z-sticky; the head column --z-timeline; the
+   ruler --z-pop. In a clip: the transition shade --z-base; the name, silences,
+   speed line --z-sticky; volume points, fade wedges --z-timeline; badges and
+   the missing picture --z-pop; the trim edges --z-dialog; keyframes, the
+   motion button, fade grips and lengths --z-toast; the off-clip keyframe mark
+   and a menu's backdrop --z-tooltip. */
+/* v3.1: the lanes stand on the stage, the darkest depth (--bg-well); the
+   head column and the toolbar are the panel's, the controls' depth. */
+.tl-scroll { overflow: auto; position: relative; isolation: isolate; background: var(--bg-well); }
+.tl-inner { position: relative; min-width: 100%; /* Fill the whole scroll area so overlays (playhead, bands) reach the bottom of the panel instead of stopping at the last track. */ min-height: 100%; display: flex; flex-direction: column; }
+.tl-inner > * { flex: 0 0 auto; }
+/* Filler under the last track: takes the leftover height so the header column
+   reaches the bottom of the panel. */
+.tl-inner > .tl-tailfill { flex: 1 1 auto; display: flex; min-height: 0; }
+.tl-tailhead { position: sticky; left: 0; flex: 0 0 var(--tl-head-w); align-self: stretch; background: var(--bg-panel); z-index: var(--z-timeline); }
+.tl-ruler { height: 24px; position: sticky; top: 0; background: var(--bg-well); border-bottom: var(--border-w) solid var(--bg-well); cursor: pointer; /* Above the track headers: the ruler is the one thing that must never be covered, whichever way the timeline is scrolled. */ z-index: var(--z-pop); }
+.tl-tick { position: absolute; top: 70%; height: 30%; padding-left: 4px; border-left: var(--border-w) solid var(--line); color: var(--text-3); font-size: var(--fs-11); font-variant-numeric: tabular-nums; pointer-events: none; }
+/* Labelled (major) ticks: a short mark at the foot, the time beside it, calm (v3). */
+.tl-tick.major { top: 0; height: 100%; border-left-color: transparent; color: var(--text-3); line-height: 20px; }
+.tl-tick.major::after { content: ''; position: absolute; left: -1px; bottom: 0; height: 30%; border-left: var(--border-w) solid var(--line-strong); }
+/* A lane is a rail, lighter than the stage; the stage shows between two
+   rails (its 1 px line and a 2 px band inside the top: no height changes). */
+.tl-track { position: relative; height: 58px; border-bottom: var(--border-w) solid var(--bg-well); background: var(--bg-lane); }
+/* Video and sound read as two groups: sound lanes carry their family's tint, and
+   a coloured edge on each lane's name says the kind (the icons say it too). */
+.tl-track.audio { height: 44px; background: var(--bg-lane); }
+.tl-track.first-audio { border-top: var(--border-w) solid var(--bg-well); }
+.tl-track > .tl-track-label::before { content: none; }
+
+/* Its right end stays 1 px short of the head column's edge, where the column's line was (the geometry check measures it). */
+.track-resize { position: absolute; left: 0; right: var(--border-w); bottom: -3px; height: 6px; cursor: row-resize; z-index: var(--z-sticky); }
+.track-resize:hover { background: color-mix(in srgb, var(--accent) 40%, transparent); }
+.tl-track-label { /* Sticky HORIZONTALLY only. With `top: 0` it also stuck vertically, so on a vertical scroll the header rode up over the ruler and covered the timecodes (its z-index is higher). It's full track height anyway. */ position: sticky; left: 0; /* Must match TIMELINE_HEADER_W in types.ts. */ width: var(--tl-head-w); /* One pixel TALLER than the row's content box, which is where `height: 100%` stops: the row's 1 px bottom border sits outside the label, so the column had a hairline gap at every row boundary — and the playhead showed through it. The column has to be one unbroken block. */ height: calc(100% + 1px); background: var(--bg-panel); /* Above the playhead + segment bands so they slide UNDER the header column instead of drawing over it. */ z-index: var(--z-timeline); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: var(--fs-11); color: var(--text-2); float: left; }
+.tl-track.hidden-track .tl-clip { opacity: 0.35; }
+/* Subtitle chips lane (CapCut-style) */
+.tl-caption-lane { position: relative; height: 24px; border-bottom: var(--border-w) solid var(--bg-well); background: var(--bg-lane); }
+/* A subtitle or a text on its lane: the subtitles' rose (v3.1), the sand of
+   pictures for a text or a shape written by hand. */
+.tl-caption-chip { position: absolute; top: 3px; height: 18px; display: flex; align-items: center; gap: 4px; padding: 0 6px; overflow: hidden; border: var(--border-w) solid transparent; border-radius: var(--r-ctl); background: var(--clip-caption-fill); color: var(--clip-caption-text); font-size: var(--fs-11); line-height: 16px; white-space: nowrap; text-overflow: ellipsis; cursor: grab; }
+.tl-caption-chip.manual { background: var(--clip-image-fill); border-color: var(--clip-image-line); color: var(--clip-image-text); }
+.tl-caption-chip { transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease); }
+.tl-caption-chip:hover { border-color: var(--clip-caption-line); filter: brightness(1.08); }
+.tl-caption-chip.selected { border-color: var(--select); outline: var(--border-w) solid var(--select); outline-offset: 0; color: var(--text); }
+.tl-caption-chip .chip-text .ui-icon { vertical-align: -2px; color: currentColor; opacity: 0.75; }
+.tl-caption-chip .chip-del { display: none; flex-shrink: 0; align-items: center; height: 14px; padding: 0 2px; border: none; border-radius: var(--r-clip); background: color-mix(in srgb, var(--bg-app) 45%, transparent); color: var(--text); }
+.tl-caption-chip:hover .chip-del { display: inline-flex; }
+.tl-caption-chip .chip-text { flex: 1; overflow: hidden; text-overflow: ellipsis; }
+.tl-caption-chip .chip-handle { position: absolute; top: 0; bottom: 0; width: 6px; cursor: ew-resize; z-index: var(--z-sticky); }
+.tl-caption-chip .chip-handle.l { left: 0; }
+.tl-caption-chip .chip-handle.r { right: 0; }
+.tl-caption-chip:hover .chip-handle { background: color-mix(in srgb, var(--text) 35%, transparent); }
+.tl-clip.snap-source { outline: 2px solid var(--accent); box-shadow: 0 0 0 3px var(--focus-halo); z-index: var(--z-sticky); }
+.tl-caption-chip.snap-source { outline: 2px solid var(--accent); z-index: var(--z-sticky); }
+.tl-clip.dragging.invalid-drop { outline: 2px dashed var(--danger); opacity: 0.65; filter: saturate(0.45); }
+.tl-track.drop-target { background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent-line); }
+.tl-track.snap-source-track { box-shadow: inset 0 0 0 1px var(--accent-line); }
+.tl-track.drop-target.invalid-drop { background: var(--danger-soft); box-shadow: inset 0 0 0 2px var(--danger-line); }
+/* Where a dragged clip lands, and where the clips it pushes go (DENEME-3, V
+   item 4; drop-ghost.tsx): a faint dashed frame on the lane, above the clips
+   that stay, under the dragged one. */
+.tl-drop-ghost { position: absolute; top: 4px; bottom: 4px; z-index: var(--z-base); border: var(--border-w) dashed var(--select); border-radius: var(--r-clip); background: color-mix(in srgb, var(--select) 14%, transparent); pointer-events: none; }
+.tl-drop-ghost.is-shift { border-color: var(--text-3); background: color-mix(in srgb, var(--text-3) 10%, transparent); }
+.tl-drop-indicator { position: absolute; top: 0; bottom: 0; width: 3px; margin-left: -1.5px; background: var(--accent); z-index: var(--z-sticky); pointer-events: none; }
+.tl-drop-indicator .tl-drop-cap { position: absolute; top: 0; left: -3.5px; border: 5px solid transparent; border-top-color: var(--accent); }
+.tl-drop-label { position: absolute; top: 48px; left: 7px; width: max-content; max-width: 280px; padding: 3px 7px; border: var(--border-w) solid var(--accent-line); border-radius: var(--r-clip); background: var(--accent-soft); color: var(--accent-text); font-size: var(--fs-11); font-weight: var(--fw-medium); white-space: normal; box-shadow: var(--shadow-pop); }
+.tl-drop-indicator.invalid-drop { background: var(--danger); }
+.tl-drop-indicator.invalid-drop .tl-drop-cap { border-top-color: var(--danger); }
+.tl-drop-indicator.invalid-drop .tl-drop-label { border-color: var(--danger-line); background: var(--danger-soft); color: var(--danger-text); }
+/* v3: a clip is a thick, rounded object. Its box (the drag code measures it)
+   is as it was; a transparent 1 px border with the fill clipped inside it,
+   and the kind's edge is an inset ring (--clip-edge), so a state changes one
+   value. Where it touches a neighbour that border goes (join-l / join-r). */
+.tl-clip { --clip-edge: var(--clip-video-line); position: absolute; top: 4px; bottom: 4px; overflow: hidden; /* Keeps the clip's internals (fade handles, keyframe diamonds, badges, each with its own z-index) inside the clip's layer, so none of them can outrank the sticky header column and paint over the track names. */ isolation: isolate; cursor: grab; border: var(--border-w) solid transparent; border-radius: var(--r-clip); background: var(--clip-video-fill); background-clip: padding-box; box-shadow: inset 0 0 0 var(--border-w) var(--clip-edge); color: var(--clip-video-text); transition: box-shadow var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease); }
+/* The four clip families (TASARIM.md): fill, edge and text of one kind. */
+.tl-clip.image { --clip-edge: var(--clip-image-line); background-color: var(--clip-image-fill); color: var(--clip-image-text); }
+.tl-clip.code { --clip-edge: var(--clip-code-line); background-color: var(--clip-code-fill); color: var(--clip-code-text); }
+.tl-clip.audio { --clip-edge: var(--clip-audio-line); background-color: var(--clip-audio-fill); color: var(--clip-audio-text); }
+/* No media of its own: an adjustment layer (hatched, the marks' purple), a compound clip (neutral). */
+.tl-clip.adjustment { --clip-edge: color-mix(in srgb, var(--mark) 70%, var(--bg-raised)); background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--mark) 46%, var(--bg-raised)) 0 8px, color-mix(in srgb, var(--mark) 34%, var(--bg-raised)) 8px 16px); background-clip: padding-box; color: var(--text); }
+.tl-clip.compound { --clip-edge: var(--line-strong); background-color: var(--bg-hover); color: var(--text); }
+/* Its states: under the pointer (a lighter edge, a touch brighter), selected
+   (v3.1: a gold frame and its two handles, a soft blue laid over the inside),
+   being dragged (lifted). The body
+   is the grab surface. */
+.tl-clip:hover:not(.dragging):not(.selected) { --clip-edge: var(--text-3); filter: brightness(1.08); }
+.tl-clip:active { cursor: grabbing; }
+.tl-clip.selected { --clip-edge: var(--select); outline: 2px solid var(--select); outline-offset: -1px; z-index: var(--z-sticky); }
+/* (22 November: no wash over the selected clip. It lay on the film strip and
+   the sound drawing and dulled the very picture one selects a clip to see;
+   the gold frame, the gold trim bars and the name pill say "selected".) */
+.tl-clip.selected .label { color: var(--text); background: color-mix(in srgb, var(--bg-app) 78%, transparent); }
+.tl-clip.dragging { z-index: var(--z-sticky); opacity: 0.9; box-shadow: var(--shadow-pop), inset 0 0 0 var(--border-w) var(--select); pointer-events: auto; }
+/* The clip's top row (22 November, L7 / L8): the name pill, then its marks,
+   laid out as one row so that nothing can lie on the name: the pill, the
+   start's motion button, the idle mark, a gap that takes the room, the end's
+   motion button, the corner badges. The row itself takes no pointer and makes
+   no layer of its own (each part keeps its own level among the clip's
+   handles and keys). When room runs out only the name shrinks. */
+.tl-clip .clip-top { position: absolute; top: 4px; left: var(--space-2); right: var(--space-1); display: flex; align-items: center; gap: var(--space-1); height: 20px; min-width: 0; pointer-events: none; }
+.tl-clip .clip-top-gap { flex: 1 1 0; min-width: 0; }
+/* A clip's coloured label (KOLAY-PLAN.md): a line along the top edge, above
+   the name row, inside the corners. */
+.tl-clip .clip-label-line { position: absolute; top: 1px; left: var(--space-1); right: var(--space-1); height: 3px; border-radius: var(--r-pill); pointer-events: none; }
+.tl-clip.tight .clip-top { display: none; }
+/* The name and kind, in a chip at the row's start. */
+.tl-clip .label { flex: 0 1 auto; min-width: 0; z-index: var(--z-sticky); display: flex; align-items: center; gap: 4px; height: 18px; padding: 0 6px; overflow: hidden; border-radius: var(--r-pill); background: color-mix(in srgb, var(--bg-app) 55%, transparent); color: var(--text); font-size: var(--fs-11); font-weight: var(--fw-medium); line-height: 1; white-space: nowrap; text-overflow: ellipsis; pointer-events: none; }
+.tl-clip .label .ui-icon { flex: none; opacity: 0.85; }
+/* (okunur, 23 November) The name only where it tells something: the first
+   piece of a run cut from one source, a piece whose neighbour before it is
+   another source, the selected clip and the clip under the pointer. The
+   later pieces of a cut-up run carry no pill (TrackClips: .quiet), and a
+   clip too narrow for a pill has none at all (.narrow). */
+.tl-clip.quiet .label { display: none; }
+.tl-clip.quiet:hover .label, .tl-clip.quiet.selected .label { display: flex; }
+.tl-clip.narrow .label, .tl-clip.narrow:hover .label, .tl-clip.narrow.selected .label { display: none; }
+.tl-clip .label .label-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+/* Linked to its sound / picture: the chain, inside the pill (it sat on the pill's corner at the small lane height). */
+.tl-clip .label .label-link { display: inline-flex; flex: none; color: var(--text-2); }
+/* The trim surfaces: thin marked edges, a grip that shows on hover and on the selected clip. */
+/* The trim surfaces (11 px, measured by the drag code): a soft bar shows on
+   hover; on the selected clip they are solid bars of the selection's gold with a grip. */
+.tl-clip .handle { position: absolute; top: 0; bottom: 0; z-index: var(--z-dialog); width: 11px; cursor: ew-resize; }
+.tl-clip .handle::before { content: ''; position: absolute; top: 0; bottom: 0; width: 7px; background: transparent; transition: background-color var(--dur-fast) var(--ease); }
+.tl-clip .handle.l, .tl-clip .handle.l::before { left: 0; }
+.tl-clip .handle.r, .tl-clip .handle.r::before { right: 0; }
+.tl-clip:hover .handle::before { background: color-mix(in srgb, var(--text) 22%, transparent); }
+.tl-clip .handle:hover::before, .tl-clip.selected .handle::before { background: var(--select); }
+.tl-clip .handle::after { content: ''; position: absolute; top: calc(50% - 8px); width: 0; height: 16px; border-left: 2px solid color-mix(in srgb, var(--bg-app) 70%, transparent); border-radius: var(--r-pill); opacity: 0; transition: opacity var(--dur-fast) var(--ease); }
+.tl-clip .handle.l::after { left: 2.5px; }
+.tl-clip .handle.r::after { right: 2.5px; }
+.tl-clip .handle:hover::after, .tl-clip.selected .handle::after { opacity: 1; }
+/* Marks in the clip's corners. */
+.tl-clip .idle-badge { flex: none; z-index: var(--z-sticky); display: inline-flex; padding: 1px 3px; border-radius: var(--r-clip); background: color-mix(in srgb, var(--bg-app) 72%, transparent); color: var(--mark-text); pointer-events: none; }
+.tl-clip .link-badge { position: absolute; left: 3px; bottom: 2px; z-index: var(--z-pop); display: inline-flex; padding: 1px 2px; border-radius: var(--r-clip); background: color-mix(in srgb, var(--bg-app) 72%, transparent); color: var(--text-2); pointer-events: none; }
+/* A transition out of this clip: its length, shaded towards the cut. */
+.tl-clip .trans-badge { position: absolute; right: 0; top: 0; bottom: 0; z-index: var(--z-base); background: color-mix(in srgb, var(--text) 12%, transparent); border-right: 2px solid var(--text-3); pointer-events: none; }
+/* Narrow clips (a fast run of cuts) lose the rounding: at 8-20 px wide, 6 px
+   corners round the whole block away and neighbours blur into each other. */
+.tl-clip.tight { border-radius: 0; }
+/* Two touching clips meet (DENEME-1, item 3): no lane between them, square
+   corners there, and one seam in the kind's edge colour drawn over the
+   thumbnail by the right-hand clip. Lane between two clips is a real gap. */
+.tl-clip.join-l { border-left-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; }
+.tl-clip.join-r { border-right-width: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; }
+/* (okunur, 23 November) The cut itself: a dark 1 px line down the right-hand
+   clip's own left edge, the full height, with a small notch at the top and
+   at the bottom. Still no lane between the two (no gap is opened): the line
+   is drawn inside the clip, over its film strip or its sound, so a run of
+   cuts reads as pieces and the strip does not seem to flow on through. */
+.tl-clip.join-l::before { content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 5px; z-index: var(--z-sticky); background: color-mix(in srgb, var(--bg-app) 92%, transparent); clip-path: polygon(0 0, 5px 0, 1px 4px, 1px calc(100% - 4px), 5px 100%, 0 100%); pointer-events: none; }
+/* …and lose the name. Twenty clips each showing "15 …" is twenty pieces of
+   identical text with no information in them, and it was a good part of what
+   made a cut-up run read as one smear. The name is still in the tooltip. */
+.tl-clip.tight .label { display: none; }
+.tl-clip.missing-image { border: var(--border-w) dashed var(--danger-line); background: repeating-linear-gradient(135deg, var(--danger-soft) 0 9px, var(--bg-raised) 9px 18px); color: var(--danger-text); }
+.tl-missing-image-fill { position: absolute; z-index: var(--z-pop); top: 3px; bottom: 3px; left: 14px; right: 14px; min-width: 0; display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 1px 7px; overflow: hidden; padding: 0 4px; border: 0; border-radius: var(--r-clip); background: color-mix(in srgb, var(--bg-raised) 82%, transparent); color: inherit; cursor: pointer; font-size: var(--fs-11); line-height: 1.1; }
+.tl-missing-image-fill:hover { background: var(--bg-hover); }
+.tl-missing-image-fill:disabled { cursor: not-allowed; opacity: 0.65; }
+.tl-missing-image-fill span, .tl-missing-image-fill small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tl-missing-image-fill small { font-size: var(--fs-11); opacity: 0.85; }
+.tl-clip .thumb { position: absolute; inset: 0; background-size: auto 100%; background-repeat: repeat-x; opacity: 0.55; pointer-events: none; }
+/* Filmstrip: frames keep their aspect (auto width, full height). NO repeat, so
+   trimming (which shifts background-position by the trimmed-in amount) visibly
+   scrolls to different frames instead of showing an identical tiled pattern. */
+.tl-clip .thumb.strip { /* A canvas now: geometry is set inline and each cell is drawn at its own aspect ratio, so no background-size/repeat trickery. */ display: block; opacity: 0.9; }
+.tl-clip .wave-loading { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; font-size: var(--fs-11); color: color-mix(in srgb, var(--text) 55%, transparent); padding-bottom: 2px; pointer-events: none; animation: wave-pulse 1.2s ease-in-out infinite; }
+.tl-clip .wave { /* A canvas sized and positioned inline: only the visible slice of the clip is drawn, so left/width come from the component, not from `inset: 0`. */ position: absolute; pointer-events: none; display: block; }
+.tl-clip .fx-badge { position: absolute; right: 4px; top: 3px; font-size: var(--fs-11); background: color-mix(in srgb, var(--bg-app) 50%, transparent); border-radius: var(--r-clip); padding: 1px 5px; z-index: var(--z-sticky); pointer-events: none; }
+.tl-clip .video-wave { position: absolute; left: 0; right: 0; bottom: 0; height: 34%; pointer-events: none; background: color-mix(in srgb, var(--clip-audio-fill) 88%, transparent); }
+.tl-clip .clip-kf { position: absolute; top: 1px; width: 10px; height: 10px; background: var(--text); border: 1.5px solid var(--bg-well); transform: rotate(45deg); z-index: var(--z-toast); cursor: ew-resize; /* Invisible padding around the diamond so it's easy to grab without making the visible marker big enough to fight with the clip body. */ box-shadow: 0 0 0 4px color-mix(in srgb, var(--bg-app) 0%, transparent); }
+.tl-clip .clip-kf:hover { background: var(--select); }
+/* A "Keyframe all" group (several channels at the same instant) — purple ring,
+   and it drags/deletes as ONE unit. */
+.tl-clip .clip-kf.multi { border-color: var(--mark-text); box-shadow: 0 0 0 2px color-mix(in srgb, var(--mark-text) 55%, transparent); }
+.tl-clip .clip-kf.multi:hover { background: var(--text); }
+.tl-clip .vol-kf { position: absolute; width: 8px; height: 8px; background: var(--text); border: 1px solid var(--bg-well); transform: rotate(45deg); z-index: var(--z-timeline); cursor: pointer; }
+.ctx-backdrop { position: fixed; inset: 0; z-index: var(--z-tooltip); }
+/* (okunur, 23 November) What Cut Silence will take out: a see-through red
+   fill, a full red line at each end and a red strip along the top, so it
+   stands out on the dark sound ground. A pause it is not sure of (taken in
+   with "unsure" on) looks the same but hatched. */
+.tl-clip .silence-region { position: absolute; top: 0; bottom: 0; box-sizing: border-box; background: color-mix(in srgb, var(--danger) 40%, transparent); border-left: 1px solid var(--danger); border-right: 1px solid var(--danger); box-shadow: inset 0 3px 0 var(--danger); z-index: var(--z-sticky); pointer-events: none; }
+.tl-clip .silence-region.unsure { background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--danger) 46%, transparent) 0 4px, color-mix(in srgb, var(--danger) 14%, transparent) 4px 8px); }
+/* Motion markers. Same purple family as the transition badge, but with their
+   own edge line so an animation and a transition on the same side stay
+   distinguishable (transition's line is blue, animation's is purple). */
+/* An entrance or an exit, as long as it lasts: a light wedge in the upper
+   half, narrowing away from its edge, under a 2 px line along the top (the
+   thin bar alone was cut away by the clip's round corner: DENEME-1, item 4).
+   The audio fade's wedge is the dark one over the whole height. */
+/* (okunur, 23 November) On the bottom edge, clear of the name row: a small
+   filled wedge in the corner of the side that has it (entrance bottom left,
+   exit bottom right, opening into the clip) and a thin line along the bottom
+   edge as long as the animation lasts. Shown at rest, not only on hover. */
+/* (A dark rim keeps the white readable over a light picture or the sound's
+   light bars; 14 px so the clip's rounded corner does not eat it.) */
+.tl-clip .anim-badge { position: absolute; bottom: 0; height: 3px; pointer-events: none; z-index: var(--z-pop); background: color-mix(in srgb, var(--text) 85%, transparent); filter: drop-shadow(0 0 1px var(--bg-app)); }
+.tl-clip .anim-badge::before { content: ''; position: absolute; bottom: 0; width: 14px; height: 14px; background: color-mix(in srgb, var(--text) 85%, transparent); }
+.tl-clip .anim-badge.in { left: 0; }
+.tl-clip .anim-badge.in::before { left: 0; clip-path: polygon(0 0, 100% 100%, 0 100%); }
+.tl-clip .anim-badge.out { right: 0; }
+.tl-clip .anim-badge.out::before { right: 0; clip-path: polygon(100% 0, 100% 100%, 0 100%); }
+/* The picture's moves: spans along the bottom edge; the keys of the effect
+   amounts and of the mask: small hollow marks just above it. */
+.tl-clip .move-mark { position: absolute; bottom: 0; height: 3px; pointer-events: none; z-index: var(--z-pop); background: var(--mark-text); border-radius: var(--r-pill); }
+.tl-clip .key-mark { position: absolute; bottom: 4px; width: 7px; height: 7px; pointer-events: none; z-index: var(--z-pop); border: var(--border-w) solid var(--mark-text); background: color-mix(in srgb, var(--bg-app) 60%, transparent); transform: rotate(45deg); }
+.tl-clip .key-mark.mask { border-color: var(--text-2); }
+.tl-cutmark { position: absolute; top: 0; bottom: 0; width: 0; border-left: 2px dashed color-mix(in srgb, var(--text) 85%, transparent); /* Under the header column with everything else time-positioned: a mark that has scrolled off to the left is off-screen, not something to paint over the track names. */ z-index: var(--z-sticky); pointer-events: none; }
+.tl-cutmark.ghost { border-left-color: color-mix(in srgb, var(--accent) 70%, transparent); }
+.tl-cutmark.ghost.snapped { border-left-style: solid; border-left-color: var(--accent); }
+.tl-scroll.cutter, .tl-scroll.cutter .tl-clip { cursor: crosshair; }
+/* Split tool: only clips are clickable targets, so only they get the blade
+   cursor; the empty timeline keeps the normal pointer. */
+.tl-scroll.splittool .tl-clip, .tl-scroll.splittool .tl-clip * { cursor: col-resize; }
+.tl-cutmark.ghost.split { border-left-color: color-mix(in srgb, var(--danger) 95%, transparent); border-left-style: solid; }
+.tl-cutrange { position: absolute; top: 0; bottom: 0; background: color-mix(in srgb, var(--danger) 14%, transparent); /* Same rule as .tl-cutmark. */ z-index: var(--z-sticky); cursor: pointer; }
+.tl-cutrange:hover { background: color-mix(in srgb, var(--danger) 24%, transparent); }
+.tl-playhead { position: absolute; top: 0; bottom: 0; /* 2 px, not 1: at t=0 the line lands in the single-pixel channel between the header column's border and the first clip, where a 1 px line reads as half-hidden. */ width: 2px; background: var(--text); box-shadow: 0 0 0 var(--border-w) color-mix(in srgb, var(--bg-app) 35%, transparent); z-index: var(--z-sticky); pointer-events: none; }
+/* The playhead's head, drawn INSIDE the ruler so the ruler's own sticky corner
+   covers it once the playhead scrolls left of the tracks — the same thing the
+   header column does for the line below. */
+.tl-playhead-head { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--text); z-index: var(--z-sticky); pointer-events: none; }
+/* A flag hanging to the RIGHT of the line rather than a triangle centred on it:
+   centred, half of it sat over the ruler's corner whenever the playhead was at
+   0, and the corner is opaque. This way the whole head is always drawn, and its
+   vertical edge marks the exact frame. */
+/* v3: a light, rounded grip centred on the line, a notch in its middle. */
+.tl-playhead-head::before { content: ''; position: absolute; top: 2px; left: -5px; width: 12px; height: 17px; border-radius: var(--r-ctl) var(--r-ctl) var(--r-pill) var(--r-pill); background: var(--text); box-shadow: 0 0 0 var(--border-w) color-mix(in srgb, var(--bg-app) 50%, transparent); }
+.tl-playhead-head::after { content: ''; position: absolute; top: 6px; left: 0; width: 2px; height: 7px; border-radius: var(--r-pill); background: color-mix(in srgb, var(--bg-app) 55%, transparent); }
+/* The ruler's share of the header column: sticky like .tl-track-label and
+   opaque, so ticks, markers and the playhead head disappear behind it instead
+   of drawing over the panel. */
+.tl-ruler-corner { position: sticky; left: 0; float: left; width: var(--tl-head-w); height: 100%; background: var(--bg-panel); z-index: var(--z-timeline); }
+.tl-kf { position: absolute; top: 2px; width: 10px; height: 10px; background: var(--text); transform: rotate(45deg) translateX(-50%); z-index: var(--z-sticky); cursor: pointer; }
+.tl-marquee { position: absolute; border: var(--border-w) solid var(--select); background: color-mix(in srgb, var(--select-soft) 16%, transparent); z-index: var(--z-sticky); pointer-events: none; }
+/* -- shorts segments ------------------------------------------------------ */
+.tl-short-seg { position: absolute; /* BELOW the ruler. The band spans the whole inner height, and the ruler is sticky on top of it — so the label bar at the band's top, with the move grip in it, was drawn underneath the ruler and could never be seen or grabbed. That is why the segment felt undraggable. */ top: 26px; bottom: 0; background: color-mix(in srgb, var(--mark) 10%, transparent); border-left: 2px solid color-mix(in srgb, var(--mark) 55%, transparent); border-right: 2px solid color-mix(in srgb, var(--mark) 55%, transparent); /* The band itself is click-through so clips underneath stay editable; only the label bar and edge handles are interactive. */ pointer-events: none; z-index: var(--z-sticky); }
+.tl-short-seg .seg-bar { position: absolute; top: 0; left: 0; right: 0; height: 20px; pointer-events: auto; cursor: grab; }
+.tl-short-seg.active { background: color-mix(in srgb, var(--mark) 18%, transparent); border-left-color: var(--mark); border-right-color: var(--mark); }
+.tl-short-seg .seg-label { position: sticky; top: 2px; /* Clears the move grip, which sticks at 4px. */ left: 28px; display: inline-block; margin: 2px 0 0 4px; padding: 1px 6px; border-radius: var(--r-clip); background: color-mix(in srgb, var(--bg-app) 85%, transparent); color: var(--mark-text); font-size: var(--fs-11); white-space: nowrap; pointer-events: none; }
+.tl-short-seg .seg-handle { position: absolute; top: 0; bottom: 0; width: 14px; cursor: ew-resize; pointer-events: auto; display: flex; align-items: center; justify-content: center; }
+.tl-short-seg .seg-handle.l { left: -7px; }
+.tl-short-seg .seg-handle.r { right: -7px; }
+/* The visible grip. The hit area was already here but drew nothing, so the
+   only way to find out a segment could be resized was to guess at its edge. */
+.tl-short-seg .seg-grip { width: 6px; height: 26px; border-radius: var(--r-clip); background: var(--mark); border: 1px solid color-mix(in srgb, var(--bg-app) 55%, transparent); box-shadow: 0 1px 3px color-mix(in srgb, var(--bg-app) 50%, transparent); opacity: 0.75; }
+.tl-short-seg .seg-handle:hover .seg-grip, .tl-short-seg.active .seg-grip { opacity: 1; height: 32px; }
+/* Move grips. Solid and in the marks' purple rather than a dim glyph: they are the
+   handle for the whole band, so they have to look like one at a glance. One
+   sticks to the left edge of the view, one sits at the band's right end — a
+   band wider than the window still has a handle on screen either way. */
+.tl-short-seg .seg-move-r { position: absolute; top: 2px; right: 3px; z-index: var(--z-sticky); display: inline-flex; align-items: center; justify-content: center; gap: 3px; height: 16px; padding: 0 6px; border-radius: var(--r-clip); background: var(--mark); border: 1px solid color-mix(in srgb, var(--bg-app) 50%, transparent); color: var(--bg-well); font-size: var(--fs-11); line-height: 1; cursor: grab; opacity: 0; transition: opacity 0.12s ease; pointer-events: auto; }
+.tl-short-seg:hover .seg-move-r, .tl-short-seg.active .seg-move-r { opacity: 0.95; }
+/* Pan keyframes of a segment, marked on its band so you can see WHERE the
+   crop was told to be somewhere. */
+.tl-short-seg .seg-kf { position: absolute; top: 22px; width: 9px; height: 9px; margin-left: -4.5px; background: var(--mark); border: 1px solid color-mix(in srgb, var(--bg-app) 60%, transparent); transform: rotate(45deg); pointer-events: none; z-index: var(--z-base); }
+.tl-short-seg .seg-move { position: sticky; left: 4px; z-index: var(--z-sticky); display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 16px; margin: 2px 0 0 4px; border-radius: var(--r-clip); background: var(--mark); border: 1px solid color-mix(in srgb, var(--bg-app) 50%, transparent); color: var(--bg-well); font-size: var(--fs-12); line-height: 1; letter-spacing: -1px; cursor: grab; opacity: 0.9; }
+.tl-short-seg .seg-move:hover { opacity: 1; background: var(--mark); color: var(--bg-well); }
+/* Locked segment bands fade back so the timeline underneath reads clearly. */
+/* A locked segment is a MARKER, not a surface: it must not intercept anything,
+   so scrubbing the playhead and editing the clips underneath stay completely
+   normal. Only the padlock itself stays clickable so it can be unlocked. */
+.tl-short-seg.locked { /* Glass-faint: enough to read the extent of the segment, not enough to get in the way of the clips underneath. */ background: color-mix(in srgb, var(--text) 4%, transparent) !important; border-left-style: dashed; border-right-style: dashed; opacity: 0.6; }
+.tl-short-seg.locked, .tl-short-seg.locked .seg-bar, .tl-short-seg.locked .seg-label { pointer-events: none; }
+.tl-short-seg.locked .seg-bar { background: transparent; }
+/* Slim add-track rows: a small + above V-tracks and below A-tracks. */
+.tl-addtrack { position: sticky; left: 0; height: 24px; display: flex; align-items: center; z-index: var(--z-timeline); }
+/* The plus sits in the middle of the header column, lined up with the track names below it. */
+.tl-addtrack button { position: relative; z-index: var(--z-sticky); display: inline-flex; align-items: center; justify-content: center; gap: var(--space-1); width: calc(var(--tl-head-w) - 10px); height: 20px; margin-left: 5px; padding: 0; border: none; border-radius: var(--r-ctl); background: transparent; color: var(--text-3); font-size: var(--fs-11); line-height: 1; }
+.tl-addtrack button:hover { color: var(--text); background: var(--bg-hover); }
+/* The ＋ sits in the middle of the header column, not jammed against its left
+   edge — it lines up with the track names below it. */
+/* The strip's slice of the header column: a real element rather than a
+   pseudo-element, and explicitly BELOW the button. Relying on paint order left
+   the ＋ at the mercy of the stacking context sticky positioning creates. */
+.tl-addtrack .addtrack-head { position: sticky; left: 0; flex: 0 0 var(--tl-head-w); align-self: stretch; margin-right: calc(-1 * var(--tl-head-w)); background: var(--bg-panel); pointer-events: none; z-index: var(--z-base); }
+/* Timeline markers (M key) */
+.tl-marker { position: absolute; top: 12px; width: 10px; height: 10px; margin-left: -5px; border-radius: var(--r-clip) var(--r-clip) var(--r-ctl) var(--r-ctl); border: 1px solid color-mix(in srgb, var(--bg-app) 50%, transparent); cursor: pointer; z-index: var(--z-sticky); }
+.tl-marker:hover { transform: scale(1.3); }
+.tl-kf.tracker { background: var(--mark-text); }
+/* While something is being dragged onto it the strip grows into a real target —
+   18 px is fine as a "+" button but far too thin to aim a drop at. */
+.tl-addtrack.drop-new { height: 34px; background: var(--accent-soft); border: var(--border-w) dashed var(--accent); border-radius: var(--r-ctl); }
+.tl-addtrack.drop-new button { width: auto; height: var(--ctl); padding: 0 10px; color: var(--accent-text); background: transparent; }
+.tl-clip.adjustment .label { color: var(--text); }
+/* Snap guide: shows the exact target a drag/trim locked onto */
+.tl-snapguide { position: absolute; top: 0; bottom: 0; width: 0; border-left: var(--border-w) solid var(--accent); z-index: var(--z-sticky); pointer-events: none; }
+.tl-snapguide.subtitle, .tl-snapguide.text { border-left-color: var(--accent-text); }
+.tl-snap-label { position: absolute; top: 4px; left: 7px; display: inline-flex; align-items: center; gap: var(--space-1); width: max-content; max-width: 220px; overflow: hidden; padding: 3px 7px; border: var(--border-w) solid var(--accent-line); border-radius: var(--r-clip); background: var(--accent-soft); color: var(--accent-text); font-size: var(--fs-11); font-weight: var(--fw-medium); text-overflow: ellipsis; white-space: nowrap; }
+.tl-snapguide.subtitle .tl-snap-label, .tl-snapguide.text .tl-snap-label { border-color: var(--accent-text); }
+/* CapCut-style volume drag line on audio/video clips */
+@media (max-height: 620px) {
+}
+/* ---- QoL: fade handles, disabled clips, loop band ---- */
+.tl-clip .fade-handle { /* BOTTOM corner: fades belong with the waveform, and the top edge is already busy with transitions, keyframes and the motion button. */ position: absolute; bottom: 0; width: 14px; height: 14px; cursor: ew-resize; z-index: var(--z-toast); opacity: 0; /* An invisible element still catches the pointer. Two 14 px targets sat in the bottom corners of every clip and swallowed clicks meant for the clip itself — zoomed out, that was most of a short clip's grabbable area, so reaching for the clip dragged a fade instead. Hidden means untouchable. */ pointer-events: none; transition: opacity 0.12s; display: flex; align-items: center; justify-content: center; }
+.tl-clip:hover .fade-handle, .tl-clip .fade-handle.on { opacity: 1; pointer-events: auto; }
+/* A small ramp glyph, so it reads as "fade" rather than "some dot". */
+.tl-clip .fade-grip { width: 10px; height: 8px; background: var(--text); border: var(--border-w) solid color-mix(in srgb, var(--bg-app) 55%, transparent); }
+.tl-clip .fade-handle.in .fade-grip { clip-path: polygon(0 100%, 100% 0, 100% 100%); }
+.tl-clip .fade-handle.out .fade-grip { clip-path: polygon(0 0, 100% 100%, 0 100%); }
+.tl-clip .fade-handle:hover .fade-grip, .tl-clip .fade-handle.on .fade-grip { background: var(--text); transform: scale(1.25); }
+/* Live duration while dragging / when a fade exists. */
+.tl-clip .fade-label { position: absolute; bottom: 2px; z-index: var(--z-toast); padding: 0 3px; border-radius: var(--r-clip); background: color-mix(in srgb, var(--bg-app) 72%, transparent); color: var(--text); font-family: var(--font-mono); font-size: var(--fs-11); pointer-events: none; }
+.tl-clip .fade-label.in { left: 16px; }
+.tl-clip .fade-label.out { right: 16px; }
+/* The ramp itself: a triangular wedge whose diagonal IS the level curve. A
+   transition is a full-height gradient at the cut, so the two can't be
+   confused — different edge, different shape, different colour. */
+.tl-clip .fade-wedge { position: absolute; top: 0; bottom: 0; pointer-events: none; z-index: var(--z-timeline); background: color-mix(in srgb, var(--bg-app) 50%, transparent); border-bottom: 2px solid color-mix(in srgb, var(--text) 70%, transparent); }
+.tl-clip .fade-wedge.in { left: 0; clip-path: polygon(0 0, 100% 0, 0 100%); }
+.tl-clip .fade-wedge.out { right: 0; clip-path: polygon(100% 0, 100% 100%, 0 0); }
+/* Switched-off clip: clearly inert, still selectable and draggable. */
+.tl-clip.disabled { opacity: 0.4; filter: grayscale(0.85); background-image: repeating-linear-gradient(135deg, transparent 0 6px, color-mix(in srgb, var(--bg-app) 55%, transparent) 6px 12px); }
+/* Loop region band on the ruler. */
+.tl-loop-band { position: absolute; top: 0; height: 100%; background: color-mix(in srgb, var(--mark) 12%, transparent); border-left: 2px solid var(--mark-text); border-right: 2px solid var(--mark-text); pointer-events: none; z-index: var(--z-sticky); }
+/* Inline marker rename + colour picker. */
+.marker-edit { min-width: 190px; padding: var(--space-2); border: var(--border-w) solid var(--line-strong); border-radius: var(--r-card); background: var(--bg-raised); box-shadow: var(--shadow-pop); }
+.marker-edit .ui-input { width: 100%; }
+.marker-colors { display: flex; gap: 5px; margin-top: 6px; }
+.marker-colors button { width: 20px; height: 20px; padding: 0; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--text) 25%, transparent); }
+/* Pointer within grabbing distance of the playhead: it is an object you can
+   pick up, so say so. col-resize is the two-headed horizontal grip. */
+.tl-scroll.on-playhead, .tl-scroll.on-playhead .tl-inner, .tl-scroll.on-playhead .tl-track, .tl-scroll.on-playhead .tl-caption-lane { cursor: col-resize; }
+/* Slip tool: the clip body becomes a grip for the footage inside it. */
+.tl-scroll.sliptool .tl-clip, .tl-scroll.sliptool .tl-clip .label, .tl-scroll.sliptool .tl-clip .thumb { cursor: ew-resize; }
+/* A/V-linked pair: a chain badge plus a tinted top edge, so the two halves of
+   one recording are recognisable without dragging one to find out. */
+.tl-clip.linked { box-shadow: inset 0 0 0 var(--border-w) var(--clip-edge), inset 0 2px 0 color-mix(in srgb, var(--text) 40%, transparent); }
+.tl-clip.linked.selected { box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--bg-app) 55%, transparent); }
+/* A pending edit's time range (the transcript selection). Same red language as
+   the silence preview, but labelled and only present while a panel is holding
+   a selection. */
+.tl-rangepreview { position: absolute; top: 0; bottom: 0; background: color-mix(in srgb, var(--danger) 16%, transparent); border-left: 2px solid var(--danger); border-right: 2px solid var(--danger); z-index: var(--z-sticky); pointer-events: none; display: flex; align-items: flex-start; justify-content: center; }
+.tl-rangepreview span { margin-top: 30px; padding: 1px 6px; border-radius: var(--r-pill); background: var(--danger-soft); border: var(--border-w) solid var(--danger-line); color: var(--danger-text); font-size: var(--fs-11); white-space: nowrap; }
+/* The clip's corner badges, in one right-aligned strip. */
+.tl-clip .clip-badges { flex: none; display: flex; gap: 3px; align-items: center; pointer-events: none; z-index: var(--z-pop); }
+.tl-clip .clip-badges .fx-badge, .tl-clip .clip-badges .speed-badge { position: static; }
+/* Retimed clip: the speed, on the clip. */
+.tl-clip .speed-badge { z-index: var(--z-pop); padding: 0 var(--space-1); border-radius: var(--r-clip); background: color-mix(in srgb, var(--bg-app) 80%, transparent); color: var(--text); font-family: var(--font-mono); font-size: var(--fs-11); line-height: 13px; pointer-events: none; }
+/* Text/shape fades, drawn on the caption chip the way clip fades are drawn on
+   a clip: a wedge you can see, so "it fades in" isn't invisible information. */
+.tl-caption-chip .cap-fade { position: absolute; top: 0; bottom: 0; pointer-events: none; z-index: var(--z-base); }
+.tl-caption-chip .cap-fade.in { left: 0; background: linear-gradient(90deg, color-mix(in srgb, var(--bg-app) 55%, transparent), color-mix(in srgb, var(--bg-app) 0%, transparent)); }
+.tl-caption-chip .cap-fade.out { right: 0; background: linear-gradient(270deg, color-mix(in srgb, var(--bg-app) 55%, transparent), color-mix(in srgb, var(--bg-app) 0%, transparent)); }
+/* The body is the grab surface; thin marked edges are trim surfaces. */
+/* ---- Templates: G lane ----------------------------------------------------- */
+.tl-tpl-lane { position: relative; height: 30px; border-bottom: var(--border-w) solid var(--line); background: var(--bg-app); }
+/* A template block: the code family (it is drawn by code), as wide as it lasts. */
+.tl-tpl-block { position: absolute; top: 4px; z-index: var(--z-sticky); box-sizing: border-box; height: 22px; display: flex; align-items: center; gap: 5px; padding: 0 8px; overflow: hidden; border: var(--border-w) solid var(--clip-code-line); border-radius: var(--r-clip); background: var(--clip-code-fill); color: var(--clip-code-text); font-size: var(--fs-11); white-space: nowrap; cursor: grab; }
+.tl-tpl-block:hover { border-color: var(--text-3); }
+.tl-tpl-block.selected { border-color: var(--select); outline: var(--border-w) solid var(--select); outline-offset: 0; z-index: var(--z-sticky); color: var(--text); }
+.tl-tpl-rest { position: absolute; top: 4px; z-index: var(--z-base); box-sizing: border-box; height: 22px; border: var(--border-w) dashed var(--clip-code-line); border-left: none; border-radius: 0 var(--r-clip) var(--r-clip) 0; background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--clip-code-line) 30%, transparent) 0 4px, transparent 4px 8px); pointer-events: none; }
+.tl-tpl-block:active { cursor: grabbing; }
+.tl-tpl-block .ico { flex: 0 0 auto; display: inline-flex; }
+.tl-tpl-block .lbl { position: relative; z-index: var(--z-base); overflow: hidden; text-overflow: ellipsis; }
+/* Where each item lands: line the block up with what is being said. */
+.tl-tpl-block .beat { position: absolute; top: 3px; bottom: 3px; width: 2px; margin-left: -1px; border-radius: var(--r-clip); background: color-mix(in srgb, var(--clip-code-text) 60%, transparent); pointer-events: none; }
+.tl-tpl-block .grip { position: absolute; top: 0; right: 0; bottom: 0; width: 8px; cursor: ew-resize; z-index: var(--z-sticky); }
+.tl-tpl-block:hover .grip, .tl-tpl-block.selected .grip { background: color-mix(in srgb, var(--text) 30%, transparent); }
+/* A template cut short: its end marked; the rest, faint. */
+.tl-tpl-block.cut { border-right: 2px solid var(--clip-code-text); }
+.tl-tpl-block .cut-mark { position: absolute; top: 0; bottom: 0; width: 0; border-left: 1px dashed var(--clip-code-text); pointer-events: none; }
+/* Box to box: a box's glow mark on the G lane can be dragged to time it. */
+.tl-tpl-block .beat.grab { pointer-events: auto; cursor: ew-resize; width: 6px; margin-left: -3px; top: 1px; bottom: 1px; background: var(--clip-code-text); border-radius: var(--r-clip); z-index: var(--z-timeline); }
+.tl-tpl-block .beat.grab:hover { background: var(--text); }
+/* Timeline lanes: video and audio read as two groups, each lane its tint and
+   a coloured edge on its name (the name and the icons say the kind too). */
+/* Trimming an edge says where it is and how long the clip is now: a label
+   beside the dragged edge, over the lanes (phase 3c.T: it used to sit inside
+   the clip, cut off by a short one; and a stray brace above this rule had
+   switched its box off altogether). On the clip's side of the edge. */
+.tl-trim-tip { position: absolute; z-index: var(--z-sticky); padding: 1px 6px; border: var(--border-w) solid var(--accent-line); border-radius: var(--r-clip); background: var(--bg-raised); box-shadow: var(--shadow-pop); color: var(--text); font-family: var(--font-mono); font-size: var(--fs-11); font-weight: var(--fw-medium); white-space: nowrap; pointer-events: none; }
+/* What moves on every frame of a drag, a scrub or playback is moved by a
+   transform on a layer of its own (will-change): the playhead and its head,
+   the snap line, the drop mark, a trim's label, the dragged clip. A change of
+   `left`, or a transform on something painted with the lanes, makes the
+   browser paint the lanes and sort all their layers out again (measured on
+   the heavy project: 7 ms of "Layerize" a frame, whatever moved). A new
+   transform in the style of such a layer still makes it sort them out (5 ms
+   and more): while the playhead is dragged, it, its head and the snap
+   line are moved by a paused animation instead (useSlideX in shared.ts). */
+.tl-playhead, .tl-playhead-head, .tl-snapguide, .tl-drop-indicator, .tl-trim-tip { will-change: transform; }
+@keyframes wave-pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ---- phase 3c.T: the timeline's feel ------------------------------------------------- */
+/* The right end of the toolbar: the lane height step, "fit", the zoom. */
+.tl-view { display: flex; flex: 0 0 auto; align-items: center; gap: var(--space-2); }
+.tl-view .ui-seg { padding: 1px; }
+.tl-view .ui-seg-part { min-width: 22px; height: 22px; padding: 0 var(--space-1); font-size: var(--fs-11); }
+@container tltb (max-width: 760px) {
+  .tl-view .ui-seg { display: none; }
+}
+/* A drag under way (timeline/drag.ts puts `tl-dragging` on <body>): nothing
+   on the timeline animates, so what is dragged stays under the pointer and
+   nothing else lags a frame behind it. Text is not selected by the drag. */
+body.tl-dragging { user-select: none; }
+body.tl-dragging .tl-clip, body.tl-dragging .tl-caption-chip, body.tl-dragging .tl-tpl-block, body.tl-dragging .tl-trans-target, body.tl-dragging .motion-quick-btn, body.tl-dragging .fade-handle { transition: none; }
+body.tl-dragging .motion-quick-btn:not(.open) { opacity: 0; }
+/* The dragged clip rides its own layer: its offset is a transform. */
+.tl-clip.dragging { will-change: transform; cursor: grabbing; }
+/* Lifted, and set down again in a short moment (the shadow and the fade). */
+.tl-clip { transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease); }
+/* A cancelled drag (Escape): the ghost glides home. */
+body.tl-settling .tl-clip { transition: transform var(--dur-fast) var(--ease), translate var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease); }
+/* Grab areas at least 8 px wide where the visible handle is thinner (the
+   handle's own box, which the geometry check measures, is as it was): a
+   subtitle chip's edge (6), a lane's height grip (6), a transition's end (7). */
+.tl-caption-chip .chip-handle::after { content: ''; position: absolute; top: 0; bottom: 0; left: -2px; right: -2px; }
+.track-resize::after { content: ''; position: absolute; left: 0; right: 0; top: -3px; bottom: -3px; }
+/* A chip's edges show on the selected chip too, not only under the pointer. */
+.tl-caption-chip.selected .chip-handle { background: color-mix(in srgb, var(--select) 45%, transparent); }
+/* The trim edge under the pointer and while it is dragged. */
+.tl-clip .handle:active { background: color-mix(in srgb, var(--select) 22%, transparent); }
+/* A speed curve on its clip (core polish T): a thin line along the bottom,
+   its height the speed (1× on the dotted middle, faster above, slower below). */
+.tl-clip .tl-curve-line { position: absolute; left: 0; bottom: 1px; z-index: var(--z-sticky); overflow: visible; pointer-events: none; }
+.tl-clip .tl-curve-line path { fill: none; stroke: var(--text); stroke-width: 1.5; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.tl-clip .tl-curve-line path.tl-curve-one { stroke: var(--line-strong); stroke-width: 1; stroke-dasharray: 2 3; }
+
+/* Arayüz v4: an empty lane's words, quiet, at its start ("Drop media here");
+   the first picture lane of an empty timeline also holds the Import button.
+   Clicks pass through to the lane (seeking, the marquee); the button keeps its own. */
+.tl-lane-hint {
+  position: absolute; top: 0; bottom: 0; left: calc(var(--tl-head-w) + var(--space-3)); z-index: var(--z-sticky);
+  display: inline-flex; flex-direction: row; align-items: center; gap: var(--space-2);
+  color: var(--text-3); font-size: var(--fs-12); white-space: nowrap; pointer-events: none;
+}
+.tl-lane-hint .ui-empty-text { color: var(--text-3); }
+.tl-lane-hint .ui-btn { pointer-events: auto; }
+
+/* ---- DENEME-2 (worker T): every block in the clips' language ------------------------
+   The subtitle and text chips and the G lane's template blocks were left in the
+   old look (an outline for the selection, a brightened hover, bare edges).
+   They now speak the v3 clips' language in their own boxes (the geometry is
+   the same: only colours, corners and marks change): the kind's colour with
+   its edge as an inset ring, the clip's corner, the name in a dark pill, the
+   gold selection with its soft blue underlay and gold edges, and a lift while
+   dragged. Text the user wrote is sand, a subtitle rose, a template purple. */
+.tl-caption-chip, .tl-tpl-block {
+  --chip-edge: var(--clip-caption-line);
+  border: var(--border-w) solid transparent; border-radius: var(--r-clip); background-clip: padding-box;
+  box-shadow: inset 0 0 0 var(--border-w) var(--chip-edge); outline: none;
+  transition: box-shadow var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease);
+}
+.tl-caption-chip.manual { --chip-edge: var(--clip-image-line); border-color: transparent; }
+.tl-tpl-block { --chip-edge: var(--clip-code-line); }
+.tl-caption-chip:hover, .tl-tpl-block:hover { --chip-edge: var(--text-3); border-color: transparent; filter: brightness(1.08); }
+.tl-caption-chip.selected, .tl-tpl-block.selected {
+  --chip-edge: var(--select); border-color: transparent; color: var(--text);
+  outline: 2px solid var(--select); outline-offset: -1px; filter: none;
+}
+.tl-caption-chip.selected::after, .tl-tpl-block.selected::after { content: ''; position: absolute; inset: 0; z-index: var(--z-base); background: color-mix(in srgb, var(--select-soft) 40%, transparent); pointer-events: none; }
+/* The words: a dark pill, its kind's icon first, like a clip's name. */
+.tl-caption-chip .chip-text {
+  position: relative; z-index: var(--z-sticky); flex: 0 1 auto; min-width: 0;
+  padding: 0 var(--space-1); border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--bg-app) 45%, transparent); color: var(--text);
+  line-height: 14px; font-weight: var(--fw-medium);
+}
+.tl-caption-chip .chip-text .ui-icon { opacity: 0.85; }
+.tl-tpl-block .lbl { padding: 0 var(--space-2); border-radius: var(--r-pill); background: color-mix(in srgb, var(--bg-app) 45%, transparent); color: var(--text); line-height: 16px; font-weight: var(--fw-medium); }
+/* The trim edges: a soft bar on hover, gold on the selected block, with a grip. */
+.tl-caption-chip .chip-handle { background: transparent; transition: background-color var(--dur-fast) var(--ease); }
+.tl-caption-chip:hover .chip-handle { background: color-mix(in srgb, var(--text) 22%, transparent); }
+.tl-caption-chip .chip-handle:hover, .tl-caption-chip.selected .chip-handle { background: var(--select); }
+.tl-caption-chip .chip-handle.l { border-radius: var(--r-clip) 0 0 var(--r-clip); }
+.tl-caption-chip .chip-handle.r { border-radius: 0 var(--r-clip) var(--r-clip) 0; }
+.tl-tpl-block .grip { border-radius: 0 var(--r-clip) var(--r-clip) 0; transition: background-color var(--dur-fast) var(--ease); }
+.tl-tpl-block:hover .grip { background: color-mix(in srgb, var(--text) 22%, transparent); }
+.tl-tpl-block .grip:hover, .tl-tpl-block.selected .grip { background: var(--select); }
+.tl-caption-chip .chip-del { position: relative; z-index: var(--z-sticky); border-radius: var(--r-pill); }
+/* Lifted while it is dragged (drag.ts puts tl-dragging on <body>; the
+   pressed block is :active until the pointer lets go). */
+body.tl-dragging .tl-caption-chip:active, body.tl-dragging .tl-tpl-block:active {
+  z-index: var(--z-sticky); cursor: grabbing; filter: none;
+  box-shadow: var(--shadow-pop), inset 0 0 0 var(--border-w) var(--select);
+}
+
+/* "LIVE" on a code clip (item 5): the code family's colour, a dot before it. */
+.live-badge {
+  flex: none; display: inline-flex; align-items: center; gap: 3px; margin-left: var(--space-1);
+  height: 14px; padding: 0 5px; border-radius: var(--r-pill);
+  background: var(--clip-code-fill); color: var(--clip-code-text); box-shadow: inset 0 0 0 var(--border-w) var(--clip-code-line);
+  font-size: var(--fs-11); font-weight: var(--fw-semibold); letter-spacing: 0.04em; line-height: 1;
+}
+.live-badge::before { content: ''; width: 5px; height: 5px; border-radius: var(--r-pill); background: var(--clip-code-text); }

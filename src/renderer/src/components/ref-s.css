@@ -1,0 +1,42 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* REF-AB, worker S (REF-AB-PLAN-S.md): the Voiceover page and the Captions
+   page's style grid and source. Design values only (src/test/ui-tokens.test.ts).
+   The prompter's and the countdown's large type is the user's own size
+   (a slider), set on the element. */
+
+/* ---- Voiceover (components/VoiceoverPage.tsx) ------------------------------------------ */
+.vo-page { min-height: 100%; }
+.vo-script.ui-textarea { min-height: 180px; resize: vertical; line-height: 1.5; }
+.vo-prompter {
+  position: relative; display: flex; flex-direction: column; gap: var(--space-3); min-height: 220px; max-height: 50vh; overflow-y: auto;
+  padding: var(--space-4) var(--space-3); border-radius: var(--r-card); background: var(--bg-well); color: var(--text);
+}
+.vo-prompt-text { white-space: pre-wrap; line-height: 1.45; font-weight: var(--fw-medium); overflow-wrap: anywhere; }
+.vo-prompt-empty { margin: auto; color: var(--text-3); font-size: var(--fs-13); text-align: center; }
+.vo-count {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: var(--scrim); color: var(--text); font-weight: var(--fw-semibold); font-variant-numeric: tabular-nums;
+}
+.vo-take-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.vo-clock { font-family: var(--font-mono); font-size: var(--fs-15); color: var(--text-3); font-variant-numeric: tabular-nums; }
+.vo-clock.is-on { color: var(--danger-text); }
+.vo-record.ui-btn { flex: 1; min-height: 48px; border-radius: var(--r-pill); justify-content: center; font-size: var(--fs-14); }
+.vo-meter { position: relative; height: 8px; border-radius: var(--r-pill); background: var(--bg-well); overflow: hidden; }
+.vo-meter-fill { position: absolute; inset: 0 auto 0 0; border-radius: var(--r-pill); background: var(--level-ok); transition: width var(--dur-fast) linear; }
+.vo-meter.is-low .vo-meter-fill { background: var(--text-3); }
+.vo-meter.is-hot .vo-meter-fill { background: var(--danger); }
+
+/* ---- Captions: where from, and the style grid (CaptionsPage.tsx, CaptionLookGrid.tsx) --- */
+.cap-source-warn { display: flex; gap: var(--space-2); align-items: flex-start; }
+.cap-source-warn > svg { flex: none; margin-top: 2px; color: var(--warn); }
+.cap-looks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); }
+.cap-look.cap-look {
+  display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-1); min-width: 0;
+  border: var(--border-w) solid var(--line); border-radius: var(--r-card); background: var(--bg-app); color: var(--text-2); cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+}
+.cap-look.cap-look:hover { border-color: var(--line-strong); background: var(--bg-hover); }
+.cap-look.cap-look[aria-pressed='true'] { border-color: var(--accent); }
+.cap-look-thumb { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: var(--r-ctl); background: var(--bg-stage); }
+.cap-look-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fs-11); text-align: center; }

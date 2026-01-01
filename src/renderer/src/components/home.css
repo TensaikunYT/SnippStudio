@@ -1,0 +1,78 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The project home (ProjectHome; SnippStudio phase 3c.4a, moved out of
+   styles.css where phase 3c.1 had left it, K12). Design values only
+   (src/test/ui-tokens.test.ts). The controls are the building blocks; the
+   project cards are tiles (3c.1 K11) and are drawn here. */
+.projects-overlay {
+  position: fixed; inset: 0; z-index: var(--z-dialog); display: flex; align-items: center; justify-content: center;
+  padding: var(--space-4); background: var(--scrim);
+}
+.projects-panel {
+  display: flex; flex-direction: column; width: min(1040px, 100%); height: min(760px, 100%); overflow: hidden;
+  border-radius: var(--r-card); background: var(--bg-panel); box-shadow: var(--shadow-pop);
+}
+.projects-head { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-4) var(--space-4) var(--space-2); }
+.projects-head { padding-top: var(--space-5); }
+.projects-head h2 { flex: 0 0 auto; margin: 0; color: var(--text); font-size: var(--fs-15); font-weight: var(--fw-semibold); }
+.projects-search.ui-input { flex: 1; max-width: 320px; margin-left: auto; }
+.projects-find {
+  display: flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-4);
+  color: var(--text-2); font-size: var(--fs-12);
+}
+.projects-find .status { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.projects-grid {
+  display: grid; flex: 1; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--space-3); align-content: start;
+  padding: var(--space-4); overflow-y: auto;
+}
+.project-card {
+  position: relative; overflow: hidden; padding: 0; border-radius: var(--r-card);
+  background: var(--bg-raised); color: var(--text); font: inherit; text-align: left; cursor: default;
+}
+.project-card.new {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-2); min-height: 132px;
+  color: var(--text-2); cursor: pointer;
+}
+.project-card.new:hover:not(:disabled) { background: var(--bg-hover); color: var(--text); }
+/* v3: the first of them, a new project, is the way in: the accent's soft tone. */
+.project-card.new:first-child { background: var(--accent-soft); color: var(--accent-text); box-shadow: inset 0 0 0 var(--border-w) var(--accent-line); }
+.project-card.new:first-child:hover:not(:disabled) { background: var(--accent-soft); color: var(--text); box-shadow: inset 0 0 0 var(--border-w) var(--accent); }
+.project-card { transition: background-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+.project-card:not(.new):hover { box-shadow: inset 0 0 0 var(--border-w) var(--line-strong); }
+.project-card.new:disabled { opacity: 0.45; cursor: default; }
+.project-thumb { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; padding: 0; border-radius: 0; background: var(--bg-app); cursor: pointer; }
+/* (A button since audit E6: the button's own hover and ring kept inside the card's round corners.) */
+.project-thumb:hover { background: var(--bg-app); }
+.project-thumb:focus-visible { outline-offset: calc(-2 * var(--border-w)); }
+.project-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.project-thumb-empty { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: var(--text-3); }
+.project-dur, .project-missing {
+  position: absolute; bottom: var(--space-1); padding: 1px var(--space-1); border-radius: var(--r-ctl);
+  background: var(--scrim); color: var(--text); font-size: var(--fs-11);
+}
+.project-dur { right: var(--space-1); font-variant-numeric: tabular-nums; }
+.project-missing { left: var(--space-1); }
+.project-meta { padding: var(--space-2) var(--space-3) var(--space-3); cursor: pointer; }
+.project-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fs-13); font-weight: var(--fw-semibold); }
+.project-sub { margin-top: 2px; color: var(--text-2); font-size: var(--fs-11); }
+.project-rename.ui-input { width: 100%; font-weight: var(--fw-semibold); }
+.project-actions { position: absolute; top: var(--space-1); right: var(--space-1); display: flex; gap: var(--space-1); opacity: 0; transition: opacity var(--dur-fast) var(--ease); }
+.project-card:hover .project-actions, .project-actions:focus-within { opacity: 1; }
+.project-actions .ui-btn { background: var(--bg-panel); }
+.project-card.missing .project-thumb img, .project-card.missing .project-thumb-empty { opacity: 0.35; }
+.project-card.missing .project-name { color: var(--text-2); }
+.projects-foot { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-4); }
+.projects-foot .status { color: var(--text-2); font-size: var(--fs-12); }
+.projects-version { margin-left: auto; white-space: nowrap; color: var(--text-3); font-size: var(--fs-11); }
+
+/* The plus, the folder and the search on the three "new" cards: one line of 30 px (from styles.css, phase 3c.4b). */
+.new-plus { font-size: var(--fs-15); line-height: 30px; }/* REF-AB item 1: an empty list is a first project to start (a picture, one
+   sentence, New as the one filled button, Open and the sample beside it). */
+.projects-first {
+  display: flex; flex: 1; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-3);
+  padding: var(--space-5) var(--space-4); text-align: center;
+}
+.projects-first h3 { margin: 0; color: var(--text); font-size: var(--fs-15); font-weight: var(--fw-semibold); }
+.projects-first p { max-width: 360px; margin: 0; color: var(--text-2); font-size: var(--fs-13); line-height: 1.45; }
+.projects-first-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2); }
+.projects-nomatch { grid-column: 1 / -1; }

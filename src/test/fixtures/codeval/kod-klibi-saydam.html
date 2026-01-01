@@ -1,0 +1,54 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>transparent 2d</title>
+<style>html,body{margin:0;overflow:hidden}canvas{display:block}</style></head>
+<body><canvas id="c" width="1920" height="1080"></canvas>
+<script>
+// A lower-third style overlay on a transparent page (phase 5b test page):
+// nothing but a 2D canvas, cleared each frame, with soft edges, a
+// half-transparent band, a gradient that fades to nothing and text.
+window.__config = { width: 1920, height: 1080, fps: 30, duration: 10 }
+const cv = document.getElementById('c')
+const g = cv.getContext('2d')
+window.renderOut = function (t) {
+  g.setTransform(1, 0, 0, 1, 0, 0)
+  g.clearRect(0, 0, 1920, 1080)
+  // (Drawn in 1280 × 720 units, at 1.5 ×.)
+  g.setTransform(1.5, 0, 0, 1.5, 0, 0)
+  const k = Math.min(1, t / 1.2)
+  const e = 1 - Math.pow(1 - k, 3)
+  // A band that slides in, half see-through.
+  g.fillStyle = 'rgba(20, 30, 60, 0.62)'
+  g.beginPath()
+  g.roundRect(60 - 400 * (1 - e), 520, 720, 120, 28)
+  g.fill()
+  // A gradient fading out to nothing.
+  const gr = g.createLinearGradient(780, 0, 1180, 0)
+  gr.addColorStop(0, 'rgba(255, 170, 60, 0.9)')
+  gr.addColorStop(1, 'rgba(255, 170, 60, 0)')
+  g.fillStyle = gr
+  g.fillRect(780, 540, 400, 80)
+  // A turning ring: antialiased edges at every angle.
+  g.save()
+  g.translate(1040, 220)
+  g.rotate(t * 0.9)
+  g.lineWidth = 18
+  g.strokeStyle = 'rgba(90, 220, 160, 0.85)'
+  g.beginPath()
+  g.arc(0, 0, 110, 0, Math.PI * 1.4)
+  g.stroke()
+  g.restore()
+  // A soft dot (a blurred edge: every alpha from 0 to 1).
+  const x = 200 + 80 * Math.sin(t * 1.3)
+  const rg = g.createRadialGradient(x, 200, 0, x, 200, 90)
+  rg.addColorStop(0, 'rgba(255, 255, 255, 1)')
+  rg.addColorStop(0.5, 'rgba(255, 255, 255, 0.5)')
+  rg.addColorStop(1, 'rgba(255, 255, 255, 0)')
+  g.fillStyle = rg
+  g.fillRect(x - 90, 110, 180, 180)
+  // Text.
+  g.fillStyle = '#ffffff'
+  g.font = '600 54px Arial'
+  g.fillText('Lower third ' + t.toFixed(1), 100 - 400 * (1 - e), 598)
+}
+window.READY = true
+</script></body></html>

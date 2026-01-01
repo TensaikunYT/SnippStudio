@@ -1,0 +1,1290 @@
+[
+ {
+  "id": "g0",
+  "kind": "steps",
+  "start": 0.2,
+  "duration": 9,
+  "title": "How to do it",
+  "items": [
+   {
+    "id": "i0_0",
+    "title": "Pick one problem",
+    "note": "Small enough to finish today"
+   },
+   {
+    "id": "i0_1",
+    "title": "Try the dumb fix first",
+    "note": "Most of the time it works"
+   },
+   {
+    "id": "i0_2",
+    "title": "Measure it",
+    "note": "Numbers, not feelings"
+   },
+   {
+    "id": "i0_3",
+    "title": "Keep what worked",
+    "note": "Throw away the rest"
+   }
+  ],
+  "style": {
+   "accent": "#ffcf3a",
+   "ink": "#161616",
+   "card": "#fbf6ea",
+   "font": "Archivo Black",
+   "hand": true,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g1",
+  "kind": "ranking",
+  "start": 0.2,
+  "duration": 12,
+  "title": "Top 5",
+  "items": [
+   {
+    "id": "i1_0",
+    "title": "The winner",
+    "note": "Why it is number one",
+    "value": 98
+   },
+   {
+    "id": "i1_1",
+    "title": "Runner-up",
+    "note": "So close",
+    "value": 91
+   },
+   {
+    "id": "i1_2",
+    "title": "Third place",
+    "note": "Solid pick",
+    "value": 84
+   },
+   {
+    "id": "i1_3",
+    "title": "Honourable mention",
+    "note": "Worth a look",
+    "value": 77
+   },
+   {
+    "id": "i1_4",
+    "title": "Fifth",
+    "note": "Made the list",
+    "value": 70
+   }
+  ],
+  "style": {
+   "accent": "#ffcf3a",
+   "ink": "#161616",
+   "card": "#fbf6ea",
+   "font": "Archivo Black",
+   "hand": true,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g2",
+  "kind": "versus",
+  "start": 0.2,
+  "duration": 9,
+  "title": "Which one wins?",
+  "items": [
+   {
+    "id": "i2_0",
+    "title": "Option A"
+   },
+   {
+    "id": "i2_1",
+    "title": "Option B"
+   },
+   {
+    "id": "i2_2",
+    "title": "Speed",
+    "value": 8,
+    "value2": 6
+   },
+   {
+    "id": "i2_3",
+    "title": "Price",
+    "value": 5,
+    "value2": 9
+   },
+   {
+    "id": "i2_4",
+    "title": "Comfort",
+    "value": 7,
+    "value2": 7
+   }
+  ],
+  "style": {
+   "accent": "#ff5c5c",
+   "ink": "#161616",
+   "card": "#fbf6ea",
+   "font": "Bangers",
+   "hand": true,
+   "backdrop": "paper"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g3",
+  "kind": "stat",
+  "start": 0.2,
+  "duration": 6,
+  "title": "",
+  "items": [
+   {
+    "id": "i3_0",
+    "title": "people watched this",
+    "value": 1250000,
+    "note": ""
+   },
+   {
+    "id": "i3_1",
+    "title": "in one week"
+   }
+  ],
+  "style": {
+   "accent": "#44d4c8",
+   "ink": "#ffffff",
+   "card": "#101014",
+   "font": "Anton",
+   "hand": true,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g4",
+  "kind": "timeline",
+  "start": 0.2,
+  "duration": 12,
+  "title": "How we got here",
+  "items": [
+   {
+    "id": "i4_0",
+    "title": "It starts",
+    "note": "1969"
+   },
+   {
+    "id": "i4_1",
+    "title": "The first big change",
+    "note": "1984"
+   },
+   {
+    "id": "i4_2",
+    "title": "Everyone has one",
+    "note": "2007"
+   },
+   {
+    "id": "i4_3",
+    "title": "Where we are now",
+    "note": "2026"
+   }
+  ],
+  "style": {
+   "accent": "#ff8a4c",
+   "ink": "#161616",
+   "card": "#fbf6ea",
+   "font": "Archivo Black",
+   "hand": true,
+   "backdrop": "paper"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g5",
+  "kind": "gallery",
+  "start": 0.2,
+  "duration": 12,
+  "title": "Photos",
+  "items": [
+   {
+    "id": "i5_0",
+    "title": "The first one",
+    "note": "Add a photo to each item"
+   },
+   {
+    "id": "i5_1",
+    "title": "The second one"
+   },
+   {
+    "id": "i5_2",
+    "title": "The third one"
+   },
+   {
+    "id": "i5_3",
+    "title": "The fourth one"
+   },
+   {
+    "id": "i5_4",
+    "title": "The fifth one"
+   },
+   {
+    "id": "i5_5",
+    "title": "The last one"
+   }
+  ],
+  "style": {
+   "accent": "#4f8cff",
+   "ink": "#f2f3f6",
+   "card": "#141519",
+   "font": "Inter",
+   "hand": false,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g6",
+  "kind": "count",
+  "start": 0.2,
+  "duration": 8,
+  "title": "Three reasons",
+  "items": [
+   {
+    "id": "i6_0",
+    "title": "It is free"
+   },
+   {
+    "id": "i6_1",
+    "title": "It runs offline"
+   },
+   {
+    "id": "i6_2",
+    "title": "It never slows down"
+   }
+  ],
+  "style": {
+   "accent": "#ffd23f",
+   "ink": "#0b0b0d",
+   "card": "#ffffff",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g7",
+  "kind": "focus",
+  "start": 0.2,
+  "duration": 10,
+  "title": "",
+  "items": [
+   {
+    "id": "i7_0",
+    "title": "The first one",
+    "note": "Add a photo to each card"
+   },
+   {
+    "id": "i7_1",
+    "title": "The second one"
+   },
+   {
+    "id": "i7_2",
+    "title": "The third one"
+   }
+  ],
+  "style": {
+   "accent": "#ffd23f",
+   "ink": "#0b0b0d",
+   "card": "#ffffff",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g8",
+  "kind": "home",
+  "start": 0.2,
+  "duration": 3.6,
+  "title": "In this video",
+  "items": [
+   {
+    "id": "i8_0",
+    "title": "The story",
+    "note": "Part 1"
+   },
+   {
+    "id": "i8_1",
+    "title": "The idea",
+    "note": "Part 2"
+   },
+   {
+    "id": "i8_2",
+    "title": "How it works",
+    "note": "Part 3"
+   },
+   {
+    "id": "i8_3",
+    "title": "What we learned",
+    "note": "Part 4"
+   }
+  ],
+  "style": {
+   "accent": "#7aa2ff",
+   "ink": "#f4f5f8",
+   "card": "#0f1116",
+   "font": "Inter",
+   "hand": false,
+   "backdrop": "none"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g9",
+  "kind": "intro",
+  "start": 0.2,
+  "duration": 4.2,
+  "title": "YOUR CHANNEL",
+  "items": [
+   {
+    "id": "i9_0",
+    "title": "Your channel line goes here"
+   }
+  ],
+  "style": {
+   "accent": "#ffd23f",
+   "ink": "#0b0b0d",
+   "card": "#f3f1ea",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "none"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g10",
+  "kind": "outro",
+  "start": 0.2,
+  "duration": 4.2,
+  "title": "Thanks for watching",
+  "items": [
+   {
+    "id": "i10_0",
+    "title": "See you in the next one"
+   },
+   {
+    "id": "i10_1",
+    "title": "Subscribe for more"
+   }
+  ],
+  "style": {
+   "accent": "#ffd23f",
+   "ink": "#0b0b0d",
+   "card": "#f3f1ea",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "none"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g11",
+  "kind": "map",
+  "start": 0.2,
+  "duration": 7,
+  "title": "",
+  "items": [
+   {
+    "id": "i11_0",
+    "title": "Istanbul",
+    "note": "Where it started"
+   },
+   {
+    "id": "i11_1",
+    "title": "Japan",
+    "note": "Where it went next"
+   }
+  ],
+  "style": {
+   "accent": "#ff5a3c",
+   "ink": "#0b0b0d",
+   "card": "#f3f1ea",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "none"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g12",
+  "kind": "terminal",
+  "start": 0.2,
+  "duration": 8,
+  "title": "~/project",
+  "items": [
+   {
+    "id": "i12_0",
+    "title": "npm run build",
+    "note": "Built in 1.2s"
+   },
+   {
+    "id": "i12_1",
+    "title": "git push",
+    "note": "Everything up to date"
+   }
+  ],
+  "style": {
+   "accent": "#7ee787",
+   "ink": "#0b0b0d",
+   "card": "#ffffff",
+   "font": "Inter",
+   "hand": false,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g13",
+  "kind": "compare",
+  "start": 0.2,
+  "duration": 7,
+  "title": "",
+  "items": [
+   {
+    "id": "i13_0",
+    "title": "Before"
+   },
+   {
+    "id": "i13_1",
+    "title": "After"
+   }
+  ],
+  "style": {
+   "accent": "#ffd23f",
+   "ink": "#0b0b0d",
+   "card": "#ffffff",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g14",
+  "kind": "checklist",
+  "start": 0.2,
+  "duration": 7,
+  "title": "Today",
+  "items": [
+   {
+    "id": "i14_0",
+    "title": "Write the script"
+   },
+   {
+    "id": "i14_1",
+    "title": "Record the voice"
+   },
+   {
+    "id": "i14_2",
+    "title": "Cut the silences"
+   },
+   {
+    "id": "i14_3",
+    "title": "Add the hands"
+   }
+  ],
+  "style": {
+   "accent": "#ffd23f",
+   "ink": "#0b0b0d",
+   "card": "#ffffff",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g15",
+  "kind": "post",
+  "start": 0.2,
+  "duration": 7,
+  "title": "",
+  "items": [
+   {
+    "id": "i15_0",
+    "title": "This is the clearest explanation I have seen on the topic!",
+    "note": "Ayşe",
+    "value": 1240
+   },
+   {
+    "id": "i15_1",
+    "title": "The hands make it so easy to follow",
+    "note": "Mert",
+    "value": 386
+   }
+  ],
+  "style": {
+   "accent": "#ffd23f",
+   "ink": "#0b0b0d",
+   "card": "#ffffff",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g16",
+  "kind": "cards",
+  "start": 0.2,
+  "duration": 8,
+  "title": "",
+  "items": [
+   {
+    "id": "i16_0",
+    "title": "Past"
+   },
+   {
+    "id": "i16_1",
+    "title": "Present"
+   },
+   {
+    "id": "i16_2",
+    "title": "Future"
+   }
+  ],
+  "style": {
+   "accent": "#ffd23f",
+   "ink": "#0b0b0d",
+   "card": "#ffffff",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g17",
+  "kind": "chess",
+  "start": 0.2,
+  "duration": 10,
+  "title": "Scholar's Mate",
+  "items": [
+   {
+    "id": "i17_0",
+    "title": "e4"
+   },
+   {
+    "id": "i17_1",
+    "title": "e5"
+   },
+   {
+    "id": "i17_2",
+    "title": "Bc4"
+   },
+   {
+    "id": "i17_3",
+    "title": "Nc6"
+   },
+   {
+    "id": "i17_4",
+    "title": "Qh5",
+    "note": "The queen comes out early"
+   },
+   {
+    "id": "i17_5",
+    "title": "Nf6??",
+    "note": "The mistake: f7 is left alone"
+   },
+   {
+    "id": "i17_6",
+    "title": "Qxf7#",
+    "note": "Checkmate in four moves"
+   }
+  ],
+  "style": {
+   "accent": "#f2c14e",
+   "ink": "#141414",
+   "card": "#efe6d4",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g18",
+  "kind": "news",
+  "start": 0.2,
+  "duration": 5,
+  "title": "AI",
+  "items": [
+   {
+    "id": "i18_0",
+    "title": "The year AI changed everything",
+    "note": "The Daily Chronicle"
+   },
+   {
+    "id": "i18_1",
+    "title": "Schools race to keep up with AI",
+    "note": "Morning Herald"
+   },
+   {
+    "id": "i18_2",
+    "title": "Is AI coming for your job?",
+    "note": "Techline"
+   },
+   {
+    "id": "i18_3",
+    "title": "AI panic grips the city",
+    "note": "The Wire"
+   },
+   {
+    "id": "i18_4",
+    "title": "Markets rally on AI hopes",
+    "note": "Financial Ledger"
+   },
+   {
+    "id": "i18_5",
+    "title": "Your phone now thinks with AI",
+    "note": "Pocket News"
+   },
+   {
+    "id": "i18_6",
+    "title": "AI: the promise and the peril",
+    "note": "The Evening Gazette"
+   },
+   {
+    "id": "i18_7",
+    "title": "Everyone is talking about AI",
+    "note": "Weekly"
+   }
+  ],
+  "style": {
+   "accent": "#ffd23f",
+   "ink": "#0b0b0d",
+   "card": "#ffffff",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "none"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g19",
+  "kind": "atlas",
+  "start": 0.2,
+  "duration": 10,
+  "title": "",
+  "items": [
+   {
+    "id": "i19_0",
+    "title": "Istanbul",
+    "note": "Where it started"
+   },
+   {
+    "id": "i19_1",
+    "title": "Egypt",
+    "note": "Where it went next"
+   }
+  ],
+  "style": {
+   "accent": "#ff5a3c",
+   "ink": "#0b0b0d",
+   "card": "#f3f1ea",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "none"
+  },
+  "seed": 1,
+  "cams": [
+   {
+    "t": 0,
+    "lon": 12,
+    "lat": 13.5,
+    "z": 1
+   },
+   {
+    "t": 3,
+    "lon": 28.98,
+    "lat": 41.01,
+    "z": 11
+   }
+  ]
+ },
+ {
+  "id": "g20",
+  "kind": "chapter",
+  "start": 0.2,
+  "duration": 3.8,
+  "title": "Chapter",
+  "items": [
+   {
+    "id": "i20_0",
+    "title": "The beginning",
+    "note": "Where it all started"
+   },
+   {
+    "id": "i20_1",
+    "title": "The turning point",
+    "note": "Everything changes"
+   },
+   {
+    "id": "i20_2",
+    "title": "What came after"
+   },
+   {
+    "id": "i20_3",
+    "title": "Where we are now"
+   }
+  ],
+  "style": {
+   "accent": "#e8c37a",
+   "ink": "#f4f1ea",
+   "card": "#0b0b0e",
+   "font": "Oswald",
+   "hand": false,
+   "backdrop": "none"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g21",
+  "kind": "list",
+  "start": 0.2,
+  "duration": 16,
+  "title": "5 places worth the trip",
+  "items": [
+   {
+    "id": "i21_0",
+    "title": "Cappadocia",
+    "note": "Balloons over the fairy chimneys at sunrise"
+   },
+   {
+    "id": "i21_1",
+    "title": "Ephesus",
+    "note": "The Library of Celsus, still standing"
+   },
+   {
+    "id": "i21_2",
+    "title": "Pamukkale",
+    "note": "White terraces of warm water"
+   },
+   {
+    "id": "i21_3",
+    "title": "Mardin",
+    "note": "A stone city over the plain"
+   },
+   {
+    "id": "i21_4",
+    "title": "Istanbul",
+    "note": "Two continents, one city"
+   }
+  ],
+  "style": {
+   "accent": "#ffd23f",
+   "ink": "#0b0b0d",
+   "card": "#ffffff",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g22",
+  "kind": "words",
+  "start": 0.2,
+  "duration": 8,
+  "title": "",
+  "items": [
+   {
+    "id": "i22_0",
+    "title": "Every great story"
+   },
+   {
+    "id": "i22_1",
+    "title": "starts with"
+   },
+   {
+    "id": "i22_2",
+    "title": "one small idea"
+   }
+  ],
+  "style": {
+   "accent": "#ffd23f",
+   "ink": "#0b0b0d",
+   "card": "#ffffff",
+   "font": "Snipp Display",
+   "hand": false,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g23",
+  "kind": "player",
+  "start": 0.2,
+  "duration": 8,
+  "title": "",
+  "items": [
+   {
+    "id": "i23_0",
+    "title": "pause",
+    "value": 1.5
+   },
+   {
+    "id": "i23_1",
+    "title": "play",
+    "value": 3.3
+   },
+   {
+    "id": "i23_2",
+    "title": "quality",
+    "value": 5.2,
+    "note": "144p"
+   },
+   {
+    "id": "i23_3",
+    "title": "cc",
+    "value": 6.6
+   }
+  ],
+  "style": {
+   "accent": "#ff2a2a",
+   "ink": "#ffffff",
+   "card": "#111111",
+   "font": "Inter",
+   "hand": false,
+   "backdrop": "none"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g24",
+  "kind": "store",
+  "start": 0.2,
+  "duration": 40,
+  "title": "Top Games",
+  "items": [
+   {
+    "id": "i24_0",
+    "title": "Sky Farmers",
+    "note": "Simulation",
+    "value": 4.8
+   },
+   {
+    "id": "i24_1",
+    "title": "Pixel Knights",
+    "note": "Adventure",
+    "value": 4.7
+   },
+   {
+    "id": "i24_2",
+    "title": "Ocean Drift",
+    "note": "Racing",
+    "value": 4.6
+   },
+   {
+    "id": "i24_3",
+    "title": "Tiny Towns",
+    "note": "Strategy",
+    "value": 4.6
+   },
+   {
+    "id": "i24_4",
+    "title": "Word Garden",
+    "note": "Word",
+    "value": 4.5
+   },
+   {
+    "id": "i24_5",
+    "title": "Star Courier",
+    "note": "Arcade",
+    "value": 4.5
+   },
+   {
+    "id": "i24_6",
+    "title": "Dungeon Bakery",
+    "note": "Role playing",
+    "value": 4.4
+   },
+   {
+    "id": "i24_7",
+    "title": "Echo Run",
+    "note": "Action",
+    "value": 4.4
+   },
+   {
+    "id": "i24_8",
+    "title": "Mosaic Mind",
+    "note": "Puzzle",
+    "value": 4.3
+   },
+   {
+    "id": "i24_9",
+    "title": "Harbor Kings",
+    "note": "Strategy",
+    "value": 4.3
+   },
+   {
+    "id": "i24_10",
+    "title": "Cloud Climb",
+    "note": "Casual",
+    "value": 4.2
+   },
+   {
+    "id": "i24_11",
+    "title": "Neon Chef",
+    "note": "Casual",
+    "value": 4.2
+   },
+   {
+    "id": "i24_12",
+    "title": "Lumen Quest",
+    "note": "Adventure",
+    "value": 4.1
+   },
+   {
+    "id": "i24_13",
+    "title": "Rally Rush",
+    "note": "Racing",
+    "value": 4
+   },
+   {
+    "id": "i24_14",
+    "title": "Paper Planes",
+    "note": "Arcade",
+    "value": 3.9
+   }
+  ],
+  "style": {
+   "accent": "#0a84ff",
+   "ink": "#111114",
+   "card": "#ffffff",
+   "font": "Inter",
+   "hand": false,
+   "backdrop": "dim"
+  },
+  "seed": 1,
+  "countdown": true
+ },
+ {
+  "id": "g25",
+  "kind": "poll",
+  "start": 0.2,
+  "duration": 7,
+  "title": "Which one would you pick?",
+  "items": [
+   {
+    "id": "i25_0",
+    "title": "The first one",
+    "value": 62,
+    "note": "✓"
+   },
+   {
+    "id": "i25_1",
+    "title": "The second one",
+    "value": 25
+   },
+   {
+    "id": "i25_2",
+    "title": "Neither",
+    "value": 13
+   }
+  ],
+  "style": {
+   "accent": "#ffd23f",
+   "ink": "#0b0b0d",
+   "card": "#ffffff",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g26",
+  "kind": "cutout",
+  "start": 0.2,
+  "duration": 5,
+  "title": "",
+  "items": [
+   {
+    "id": "i26_0",
+    "title": "The",
+    "value": 80
+   },
+   {
+    "id": "i26_1",
+    "title": "secret",
+    "value": 150
+   },
+   {
+    "id": "i26_2",
+    "title": "nobody",
+    "value": 100
+   },
+   {
+    "id": "i26_3",
+    "title": "tells",
+    "value": 90
+   },
+   {
+    "id": "i26_4",
+    "title": "you",
+    "value": 110
+   }
+  ],
+  "style": {
+   "accent": "#ffd23f",
+   "ink": "#0b0b0d",
+   "card": "#ffffff",
+   "font": "Archivo Black",
+   "hand": true,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g27",
+  "kind": "bars",
+  "start": 0.2,
+  "duration": 8,
+  "title": "Views per year",
+  "items": [
+   {
+    "id": "i27_0",
+    "title": "2021",
+    "value": 12,
+    "note": "K"
+   },
+   {
+    "id": "i27_1",
+    "title": "2022",
+    "value": 18
+   },
+   {
+    "id": "i27_2",
+    "title": "2023",
+    "value": 31
+   },
+   {
+    "id": "i27_3",
+    "title": "2024",
+    "value": 47
+   }
+  ],
+  "style": {
+   "accent": "#ff5a3c",
+   "ink": "#0b0b0d",
+   "card": "#fbf6ea",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "blur"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g28",
+  "kind": "pie",
+  "start": 0.2,
+  "duration": 8,
+  "title": "Where the time goes",
+  "items": [
+   {
+    "id": "i28_0",
+    "title": "Videos",
+    "value": 45
+   },
+   {
+    "id": "i28_1",
+    "title": "Shorts",
+    "value": 30
+   },
+   {
+    "id": "i28_2",
+    "title": "Live",
+    "value": 15
+   },
+   {
+    "id": "i28_3",
+    "title": "Posts",
+    "value": 10
+   }
+  ],
+  "style": {
+   "accent": "#4fa8ff",
+   "ink": "#0b0b0d",
+   "card": "#fbf6ea",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "blur"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g29",
+  "kind": "line",
+  "start": 0.2,
+  "duration": 9,
+  "title": "Subscribers",
+  "items": [
+   {
+    "id": "i29_0",
+    "title": "Jan",
+    "value": 120,
+    "value2": 90
+   },
+   {
+    "id": "i29_1",
+    "title": "Feb",
+    "value": 180,
+    "value2": 110
+   },
+   {
+    "id": "i29_2",
+    "title": "Mar",
+    "value": 150,
+    "value2": 140
+   },
+   {
+    "id": "i29_3",
+    "title": "Apr",
+    "value": 260,
+    "value2": 150
+   },
+   {
+    "id": "i29_4",
+    "title": "May",
+    "value": 340,
+    "value2": 170
+   }
+  ],
+  "style": {
+   "accent": "#ffd23f",
+   "ink": "#0b0b0d",
+   "card": "#fbf6ea",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g30",
+  "kind": "blackhole",
+  "start": 0.2,
+  "duration": 10,
+  "title": "Thanks for watching",
+  "items": [
+   {
+    "id": "i30_0",
+    "title": "See you in the next one"
+   }
+  ],
+  "style": {
+   "accent": "#ff9a3c",
+   "ink": "#ffffff",
+   "card": "#000000",
+   "font": "Inter",
+   "hand": false,
+   "backdrop": "none"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g31",
+  "kind": "domino",
+  "start": 0.2,
+  "duration": 7,
+  "title": "",
+  "items": [
+   {
+    "id": "i31_0",
+    "title": "Drought"
+   },
+   {
+    "id": "i31_1",
+    "title": "Hunger"
+   },
+   {
+    "id": "i31_2",
+    "title": "Migration"
+   },
+   {
+    "id": "i31_3",
+    "title": "War"
+   }
+  ],
+  "style": {
+   "accent": "#ffd23f",
+   "ink": "#0b0b0d",
+   "card": "#ffffff",
+   "font": "Archivo Black",
+   "hand": false,
+   "backdrop": "dim"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g32",
+  "kind": "boxes",
+  "start": 0.2,
+  "duration": 7,
+  "title": "",
+  "items": [
+   {
+    "id": "i32_0",
+    "title": "Sleep",
+    "note": "Where it starts"
+   },
+   {
+    "id": "i32_1",
+    "title": "Focus"
+   },
+   {
+    "id": "i32_2",
+    "title": "Mood"
+   },
+   {
+    "id": "i32_3",
+    "title": "Energy"
+   },
+   {
+    "id": "i32_4",
+    "title": "Memory"
+   }
+  ],
+  "style": {
+   "accent": "#4f7dff",
+   "ink": "#eef2ff",
+   "card": "#0e1322",
+   "font": "Inter",
+   "hand": false,
+   "backdrop": "blur"
+  },
+  "seed": 1
+ },
+ {
+  "id": "g33",
+  "kind": "quote",
+  "start": 0.2,
+  "duration": 8,
+  "title": "The impediment to action advances action. What stands in the way becomes the way.",
+  "items": [
+   {
+    "id": "i33_0",
+    "title": "Marcus Aurelius",
+    "note": "Meditations, V.20"
+   }
+  ],
+  "style": {
+   "accent": "#c9a45c",
+   "ink": "#f3efe6",
+   "card": "#101218",
+   "font": "Merriweather",
+   "hand": false,
+   "backdrop": "none"
+  },
+  "seed": 1
+ }
+]

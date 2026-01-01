@@ -1,0 +1,116 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The export window (phase Ç3b, decision 9; DENEME-4, worker W: the outputs
+   ticked, the settings on the left, what will be written on the right) and
+   the export's in / out points on the timeline's ruler. Design values only
+   (tokens.css = TASARIM.md). */
+
+/* ---- the window ------------------------------------------------------------- */
+/* Wider than 'lg': two columns. It fits 1366 × 768 without scrolling; on a
+   narrow window the right column goes under the left. */
+/* (960, was 880: with two settings side by side a choice had about 130 px
+   for its words and showed "1920 × 1080 (proj", "High (recommenc": 22 Nov, L9.) */
+.ui-dialog.xw-dialog { width: min(960px, calc(100vw - var(--space-5) * 2)); }
+.xw { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
+.xw-presets { display: flex; }
+.xw-presets .ui-seg { flex: 1; }
+/* The presets by the length of their names ("YouTube 1080p" was cut in four
+   equal parts, audit item 9), the spare room shared. */
+.xw .ui-seg-part { flex: 1 1 auto; }
+.xw-cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 300px); gap: var(--space-4); align-items: start; }
+@media (max-width: 920px) { .xw-cols { grid-template-columns: minmax(0, 1fr); } }
+
+.xw-settings { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.xw-head { color: var(--text); font-size: var(--fs-13); font-weight: var(--fw-semibold); }
+/* An output: its tick, and under it (ticked) its own settings, set in. */
+.xw-out { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-2) var(--space-3); border: var(--border-w) solid var(--line); border-radius: var(--r-card); }
+.xw-out.is-on { background: var(--bg-raised); border-color: transparent; }
+.xw-out .ui-check { font-weight: var(--fw-medium); }
+.xw-out-body { display: flex; flex-direction: column; gap: var(--space-2); padding-left: calc(var(--check) + var(--space-2)); }
+.xw-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-2) var(--space-3); }
+/* The names here are short ("Format", "Kare hızı"): the room goes to the choice
+   (every setting of an output, so they stand in one line). */
+.xw-out-body .ui-field-label { flex-basis: 76px; }
+.xw-out-body .ui-field-hint { padding-left: calc(76px + var(--space-3)); }
+.xw-checks { display: flex; flex-direction: column; gap: 0; }
+.xw-checks .ui-check { font-size: var(--fs-12); font-weight: var(--fw-regular); color: var(--text-2); }
+/* In and Out, a row each: the time, then its "at the playhead" button with
+   room between them (on one row the button sat against the number, "5.00 s
+   At the playhead", and in Turkish lay over it: 22 Nov, L9). */
+.xw-range { display: grid; grid-template-columns: max-content max-content; justify-content: start; align-items: center; gap: var(--space-2) var(--space-4); }
+/* (Room for "12,00 sn": the Turkish unit is a letter longer, and the block's
+   72 px cut its last letter.) */
+.xw-range .ui-input.ui-number { width: 88px; }
+.xw-hint { margin: 0; color: var(--text-2); font-size: var(--fs-12); }
+.xw-hint.is-warn { color: var(--warn); }
+
+/* ---- the right column: what stops it, what will be written, the check -------- */
+.xw-side { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.xw-blocked {
+  display: flex; align-items: flex-start; gap: var(--space-2); margin: 0; padding: var(--space-2);
+  border: var(--border-w) solid var(--danger-line); border-radius: var(--r-ctl); background: var(--danger-soft);
+  color: var(--danger-text); font-size: var(--fs-12); line-height: 1.4;
+}
+.xw-blocked .ui-icon { flex: none; margin-top: 2px; }
+.xw-summary {
+  display: flex; flex-direction: column; gap: var(--space-2);
+  padding: var(--space-3); border-radius: var(--r-card); background: var(--bg-raised);
+  color: var(--text-3); font-size: var(--fs-12); line-height: 1.4;
+}
+.xw-file { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.xw-file-name { overflow: hidden; color: var(--text); font-weight: var(--fw-medium); text-overflow: ellipsis; white-space: nowrap; }
+.xw-file-note { color: var(--text-3); font-size: var(--fs-11); }
+.xw-total { padding-top: var(--space-2); border-top: var(--border-w) solid var(--line); color: var(--text-2); }
+.xw-refused { color: var(--danger-text); }
+
+/* The check: one calm line that opens a grouped list. */
+.xw-pre { display: flex; flex-direction: column; min-width: 0; border-radius: var(--r-card); background: var(--bg-raised); }
+.xw-pre-line {
+  display: flex; align-items: center; gap: var(--space-2); width: 100%; min-height: var(--ctl-sm); padding: var(--space-1) var(--space-3);
+  border: 0; border-radius: var(--r-card); background: transparent; color: var(--text-2); font: inherit; font-size: var(--fs-12); text-align: left;
+}
+button.xw-pre-line { cursor: pointer; }
+button.xw-pre-line:hover { background: var(--bg-hover); color: var(--text); }
+.xw-pre-mark { flex: none; color: var(--warn); }
+.xw-pre.is-clear .xw-pre-line .ui-icon { color: var(--accent-text); }
+.xw-pre-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.xw-pre-spin { flex: none; animation: xw-spin var(--dur-slow) linear infinite; }
+@keyframes xw-spin { to { transform: rotate(360deg); } }
+html.motion-off .xw-pre-spin { animation: none; }
+.xw-pre-list { display: flex; flex-direction: column; gap: var(--space-3); max-height: 260px; padding: var(--space-1) var(--space-3) var(--space-3); overflow-y: auto; }
+.xw-pre-group { display: flex; flex-direction: column; gap: var(--space-1); }
+.xw-pre-head { display: flex; align-items: center; gap: var(--space-2); color: var(--text); font-size: var(--fs-12); font-weight: var(--fw-medium); }
+.xw-pre-head .ui-icon { color: var(--text-3); }
+.xw-pre-times { display: flex; flex-wrap: wrap; gap: var(--space-1); padding-left: calc(14px + var(--space-2)); }
+.xw-pre-time {
+  height: 22px; padding: 0 var(--space-2); border: var(--border-w) solid var(--line); border-radius: var(--r-pill);
+  background: transparent; color: var(--text-2); font-family: var(--font-mono); font-size: var(--fs-11); cursor: pointer;
+}
+.xw-pre-time:hover { border-color: var(--line-strong); background: var(--bg-hover); color: var(--text); }
+.xw-pre-item { display: flex; align-items: center; gap: var(--space-2); padding-left: calc(14px + var(--space-2)); font-size: var(--fs-12); }
+.xw-pre-item-text { flex: 1; min-width: 0; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; color: var(--text-2); line-height: 1.35; }
+
+/* ---- the in and out points on the timeline ---------------------------------- */
+.tl-exportmark {
+  position: absolute; top: 0; bottom: 0; width: 0; z-index: var(--z-sticky); pointer-events: none;
+  border-left: var(--border-w) solid var(--mark);
+}
+.tl-exportrange {
+  position: absolute; top: 0; height: var(--space-1); z-index: var(--z-sticky); pointer-events: none;
+  background: var(--mark); border-radius: var(--r-clip);
+}
+
+/* ---- REF-AB item 11: the name and place, the cover ---------------------------- */
+.xw-where { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: var(--space-2) var(--space-3); }
+@media (max-width: 920px) { .xw-where { grid-template-columns: minmax(0, 1fr); } }
+.xw-place { display: flex; align-items: center; gap: var(--space-1); min-width: 0; }
+.xw-place .ui-input { flex: 1; min-width: 0; color: var(--text-2); text-overflow: ellipsis; }
+.xw-cover { display: flex; flex-direction: column; gap: var(--space-2); padding-bottom: var(--space-2); border-bottom: var(--border-w) solid var(--line); }
+.xw-cover-pic {
+  display: flex; align-items: center; justify-content: center; width: 100%; max-height: 180px; overflow: hidden;
+  border-radius: var(--r-clip); background: var(--bg-app);
+}
+.xw-cover-pic img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.xw-cover-wait { color: var(--text-3); font-size: var(--fs-11); }
+.xw-cover-change { display: flex; flex-direction: column; gap: var(--space-2); }
+.xw-cover .ui-btn-ghost { align-self: flex-start; }

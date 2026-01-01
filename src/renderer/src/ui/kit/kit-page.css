@@ -1,0 +1,21 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The building blocks page's own layout (#ui-kit). Values from ui/tokens.css only. */
+html, body, #root { overflow: auto; height: auto; min-height: 100%; }
+.kit-page { min-height: 100vh; padding: var(--space-4) var(--space-4) calc(var(--space-4) * 4); background: var(--bg-app); color: var(--text); font-family: var(--font); font-size: var(--fs-13); user-select: text; }
+.kit-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-4); margin-bottom: var(--space-4); }
+.kit-title { font-size: var(--fs-15); font-weight: var(--fw-semibold); color: var(--text); }
+.kit-lead { margin-top: var(--space-1); color: var(--text-2); }
+.kit-lang { width: 240px; }
+.kit-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); align-items: start; }
+.kit-card { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; padding: var(--pad-panel); border-radius: var(--r-card); background: var(--bg-panel); }
+.kit-card.is-wide { grid-column: 1 / -1; }
+.kit-card-title { color: var(--text-3); font-size: var(--fs-12); font-weight: var(--fw-medium); }
+.kit-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); min-width: 0; }
+.kit-col { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.kit-mono { font-family: var(--font-mono); font-size: var(--fs-12); color: var(--text-2); }
+.kit-dim { color: var(--text-2); font-size: var(--fs-12); }
+.kit-static-menu { display: flex; }
+.kit-icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: var(--space-1) var(--space-3); }
+.kit-icon { display: flex; align-items: center; gap: var(--space-2); min-width: 0; height: var(--ctl-sm); color: var(--text); }
+.kit-icon-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-3); font-family: var(--font-mono); font-size: var(--fs-11); }

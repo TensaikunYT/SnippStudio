@@ -1,0 +1,135 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The editor's shell (SnippStudio phase 3c.1): the top bar, the left dock and
+   their pop-up surfaces. Moved out of styles.css; design values only
+   (src/test/ui-tokens.test.ts). The controls themselves are the building
+   blocks (ui/kit.css); this sheet only places them. */
+
+/* ---- Top bar ------------------------------------------------------------------ */
+/* The top bar is the window's own ground (no surface, no line under it): the
+   panels below stand on it by their tone. */
+.topbar {
+  position: relative; display: flex; align-items: center; gap: var(--space-1); padding: 0 var(--space-1);
+  background: var(--bg-app);
+}
+.topbar .logo {
+  margin: 0 var(--space-3) 0 var(--space-2); color: var(--text);
+  font-size: var(--fs-14); font-weight: var(--fw-semibold); letter-spacing: -0.01em; cursor: default;
+}
+.topbar .spacer { flex: 1; }
+.topbar .status {
+  max-width: 340px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  color: var(--text-2); font-size: var(--fs-12);
+}
+.topbar .tb-status-wide { max-width: 260px; }
+.topbar .progressbar { width: 160px; height: var(--space-2); overflow: hidden; border-radius: var(--r-pill); background: var(--bg-raised); }
+.topbar .progressbar > div { height: 100%; background: var(--accent); transition: width var(--dur-fast) var(--ease); }
+
+/* v3: the project's name in the middle of the bar, the document's title. */
+.tb-name.ui-btn { position: absolute; left: 50%; transform: translateX(-50%); min-width: 0; max-width: 280px; color: var(--text); font-size: var(--fs-13); font-weight: var(--fw-medium); }
+.tb-name .tb-name-dot { display: inline-flex; flex: none; color: var(--text-3); }
+.tb-name .tb-name-unsaved { width: var(--space-2); height: var(--space-2); border-radius: var(--r-pill); background: var(--text-2); }
+/* The dot (or the check) and the name side by side, a gap between (phase 3c.4a). */
+.tb-name .ui-btn-label { display: inline-flex; align-items: center; gap: var(--space-2); }
+/* (A line taller than the button's 1: with `overflow: hidden` the marks over
+   Turkish capitals, the dots of İ and Ö, the breve of Ğ, were cut off: phase 11b, U1.) */
+.tb-name .tb-name-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; line-height: 1.5; }
+
+.tb-export { display: flex; flex: none; }
+.tb-export > .ui-btn.ui-btn:first-child { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.tb-export > .tb-export-more.ui-btn { margin-left: 1px; border-top-left-radius: 0; border-bottom-left-radius: 0; }
+
+@media (max-width: 1240px) { .tb-name.ui-btn { max-width: 170px; } }
+
+/* ---- A pop-up panel under a button (the canvas) -------------------------------- */
+.canvas-menu { position: relative; flex: none; }
+.shell-pop {
+  position: absolute; top: 100%; left: 0; z-index: var(--z-pop); margin-top: var(--space-1);
+  display: flex; flex-direction: column; gap: 1px; padding: var(--space-1);
+  border-radius: var(--r-card); background: var(--bg-raised);
+  box-shadow: var(--shadow-pop); color: var(--text); font-size: var(--fs-13);
+}
+.shell-pop-title { padding: var(--space-1) var(--space-2); color: var(--text); font-size: var(--fs-12); font-weight: var(--fw-semibold); }
+.shell-pop-hint {
+  margin-top: var(--space-2); padding: 0 var(--space-2) var(--space-1);
+  color: var(--text-3); font-size: var(--fs-11); line-height: 1.4;
+}
+.canvas-pop { width: 360px; max-height: min(640px, calc(100vh - 80px)); overflow-y: auto; }
+.canvas-pop .canvas-choice {
+  display: flex; align-items: center; gap: var(--space-2); width: 100%; height: var(--ctl); padding: 0 var(--space-2);
+  border: 0; border-radius: var(--r-ctl); background: transparent; color: var(--text); text-align: left; font-size: var(--fs-13);
+}
+.canvas-pop .canvas-choice:hover:not(:disabled) { background: var(--bg-hover); border-color: transparent; }
+.canvas-pop .canvas-choice.is-on { background: var(--bg-hover); }
+.canvas-pop .canvas-choice-name { flex: 1; min-width: 0; }
+.canvas-pop .canvas-choice small { color: var(--text-3); font-family: var(--font-mono); font-size: var(--fs-11); white-space: nowrap; }
+
+/* ---- The background picker (the canvas pop-up and Project → Background) ----------- */
+.backdrop-picker { margin-top: var(--space-3); }
+.backdrop-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2); margin: var(--space-2) 0; }
+/* The swatches size to their column wherever the picker is, never to the canvases' own pixel width. */
+.backdrop-grid > * { min-width: 0; }
+.backdrop-grid button {
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: var(--space-1);
+  height: auto; min-width: 0; padding: var(--space-1); overflow: hidden;
+  border-radius: var(--r-ctl); background: var(--bg-hover); color: var(--text-2); font-size: var(--fs-11);
+}
+.backdrop-grid button:hover:not(:disabled) { background: var(--line); }
+.backdrop-grid button canvas { display: block; width: 96px; max-width: 100%; aspect-ratio: 16 / 9; border-radius: var(--r-clip); }
+.backdrop-grid button span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.backdrop-grid button.is-on, .backdrop-grid button.is-on:hover:not(:disabled) { background: var(--accent-soft); color: var(--accent-text); box-shadow: inset 0 0 0 1px var(--accent); }
+.backdrop-tints { display: flex; flex-wrap: wrap; gap: var(--space-1); margin: var(--space-2) 0; }
+.backdrop-tints button {
+  display: inline-flex; align-items: center; gap: var(--space-1); height: var(--ctl-sm); padding: 0 var(--space-2);
+  border-radius: var(--r-ctl); background: var(--bg-hover); color: var(--text-2); font-size: var(--fs-11);
+}
+.backdrop-tints button.is-on { background: var(--accent-soft); color: var(--text); }
+.backdrop-tints .backdrop-tint-swatch { width: 12px; height: 12px; border-radius: var(--r-clip); }
+.backdrop-controls { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); margin: var(--space-1) 0; color: var(--text-2); font-size: var(--fs-12); }
+.backdrop-controls label { display: flex; align-items: center; gap: var(--space-2); }
+.backdrop-controls input[type='range'] { width: 110px; max-width: 100%; }
+
+/* ---- The window's frame (from styles.css, phase 3c.4b) ---------------------------- */
+/* Top bar, the work area, the splitter, the timeline (App.tsx sets the rows). */
+/* v3 (tarifler/UI-YENI.md): the four regions are cards on the ground, a
+   --gap-card apart and as far from the window's edges; the splitters are the
+   gaps between them. The top bar stands on the ground itself. */
+.app { display: grid; grid-template-rows: 48px 1fr 6px 300px; height: 100%; padding: 0 var(--gap-card) var(--gap-card); }
+/* Library, splitter, preview, splitter, Inspector. */
+.main { display: grid; grid-template-columns: 220px 6px 1fr 6px 320px; min-height: 0; }
+/* (The preview and the timeline keep their overflow: their menus open over
+   the card's edge; what is drawn in them is rounded by their own parts.) */
+.workspace-dock, .main > .preview, .inspector, .app > .timeline { border-radius: var(--r-card); }
+.workspace-dock, .inspector { overflow: hidden; }
+.splitter { position: relative; z-index: var(--z-timeline); background: transparent; transition: background-color var(--dur-fast) ease; }
+/* Under the pointer the gap shows a thin line of the accent in its middle, not a 6 px bar. */
+.splitter::after { content: ''; position: absolute; inset: 0; margin: auto; border-radius: var(--r-pill); background: transparent; transition: background-color var(--dur-fast) ease; }
+.splitter.v::after { width: 2px; height: 48px; max-height: 40%; }
+.splitter.h::after { width: 48px; height: 2px; max-width: 40%; }
+.splitter:hover::after { background: var(--line-strong); }
+.splitter:active::after { background: var(--accent); }
+.splitter.h:hover::after, .splitter.h:active::after { width: 96px; }
+.splitter.v { cursor: col-resize; }
+.splitter.h { cursor: row-resize; }
+/* Phase 3c.Y (K1): the timeline's splitter takes the focus (arrow keys move
+   it); it shows the same accent as under the pointer. */
+.splitter:focus-visible { outline: none; box-shadow: none; background: var(--accent); }
+.splitter:focus-visible::after { background: var(--accent); }
+
+/* The preview's place: the one preview is drawn into .preview-host. */
+.preview { position: relative; display: flex; flex-direction: column; min-width: 0; min-height: 0; background: var(--bg-panel); }
+.preview-slot, .preview-host { position: relative; display: flex; flex: 1; flex-direction: column; min-width: 0; min-height: 0; }
+
+/* Files dragged over the window. */
+.drop-overlay {
+  position: fixed; inset: 0; z-index: var(--z-pop); display: flex; align-items: center; justify-content: center;
+  border: 3px dashed var(--accent); background: color-mix(in srgb, var(--bg-app) 75%, transparent);
+  color: var(--accent); font-size: var(--fs-15); font-weight: var(--fw-semibold); pointer-events: none;
+}
+
+/* A right-click menu placed at the pointer (FloatingMenu, the timeline's, the template picture's). */
+.ctx-menu { position: fixed; z-index: var(--z-pop); padding: var(--space-1); border-radius: var(--r-card); background: var(--bg-raised); box-shadow: var(--shadow-pop); }
+.ctx-menu button { display: block; width: 100%; border: none; background: transparent; text-align: left; }
+.ctx-menu button:hover { background: var(--bg-hover); }
+.ctx-title { padding: var(--space-1) var(--space-2); color: var(--text-3); font-size: var(--fs-11); }
+.ctx-sep { height: var(--space-2); margin: 0; background: transparent; }

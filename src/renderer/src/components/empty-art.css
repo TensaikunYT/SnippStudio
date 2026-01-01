@@ -1,0 +1,11 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The empty states' pictures (components/empty-art.tsx, REF-AB item 7). Design
+   values only (src/test/ui-tokens.test.ts). */
+.empty-art { flex: none; color: var(--text-3); fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.empty-art .ea-fill { fill: var(--bg-raised); }
+.empty-art .ea-accent { color: var(--accent-text); }
+.empty-art .ea-accent .ea-fill { fill: var(--accent-soft); }
+/* An empty state with a picture: the picture, its sentence, its one action. */
+.ui-empty.has-art { gap: var(--space-3); padding: var(--space-5) var(--space-3); }
+.ui-empty.has-art .ui-empty-text { max-width: 280px; color: var(--text-2); font-size: var(--fs-12); line-height: 1.45; }

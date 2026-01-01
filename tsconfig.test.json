@@ -1,0 +1,29 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2022",
+    "outDir": "out-test",
+    "noEmit": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "types": [
+      "node"
+    ],
+    "lib": [
+      "es2023",
+      "dom",
+      "dom.iterable"
+    ],
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  },
+  "include": [
+    "src/test/**/*.ts",
+    "src/renderer/src/types.ts",
+    "src/renderer/src/subtitles/srt.ts",
+    "src/renderer/src/subtitles/models.ts",
+    "src/renderer/src/audio/envelope.ts"
+  ]
+}

@@ -1,0 +1,7 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:transparent}*{box-sizing:border-box}body{font-family:Segoe UI,Arial,sans-serif;color:#fff}.a{position:absolute}.card{background:rgba(15,20,30,.82);border:2px solid rgba(255,255,255,.25);border-radius:18px;box-shadow:0 8px 30px rgba(0,0,0,.4)}</style>
+<div class="a card" style="left:120px;top:90px;padding:24px 40px;width:640px;display:flex;gap:30px;align-items:center"><svg width="260" height="260" viewBox="-130 -130 260 260"><circle id=z r=0 fill="rgba(229,72,77,.25)" stroke="#e5484d" stroke-width="5" stroke-dasharray="14 10"/><circle r="7" fill="#f5b942"/><line id=ln x1=0 y1=0 x2=0 y2=0 stroke="#fff" stroke-width="3"/></svg><div><div style="font-size:26px;color:#ccc">YASAK BÖLGE</div><div style="font-size:110px;font-weight:800;line-height:1"><span id=n>0</span></div><div style="font-size:30px">km yarıçap</div></div></div>
+<script>
+var DUR=4.5,q=function(i){return document.getElementById(i)},E=function(x){return Math.max(0,Math.min(1,x))},S=function(t,a,b){return 1-Math.pow(1-E((t-a)/(b-a)),3)};
+function draw(t){var p=S(t,.4,2.6),o=1-S(t,4,4.5);document.body.style.opacity=S(t,0,.3)*o;q('z').setAttribute('r',120*p);q('ln').setAttribute('x2',120*p);q('n').textContent=Math.round(30*p)}
+var ext=false;window.renderOut=function(t){ext=true;draw(t)};window.READY=true;var t0=performance.now();(function L(){if(!ext)draw(((performance.now()-t0)/1000)%DUR);requestAnimationFrame(L)})();
+</script>

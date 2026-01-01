@@ -1,0 +1,8 @@
+{
+  "name": "SnippStudio",
+  "appId": "com.snippstudio.app",
+  "agentId": "snipp",
+  "projectExt": "snipp",
+  "inheritFrom": ["Snipp Dev", "Snipp"],
+  "legacyProfiles": ["AutoCut Studio", "autocut-studio"]
+}

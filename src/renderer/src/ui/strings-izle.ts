@@ -1,0 +1,35 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 SnippStudio contributors
+// Dalga 3, İ: the watch-and-note mode (Desktop\SnippStudio\IZLE-PLAN.md).
+// Few words on purpose: the mode is a quiet screen. English and Turkish,
+// the same parameters. Spread into STRINGS by ui/strings.ts.
+export const STRINGS_IZLE = {
+  'izle.button': { en: 'Watch', tr: 'İzle' },
+  'izle.button.hint': { en: 'Watch the film large and leave notes as it plays', tr: 'Filmi büyük izle, oynarken not bırak' },
+  'izle.button.exit': { en: 'Back to editing', tr: 'Düzenlemeye dön' },
+  'keys.act.watchMode': { en: 'Watch and note mode', tr: 'İzle ve not ver kipi' },
+  'izle.name': { en: 'Watch and note', tr: 'İzle ve not ver' },
+  'izle.notes': { en: 'Notes', tr: 'Notlar' },
+  'izle.notes.empty': { en: 'Press N or double-click the picture', tr: 'N\'ye bas ya da kareye çift tıkla' },
+  'izle.play': { en: 'Play', tr: 'Oynat' },
+  'izle.pause': { en: 'Pause', tr: 'Duraklat' },
+  'izle.pen': { en: 'Draw on the frame', tr: 'Kareye çiz' },
+  'izle.keys': { en: 'Click: play · double-click or N: note · Esc: exit', tr: 'Tık: oynat · çift tık ya da N: not · Esc: çık' },
+  'izle.strip': { en: 'The film: click to go there, drag for a range note', tr: 'Film: tıkla oraya git, sürükle aralık notu' },
+  'izle.pin': { en: 'Note {num} · {time}', tr: 'Not {num} · {time}' },
+  'izle.remove': { en: 'Delete note {num}', tr: '{num}. notu sil' },
+  'izle.send.one': { en: 'Send to agent ({n} note)', tr: 'Ajana gönder ({n} not)' },
+  'izle.send.other': { en: 'Send to agent ({n} notes)', tr: 'Ajana gönder ({n} not)' },
+  'izle.send.none': { en: 'Send to agent', tr: 'Ajana gönder' },
+  'izle.send.queued': { en: 'Waiting for the agent ({n})', tr: 'Ajanı bekliyor ({n})' },
+  'izle.access': { en: 'Turn on agent access', tr: 'Ajan erişimini aç' },
+  'izle.review': { en: 'Watch what changed ({n})', tr: 'Değişeni izle ({n})' },
+  'izle.draft': { en: 'Review the draft', tr: 'Taslağı incele' },
+  'izle.bubble': { en: 'The note', tr: 'Not' },
+  'izle.bubble.placeholder': { en: 'What should change?', tr: 'Ne değişmeli?' },
+  'izle.bubble.kinds': { en: 'What the note asks for', tr: 'Not ne istiyor' },
+  'izle.kind.fix': { en: 'fix', tr: 'düzelt' },
+  'izle.kind.cut': { en: 'cut', tr: 'kes' },
+  'izle.kind.animate': { en: 'add animation', tr: 'animasyon ekle' },
+  'izle.kind.free': { en: 'question', tr: 'soru' },
+} as const

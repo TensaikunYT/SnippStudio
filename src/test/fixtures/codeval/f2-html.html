@@ -1,0 +1,33 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>F2 HTML, CSS and GSAP</title>
+<style>
+html,body{margin:0;height:100%;overflow:hidden;background:transparent;font-family:"Segoe UI",Arial,sans-serif}
+.card{position:absolute;left:8vw;top:12vh;padding:3vh 3vw;border-radius:2vh;background:rgba(20,24,34,.82);color:#fff;box-shadow:0 1vh 4vh rgba(0,0,0,.45)}
+.card h1{margin:0;font-size:7vh;font-weight:800;letter-spacing:.02em}
+.card p{margin:1vh 0 0;font-size:3.2vh;color:#c9d3e6}
+.icon{position:absolute;right:10vw;top:14vh;width:18vh;height:18vh;animation:spin 4s linear infinite}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.pulse{position:absolute;left:8vw;bottom:16vh;width:10vh;height:10vh;border-radius:50%;background:#ff6b5a;animation:pulse 1.2s ease-in-out infinite alternate}
+@keyframes pulse{from{transform:scale(.6);opacity:.5}to{transform:scale(1.15);opacity:1}}
+.badge{position:absolute;left:24vw;bottom:17vh;padding:1.5vh 2.5vw;border-radius:5vh;background:#3ddc97;color:#06281a;font-size:3.6vh;font-weight:700;transform:translateX(0);transition:transform 1.5s cubic-bezier(.2,.8,.2,1),background-color 1.5s linear}
+.badge.on{transform:translateX(34vw);background-color:#ffd166}
+.bar{position:absolute;left:8vw;right:8vw;bottom:7vh;height:1.6vh;border-radius:1vh;background:rgba(255,255,255,.2);overflow:hidden}
+.bar i{display:block;height:100%;width:100%;background:#7aa2ff;transform-origin:0 50%;transform:scaleX(0)}
+</style>
+<script src="gsap.min.js"></script>
+</head><body>
+<div class="card"><h1 id="title">Hello from HTML</h1><p id="sub">CSS, SVG and GSAP, no canvas</p></div>
+<svg class="icon" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="#7aa2ff" stroke-width="8"/><path d="M50 14 L60 42 L88 50 L60 58 L50 86 L40 58 L12 50 L40 42 Z" fill="#ffd166"/></svg>
+<div class="pulse"></div>
+<div class="badge" id="badge">transition</div>
+<div class="bar"><i id="fill"></i></div>
+<script>
+// Written the way one writes for a browser: GSAP tweens that play by
+// themselves, CSS keyframes, one CSS transition started by a timer.
+gsap.from('#title', { y: -60, opacity: 0, duration: 1.2, ease: 'power3.out' })
+gsap.from('#sub', { x: -80, opacity: 0, duration: 1, delay: 0.6 })
+gsap.to('#fill', { scaleX: 1, duration: 6, ease: 'none' })
+gsap.to('.card', { rotation: 3, duration: 1.5, delay: 2.5, yoyo: true, repeat: 1, ease: 'sine.inOut' })
+setTimeout(function () { document.getElementById('badge').classList.add('on') }, 2000)
+</script>
+</body></html>

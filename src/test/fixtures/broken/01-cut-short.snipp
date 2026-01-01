@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "name": "Broken sample",
+  "settings": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "mode": "frame",
+  "tracks": [
+    {
+      "id": "v1",
+      "kind": "video",
+      "name": "V1",
+      "clipIds": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "id": "a1",
+      "kind": "audio",
+      "name": "A1",
+      "clipIds": [
+        "s"
+      ]
+    }
+  ],
+  "clips": {
+    "a": {
+      "id": "a",
+      "assetId": "vid",
+      "trackId": "v1",
+      "start": 0,
+      "inPoint": 0,
+      "duration": 4,
+      "transform": {
+        "x": 960,
+        "y": 540,
+        "scale": 1,
+        "rotation": 0
+      },
+      "volume": 1,
+      "linkId": "L",
+      "aud

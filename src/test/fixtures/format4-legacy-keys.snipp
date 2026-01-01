@@ -1,0 +1,191 @@
+{
+  "version": 1,
+  "formatVersion": 4,
+  "name": "Old keyed film",
+  "settings": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "tracks": [
+    {
+      "id": "v1",
+      "kind": "video",
+      "name": "V1",
+      "clipIds": [
+        "a",
+        "b",
+        "cmp"
+      ]
+    },
+    {
+      "id": "a1",
+      "kind": "audio",
+      "name": "A1",
+      "clipIds": []
+    }
+  ],
+  "clips": {
+    "a": {
+      "id": "a",
+      "assetId": "vid",
+      "trackId": "v1",
+      "start": 0,
+      "inPoint": 0,
+      "duration": 6,
+      "transform": {
+        "x": 960,
+        "y": 540,
+        "scale": 1,
+        "rotation": 0
+      },
+      "volume": 1,
+      "opacity": 0.8,
+      "keyframes": [
+        {
+          "id": "k1",
+          "time": 0,
+          "x": 100,
+          "y": 200,
+          "scale": 1,
+          "rotation": 0,
+          "opacity": 1
+        },
+        {
+          "id": "k2",
+          "time": 2,
+          "x": 900,
+          "y": 300,
+          "scale": 1.5,
+          "rotation": 0.5,
+          "easing": "linear"
+        },
+        {
+          "id": "k3",
+          "time": 5,
+          "x": 400,
+          "y": 600,
+          "scale": 2,
+          "rotation": -0.3,
+          "opacity": 0.2,
+          "easing": "easeOut"
+        }
+      ]
+    },
+    "b": {
+      "id": "b",
+      "assetId": "vid",
+      "trackId": "v1",
+      "start": 6,
+      "inPoint": 0,
+      "duration": 6,
+      "transform": {
+        "x": 960,
+        "y": 540,
+        "scale": 1,
+        "rotation": 0
+      },
+      "volume": 1,
+      "keyframes": [
+        {
+          "id": "m1",
+          "time": 4,
+          "x": 0,
+          "y": 0,
+          "scale": 3,
+          "rotation": 1
+        },
+        {
+          "id": "m2",
+          "time": 1,
+          "x": 500,
+          "y": 50,
+          "scale": 1,
+          "rotation": 0
+        }
+      ],
+      "channels": {
+        "scale": [
+          {
+            "id": "own",
+            "time": 0.5,
+            "value": 0.7
+          },
+          {
+            "id": "own2",
+            "time": 3,
+            "value": 1.2
+          }
+        ],
+        "x": []
+      }
+    },
+    "cmp": {
+      "id": "cmp",
+      "assetId": "",
+      "trackId": "v1",
+      "start": 12,
+      "inPoint": 0,
+      "duration": 4,
+      "transform": {
+        "x": 960,
+        "y": 540,
+        "scale": 1,
+        "rotation": 0
+      },
+      "volume": 1,
+      "nested": {
+        "clips": [
+          {
+            "id": "child",
+            "assetId": "vid",
+            "trackId": "v1",
+            "start": 0,
+            "inPoint": 0,
+            "duration": 4,
+            "transform": {
+              "x": 960,
+              "y": 540,
+              "scale": 1,
+              "rotation": 0
+            },
+            "volume": 1,
+            "keyframes": [
+              {
+                "id": "c1",
+                "time": 0,
+                "x": 960,
+                "y": 540,
+                "scale": 1,
+                "rotation": 0
+              },
+              {
+                "id": "c2",
+                "time": 3,
+                "x": 1200,
+                "y": 540,
+                "scale": 1.25,
+                "rotation": 0
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "assets": [
+    {
+      "id": "vid",
+      "kind": "video",
+      "name": "vid.mp4",
+      "path": "C:\\media\\vid.mp4",
+      "url": "",
+      "size": 1000,
+      "duration": 60,
+      "width": 1920,
+      "height": 1080,
+      "hasAudio": false
+    }
+  ],
+  "captions": []
+}

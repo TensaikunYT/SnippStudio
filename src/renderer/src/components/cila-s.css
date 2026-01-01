@@ -1,0 +1,37 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* Çekirdek cila S: what "Remove silence" says it will cut and leave, and the
+   transcript panel's pauses, findings list and selection actions. Design
+   values only (src/test/ui-tokens.test.ts). */
+
+/* ---- Remove silence: the tracks it cuts and the ones it leaves ---------------------- */
+.silence-panel .cs-kept, .cs-kept.win-hint { color: var(--text-3); opacity: 0.75; }
+.silence-panel [data-testid='silence.scope'] { color: var(--text-2); }
+
+/* ---- The transcript ------------------------------------------------------------------ */
+.cs-switch { display: flex; }
+.cs-switch .ui-switch-row { flex: 1; }
+.transcript-word.cs-pause { color: var(--text-3); font-size: var(--fs-11); white-space: nowrap; }
+.transcript-word.cs-pause.sel { color: var(--danger-text); }
+
+.cs-review { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-2); border-radius: var(--r-card); background: var(--bg-raised); }
+.cs-review-title { flex: 1; min-width: 0; color: var(--text); font-size: var(--fs-12); font-weight: var(--fw-semibold); }
+.cs-review-list { display: flex; flex-direction: column; gap: var(--space-1); max-height: 240px; overflow-y: auto; overscroll-behavior: contain; }
+.cs-review-row { display: flex; align-items: center; gap: var(--space-2); color: var(--text-2); font-size: var(--fs-12); line-height: 1.4; }
+.cs-review-time { color: var(--text-3); font-size: var(--fs-11); font-variant-numeric: tabular-nums; cursor: pointer; }
+.cs-review-time:hover { color: var(--text); }
+.cs-review-text { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.cs-review-text b { color: var(--text); font-weight: var(--fw-semibold); }
+.cs-review-row.on .cs-review-text b { color: var(--danger-text); text-decoration: line-through; }
+.cs-review-ctx, .cs-review-why { color: var(--text-3); }
+.ss-tracks { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); }
+/* "Where to cut?": the question above, the three choices one row across the window. */
+.ss-target .ui-field-row { flex-direction: column; align-items: stretch; gap: var(--space-1); }
+.ss-target .ui-field-label { flex: none; white-space: normal; }
+.ss-target .ui-seg { flex: 1; flex-wrap: nowrap; }
+/* The Remove button keeps its whole word (in Turkish it was cut to "Kal…"). */
+.silence-panel .silence-actions > .ui-btn.grow { flex: 1 0 auto; }
+/* The look tour (rule 2): every choice in this window is labelled above and
+   as wide as the window, like "where to cut". */
+.silence-panel .ui-field-row:has(> .ui-field-control > .ui-seg) { flex-direction: column; align-items: stretch; gap: var(--space-1); }
+.silence-panel .ui-field-row:has(> .ui-field-control > .ui-seg) > .ui-field-label { flex: none; }

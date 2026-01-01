@@ -1,0 +1,165 @@
+# SnippStudio on Windows, macOS and Linux (phase 10b.6, FAZ10-PLAN.md).
+# Prepared on a Windows PC and committed, never pushed or run by the session
+# that wrote it: macOS and Linux have not been built or run anywhere yet.
+# This is the first place they would be. What it does on each system:
+#   type check, unit tests, build, a codec probe (what WebCodecs offers there:
+#   the AAC / H.264 question of report M1-M2), the e2e scenarios that need no
+#   outside material and no speech model, the package, and "does the packaged
+#   app start".
+# Secrets come in only through `env:` (never written into a command); without
+# them the macOS package is signed ad hoc and not notarised, the Windows one
+# unsigned (electron-builder.config.cjs says how).
+name: platforms
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+concurrency:
+  group: platforms-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            dist: --win nsis --x64
+          - os: macos-latest # Apple silicon; the x64 package is built beside it
+            dist: --mac dmg zip --arm64 --x64
+          - os: ubuntu-latest
+            dist: --linux AppImage deb --x64
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 75
+    env:
+      ELECTRON_CACHE: ${{ github.workspace }}/.cache/electron
+      ELECTRON_BUILDER_CACHE: ${{ github.workspace }}/.cache/electron-builder
+      # The test material outside the checkout (scripts/e2e/harness-paths.mjs).
+      SNIPP_TESTDATA: ${{ runner.temp }}/testdata
+      # e2e scenarios that make their own media with ffmpeg and need no model.
+      E2E_ONLY: '^(import-media-to-timeline|edit-split-move-trim-delete-undo|captions-add-and-style|text-edit-delete-range|cut-marks-delete|shapes-add|transition-add|template-insert|save-close-open|legacy-project-opens-as-copy|export-mp4|faz10-export-no-aac|agent-server-tools-v2|candidate-while-playing|run-batch-and-adopt-candidate|ui-kit-keyboard-focus)$'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Cache Electron and electron-builder downloads
+        uses: actions/cache@v4
+        with:
+          path: |
+            .cache/electron
+            .cache/electron-builder
+          key: ${{ runner.os }}-electron-${{ hashFiles('package-lock.json') }}
+
+      - name: Tools (ffmpeg for the test media; Linux - xvfb)
+        shell: bash
+        run: |
+          case "$RUNNER_OS" in
+            Linux)   sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg xvfb ;;
+            macOS)   brew install ffmpeg ;;
+            Windows) choco install ffmpeg -y --no-progress ;;
+          esac
+
+      - name: Linux - allow Chromium's user-namespace sandbox (Ubuntu 24.04 AppArmor)
+        if: runner.os == 'Linux'
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test # includes the platform-neutrality scan (src/test/platform-neutral.test.ts)
+      - run: npm run build
+
+      - name: Codec probe (what WebCodecs offers on this system)
+        shell: bash
+        run: |
+          cat > "$RUNNER_TEMP/probe.cjs" <<'EOF'
+          const { app, BrowserWindow } = require('electron')
+          app.whenReady().then(async () => {
+            const w = new BrowserWindow({ show: false })
+            await w.loadURL('data:text/html,<p>probe')
+            const r = await w.webContents.executeJavaScript(`(async () => {
+              const v = async (codec) => (await VideoEncoder.isConfigSupported({ codec, width: 1920, height: 1080, bitrate: 8e6, framerate: 30 })).supported
+              const a = async (codec) => (await AudioEncoder.isConfigSupported({ codec, sampleRate: 48000, numberOfChannels: 2, bitrate: 192000 })).supported
+              const gpu = navigator.gpu ? !!(await navigator.gpu.requestAdapter()) : false
+              return { avc: await v('avc1.640028'), vp9: await v('vp09.00.40.08'), hevc: await v('hvc1.1.6.L120.B0'),
+                       aac: await a('mp4a.40.2'), opus: await a('opus'), webgpuAdapter: gpu }
+            })()`)
+            console.log('CODEC-PROBE', process.platform, process.arch, JSON.stringify(r))
+            app.quit()
+          })
+          EOF
+          if [ "$RUNNER_OS" = "Linux" ]; then xvfb-run -a npx electron "$RUNNER_TEMP/probe.cjs"; else npx electron "$RUNNER_TEMP/probe.cjs"; fi
+
+      - name: e2e (the scenarios that need no outside material)
+        shell: bash
+        run: |
+          mkdir -p "$SNIPP_TESTDATA"
+          if [ "$RUNNER_OS" = "Linux" ]; then
+            xvfb-run -a --server-args="-screen 0 1920x1080x24" npm run e2e -- --no-build "--only=$E2E_ONLY"
+          else
+            npm run e2e -- --no-build "--only=$E2E_ONLY"
+          fi
+
+      - name: macOS - the notarisation key as a file (only when the secret is set)
+        if: runner.os == 'macOS'
+        shell: bash
+        env:
+          APPLE_API_KEY_P8: ${{ secrets.APPLE_API_KEY_P8 }}
+        run: |
+          if [ -n "$APPLE_API_KEY_P8" ]; then
+            printf '%s' "$APPLE_API_KEY_P8" > "$RUNNER_TEMP/AuthKey.p8"
+            echo "APPLE_API_KEY=$RUNNER_TEMP/AuthKey.p8" >> "$GITHUB_ENV"
+          fi
+
+      # The weights are not in git: the package is built without them (an
+      # empty models-dist/), so the speech model is absent in these packages.
+      - name: Package
+        shell: bash
+        env:
+          CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
+          CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_PASSWORD }}
+          APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+          WIN_CSC_LINK: ${{ secrets.WIN_CERT_PFX_BASE64 }}
+          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_PASSWORD }}
+          SNIPP_CHANNEL: release
+        run: |
+          mkdir -p models-dist
+          npx electron-vite build
+          npx electron-builder ${{ matrix.dist }} --config electron-builder.config.cjs --publish never
+
+      - name: The packaged app starts (and is closed by its own PID)
+        shell: bash
+        run: |
+          case "$RUNNER_OS" in
+            Linux)   APP=$(ls release/*.AppImage | head -1); chmod +x "$APP"
+                     xvfb-run -a "$APP" --appimage-extract-and-run --no-sandbox --user-data-dir="$RUNNER_TEMP/p" & ;;
+            macOS)   release/mac-arm64/SnippStudio.app/Contents/MacOS/SnippStudio --user-data-dir="$RUNNER_TEMP/p" & ;;
+            Windows) release/win-unpacked/SnippStudio.exe --user-data-dir="$RUNNER_TEMP/p" & ;;
+          esac
+          PID=$!
+          sleep 20
+          if kill -0 "$PID" 2>/dev/null; then echo "still running after 20 s"; kill "$PID" || true; else wait "$PID"; echo "exited early: $?"; exit 1; fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: snippstudio-${{ runner.os }}
+          path: |
+            release/*.exe
+            release/*.dmg
+            release/*.zip
+            release/*.AppImage
+            release/*.deb
+            ${{ runner.temp }}/testdata/e2e-sonuc/**
+          if-no-files-found: warn

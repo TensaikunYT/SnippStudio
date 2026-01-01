@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Lower third</title>
+<style>html,body{margin:0;background:transparent;overflow:hidden}canvas{display:block}</style>
+</head>
+<body>
+<script>
+// A Snipp code template: a transparent page drawn live over the video.
+// Everything outside what draw(t) paints stays see-through.
+
+// ===== Settings =====================================================
+// The Inspector's "Parameters" section edits these values; the code below
+// stays as it is. Types: 'text', 'color' (empty: the project look, else the
+// template's own), 'number'.
+window.__params = [
+  {key: "name", label: "Name", type: "text", value: "Ada Lovelace"},
+  {key: "title", label: "Title", type: "text", value: "Mathematician"},
+  {key: "plate", label: "Plate", type: "color", value: "#101418"},
+  {key: "accent", label: "Accent", type: "color", value: ""},
+  {key: "duration", label: "Length (s)", type: "number", value: 5, min: 0.5, max: 600}
+]
+const P = {}
+for (const p of window.__params) P[p.key] = p.value
+const LOOK = window.__snippLook || {}
+const ACCENT = P.accent || LOOK.accent || '#ffb020'
+const FONT = (LOOK.font ? '"' + LOOK.font + '", ' : '') + '"Segoe UI", system-ui, sans-serif'
+const DUR = Math.max(0.5, +P.duration || 4)
+
+// ===== Drawing helper (text, easing, shapes) =========================
+const W = window.innerWidth || 1920
+const H = window.innerHeight || 1080
+const DPR = window.devicePixelRatio || 1
+/** One unit: 1 px of a 1080-line frame. */
+const U = Math.min(W, H) / 1080
+const cv = document.createElement('canvas')
+cv.width = Math.round(W * DPR)
+cv.height = Math.round(H * DPR)
+cv.style.width = W + 'px'
+cv.style.height = H + 'px'
+document.body.appendChild(cv)
+const g = cv.getContext('2d')
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x))
+/** 0 → 1 while t goes from a to b. */
+const span = (t, a, b) => clamp((t - a) / (b - a))
+const easeOut = (x) => 1 - Math.pow(1 - clamp(x), 3)
+const easeInOut = (x) => (x = clamp(x), x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2)
+const easeBack = (x) => (x = clamp(x), 1 + 2.7 * Math.pow(x - 1, 3) + 1.7 * Math.pow(x - 1, 2))
+/** 0 → 1 over the first inS seconds, 1 → 0 over the last outS. */
+const life = (t, inS = 0.6, outS = 0.5) => easeOut(span(t, 0, inS)) * (1 - easeInOut(span(t, DUR - outS, DUR)))
+const font = (weight, px) => weight + ' ' + Math.round(px) + 'px ' + FONT
+function measure(s, weight, px) {
+  g.font = font(weight, px)
+  return g.measureText(String(s)).width
+}
+function text(s, x, y, o = {}) {
+  g.save()
+  g.font = font(o.weight || 700, o.size || 48 * U)
+  g.textAlign = o.align || 'left'
+  g.textBaseline = o.baseline || 'alphabetic'
+  g.globalAlpha *= o.alpha === undefined ? 1 : o.alpha
+  if (o.shadow !== false) {
+    g.shadowColor = 'rgba(0,0,0,0.55)'
+    g.shadowBlur = 12 * U
+    g.shadowOffsetY = 3 * U
+  }
+  g.fillStyle = o.color || '#ffffff'
+  g.fillText(String(s), x, y)
+  g.restore()
+}
+function box(x, y, w, h, r, fill, alpha = 1) {
+  if (w <= 0 || h <= 0) return
+  g.save()
+  g.globalAlpha *= alpha
+  g.beginPath()
+  g.roundRect(x, y, w, h, Math.min(r, w / 2, h / 2))
+  g.fillStyle = fill
+  g.fill()
+  g.restore()
+}
+
+// ===== The picture at second t ==========================================
+function draw(t) {
+  g.setTransform(DPR, 0, 0, DPR, 0, 0)
+  g.clearRect(0, 0, W, H)
+  const k = life(t, 0.8, 0.5)
+  if (k <= 0) return
+  const x = W * 0.06, y = H * 0.78
+  const nameS = 58 * U, titleS = 34 * U
+  const w = Math.max(measure(P.name, 800, nameS), measure(P.title, 500, titleS)) + 64 * U
+  const h = nameS + titleS + 52 * U
+  const bar = easeOut(span(t, 0, 0.45)) * (1 - easeInOut(span(t, DUR - 0.5, DUR)))
+  const plate = easeOut(span(t, 0.15, 0.8)) * (1 - easeInOut(span(t, DUR - 0.5, DUR)))
+  box(x, y - h, 10 * U, h * bar, 3 * U, ACCENT)
+  g.save()
+  g.beginPath()
+  g.rect(x + 14 * U, y - h - 4 * U, (w + 8 * U) * plate, h + 8 * U)
+  g.clip()
+  box(x + 14 * U, y - h, w, h, 6 * U, P.plate || '#101418', 0.82)
+  text(P.name, x + 46 * U - (1 - plate) * 40 * U, y - h + 24 * U + nameS * 0.8, { size: nameS, weight: 800, alpha: plate })
+  text(P.title, x + 46 * U - (1 - plate) * 60 * U, y - 26 * U, { size: titleS, weight: 500, color: ACCENT, alpha: easeOut(span(t, 0.4, 1)) * k, shadow: false })
+  g.restore()
+}
+
+window.__config = { duration: DUR, transparent: true }
+window.renderOut = draw
+draw(0)
+window.READY = true
+</script>
+</body>
+</html>

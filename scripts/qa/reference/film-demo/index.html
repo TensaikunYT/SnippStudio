@@ -1,0 +1,32 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!-- Copyright (C) 2026 SnippStudio contributors -->
+<html>
+<head>
+<meta charset="utf-8">
+<title>film-demo</title>
+<style>html,body{margin:0;background:#000}canvas{display:block}</style>
+</head>
+<body>
+<canvas id="c" width="1280" height="720"></canvas>
+<script>
+// A tiny code film for trying Snipp's work notes: a bar that crosses the
+// frame and the film's own time written large, so any frame says which
+// second of the film it is.
+window.__config = { width: 1280, height: 720, fps: 30, duration: 20 };
+const c = document.getElementById('c'), g = c.getContext('2d');
+window.renderOut = function (t) {
+  g.fillStyle = '#14202b'; g.fillRect(0, 0, 1280, 720);
+  g.fillStyle = '#2f6f8f'; g.fillRect(0, 520, 1280, 200);
+  const x = 80 + (t / 20) * 1000;
+  g.fillStyle = '#f2c46d'; g.fillRect(x, 300, 120, 120);
+  g.fillStyle = '#ffffff'; g.font = '700 96px Segoe UI, sans-serif'; g.textBaseline = 'top';
+  g.fillText('film ' + t.toFixed(2) + ' s', 80, 60);
+  g.font = '700 64px Segoe UI, sans-serif';
+  g.fillText('TITLE: population growth', 80, 190);
+};
+window.renderOut(0);
+window.READY = true;
+</script>
+</body>
+</html>

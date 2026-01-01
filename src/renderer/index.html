@@ -1,0 +1,38 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!-- Copyright (C) 2026 SnippStudio contributors -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      Strict CSP — fully airgapped. There are NO remote origins: the Whisper
+      model ships bundled in resources/models, so no CDN is ever contacted.
+      connect-src permits only local schemes (plus ws://localhost for Vite HMR
+      in dev, which is unreachable in the packaged app); no file: address is
+      named ('self' on a file:// page would be every local file: security
+      patch, item 4), so neither the page nor a worker it makes from a blob
+      can fetch a local file. The app cannot reach
+      the internet.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self';
+        script-src 'self' 'wasm-unsafe-eval';
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' media: blob: data:;
+        media-src 'self' media: blob:;
+        font-src 'self' data:;
+        worker-src 'self' blob:;
+        connect-src media: blob: data: ws://localhost:* http://localhost:*;
+        object-src 'none';
+        base-uri 'none';
+        frame-src snippfilm:"
+    />
+    <title>%PRODUCT_NAME%</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

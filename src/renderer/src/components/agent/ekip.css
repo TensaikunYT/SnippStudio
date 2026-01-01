@@ -1,0 +1,90 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The team mode (EKIP-PLAN.md; the mock-up tasarim\maket-ajan, screen 5):
+   the workers' chips on the agent bar, one flag per worker on the ruler (two
+   rows at most, "+N" for the rest), the worker before a step, the draft's
+   group picker, the worker's corner on a draft's mark. Design values only;
+   a worker's colour is one of --agent-w1 … --agent-w6 (ui/tokens.css),
+   derived from its program's. Nothing here moves on its own. */
+
+/* ---- the agent bar --------------------------------------------------------------- */
+.agent-crew { display: inline-flex; align-items: center; gap: var(--space-1); flex: 0 1 auto; min-width: 0; overflow: hidden; }
+.agent-crew-item { display: inline-flex; flex: none; min-width: 0; border-radius: var(--r-pill); }
+.agent-crew-item:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.agent-crew .ui-chip { height: 20px; background: color-mix(in srgb, var(--bg-app) 45%, transparent); }
+.agent-crew .ui-chip-text { display: inline-flex; align-items: center; gap: 5px; color: var(--text); font-size: var(--fs-11); }
+.agent-crew-dot { flex: none; width: 7px; height: 7px; border-radius: var(--r-pill); }
+.agent-crew-name { white-space: nowrap; }
+.agent-bar-what:has(> .agent-bar-worker) { display: inline-flex; align-items: baseline; gap: var(--space-2); }
+.agent-bar-worker { flex: none; font-weight: var(--fw-semibold); }
+.agent-bar-said { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* A narrow bar: the chips keep their dots, their names go to the tips. */
+@container agentover (max-width: 1180px) {
+  .agent-crew-name { display: none; }
+  .agent-crew .ui-chip { padding: 0 var(--space-1); }
+}
+
+/* ---- the flags: one per worker -------------------------------------------------------- */
+/* (Its colour comes in as --agent on the flag itself.) */
+.agent-flag.is-worker { pointer-events: none; }
+.agent-flag.is-row2 { top: 2px; }
+.agent-flag.is-row2::after { top: 18px; }
+.agent-trail.has-row2 { height: 26px; }
+.agent-trail.has-row2.has-film { height: 40px; }
+.agent-flag-more {
+  position: absolute; top: 2px; z-index: var(--z-sticky); display: inline-flex; align-items: center;
+  height: 18px; padding: 0 var(--space-2); border-radius: var(--r-pill);
+  background: var(--bg-raised); color: var(--text); box-shadow: inset 0 0 0 var(--border-w) var(--line-strong);
+  font-size: var(--fs-11); font-weight: var(--fw-semibold); line-height: 18px; white-space: nowrap;
+}
+.agent-flag-more:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+/* ---- the Agent tab's steps --------------------------------------------------------------- */
+.agent-crew-filter { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-bottom: var(--space-2); }
+.agent-crew-filter .ui-chip-text { display: inline-flex; align-items: center; gap: 5px; }
+.agent-step-main { display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; padding: 2px 0; }
+.agent-step-main > .agent-step-text { flex: none; }
+.agent-step-worker { display: inline-flex; align-items: center; gap: 5px; min-width: 0; color: var(--text-2); font-size: var(--fs-11); font-weight: var(--fw-semibold); line-height: 1.3; }
+.agent-step-worker > span:last-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ---- the token card -------------------------------------------------------------------- */
+.agent-tok-crew { margin-top: var(--space-2); padding-top: var(--space-2); border-top: var(--border-w) solid var(--line); }
+.agent-tok-crew .agent-tok-label { display: inline-flex; align-items: center; gap: 5px; }
+
+/* ---- the review strip: the group picker ---------------------------------------------------- */
+.agent-rev-group { display: inline-flex; align-items: center; gap: var(--space-1); flex: none; }
+.agent-rev-group .ui-btn { max-width: 150px; }
+.agent-rev-group .ui-btn-label { overflow: hidden; text-overflow: ellipsis; }
+
+/* ---- a draft's mark: its worker's corner --------------------------------------------------- */
+/* Bottom left: a clip's name is at the top left, the badges at the top right. */
+.agent-mark-corner {
+  position: absolute; left: 0; bottom: 0; width: 10px; height: 5px; pointer-events: none;
+  border-left: 2px solid var(--worker); border-bottom: 2px solid var(--worker); border-bottom-left-radius: 2px;
+}
+.agent-mark.is-chip .agent-mark-corner, .agent-mark.is-row .agent-mark-corner { bottom: 1px; }
+/* A step dropped after another worker's change: said under it, wrapped (never cut). */
+.agent-step-after { color: var(--agent-text); font-size: var(--fs-11); line-height: 1.3; white-space: normal; overflow-wrap: anywhere; }
+
+/* ---- the regions of the workers (step 3) ---------------------------------------------- */
+/* Under the ruler: a thin line per region, in the colour of its worker
+   (--agent comes in on the line); the parts of the trail sit above them. */
+.agent-trail.has-regions { height: 13px; }
+.agent-trail.has-regions.has-film { height: 27px; }
+.agent-trail.has-regions.has-row2 { height: 31px; }
+.agent-trail.has-regions.has-row2.has-film { height: 45px; }
+.agent-trail.has-regions .agent-trail-part { bottom: 7px; }
+.agent-zone { position: absolute; bottom: 1px; height: 3px; border-radius: var(--r-pill); background: var(--agent); }
+.agent-zone::before { content: ''; position: absolute; inset: -3px 0 -1px; }
+.agent-zone:hover, .agent-zone:focus-visible { outline: none; box-shadow: 0 0 0 1px var(--agent-text); }
+/* The Agent tab: who has which stretch. */
+.agent-zone-list { display: flex; flex-direction: column; gap: var(--space-1); }
+.agent-zone-row { display: flex; align-items: center; gap: var(--space-2); min-width: 0; font-size: var(--fs-12); line-height: 1.4; }
+.agent-zone-name { flex: none; font-weight: var(--fw-semibold); color: var(--text); }
+.agent-zone-where { min-width: 0; color: var(--text-2); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+/* (A step with a sentence under it is as tall as its lines: the list scrolls,
+   its rows are never squeezed.) */
+.agent-steps > .agent-step { flex: none; }
+/* (Only its words give way in a narrow card: not its icon, its numbers or
+   its button.) */
+.agent-steps > .agent-step > :not(.agent-step-main):not(.agent-step-text) { flex: none; }

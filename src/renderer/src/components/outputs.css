@@ -1,0 +1,96 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* What leaves the editor: the renders panel under the top bar (RendersPanel)
+   and the Shorts strip under the preview (ShortsPanel). SnippStudio phase
+   3c.4a moved their rules out of styles.css, where phase 3c.1 had left them
+   (K12). Design values only (src/test/ui-tokens.test.ts); the controls are
+   the building blocks. */
+
+/* ---- Renders -------------------------------------------------------------------- */
+.renders-menu { position: relative; }
+.renders-btn { display: inline-flex; align-items: center; gap: var(--space-1); }
+.renders-badge {
+  min-width: 16px; padding: 0 var(--space-1); border-radius: var(--r-pill); background: var(--bg-hover); color: var(--text);
+  font-size: var(--fs-11); font-weight: var(--fw-semibold); line-height: 16px; text-align: center;
+}
+.renders-left { color: var(--text-2); font-size: var(--fs-11); font-variant-numeric: tabular-nums; }
+.renders-panel {
+  position: absolute; top: calc(100% + 6px); right: 0; z-index: var(--z-pop); display: flex; flex-direction: column;
+  width: min(420px, calc(100vw - 24px)); max-height: min(70vh, 640px);
+  border-radius: var(--r-card); background: var(--bg-raised); box-shadow: var(--shadow-pop);
+}
+.rp-title {
+  display: flex; align-items: baseline; justify-content: space-between; padding: var(--space-3) var(--space-3) var(--space-2);
+  font-size: var(--fs-13); font-weight: var(--fw-semibold);
+}
+.rp-title small { color: var(--text-2); font-size: var(--fs-11); font-weight: var(--fw-regular); }
+.rp-empty { padding: var(--space-3); color: var(--text-2); font-size: var(--fs-12); line-height: 1.45; }
+.rp-list { padding: var(--space-1); overflow-y: auto; }
+.rp-row { padding: var(--space-2); border-radius: var(--r-card); }
+.rp-row + .rp-row { margin-top: var(--space-1); }
+.rp-row.running { background: var(--bg-hover); }
+.rp-row.failed .rp-state { color: var(--danger-text); }
+.rp-row.stale .rp-state, .rp-row.cancelled .rp-state { color: var(--text-2); }
+.rp-row.done .rp-state { color: var(--accent-text); }
+.rp-row-head { display: flex; align-items: baseline; gap: var(--space-2); min-width: 0; }
+.rp-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fs-12); font-weight: var(--fw-semibold); }
+.rp-source { padding: 1px var(--space-2); border-radius: var(--r-pill); background: var(--bg-hover); color: var(--text-2); font-size: var(--fs-11); }
+.rp-state { font-size: var(--fs-12); font-weight: var(--fw-semibold); font-variant-numeric: tabular-nums; }
+.rp-bar { height: 5px; margin-top: var(--space-2); overflow: hidden; border-radius: var(--r-pill); background: var(--bg-app); }
+.rp-bar > div { height: 100%; background: var(--accent); transition: width var(--dur-slow) linear; }
+.rp-row.stale .rp-bar > div, .rp-row.cancelled .rp-bar > div { background: var(--text-3); }
+.rp-row.failed .rp-bar > div { background: var(--danger); }
+.rp-step { margin-top: var(--space-1); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-2); font-size: var(--fs-11); }
+.rp-eta { display: flex; gap: var(--space-1); margin-top: var(--space-1); color: var(--text-2); font-size: var(--fs-12); font-variant-numeric: tabular-nums; }
+.rp-eta b { color: var(--text); font-weight: var(--fw-semibold); }
+.rp-note { margin-top: var(--space-1); color: var(--text-2); font-size: var(--fs-11); }
+.rp-error { margin-top: var(--space-1); color: var(--danger-text); font-size: var(--fs-11); word-break: break-word; }
+.rp-facts { display: flex; flex-wrap: wrap; gap: var(--space-1); margin-top: var(--space-2); }
+.rp-actions { display: flex; gap: var(--space-2); margin-top: var(--space-2); }
+.rp-actions .ui-btn-ghost { margin-left: auto; }
+
+/* ---- Shorts ------------------------------------------------------------------------ */
+.shorts-panel {
+  display: flex; flex-direction: column; gap: var(--space-1); max-height: 160px; padding: var(--space-1) var(--space-3);
+  overflow-y: auto; overscroll-behavior: contain; background: var(--bg-panel); font-size: var(--fs-12);
+}
+.shorts-panel .sp-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.shorts-panel .sp-title { white-space: nowrap; color: var(--text); font-weight: var(--fw-semibold); }
+.shorts-panel .sp-info { white-space: nowrap; color: var(--text-2); font-size: var(--fs-11); }
+.shorts-panel .sp-hint { color: var(--text-2); font-size: var(--fs-12); }
+.shorts-panel .sp-kfs { display: flex; flex: 1; align-items: center; gap: var(--space-1); overflow-x: auto; }
+.shorts-panel .sp-kf { display: inline-flex; align-items: center; gap: 1px; overflow: hidden; white-space: nowrap; border-radius: var(--r-ctl); background: var(--bg-raised); }
+.shorts-panel .sp-kf .ui-btn { border-radius: 0; }
+.sp-seg {
+  position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); overflow: hidden;
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-3); border-radius: var(--r-ctl);
+  background: var(--bg-app); transition: background-color var(--dur-fast) var(--ease);
+}
+.sp-seg::before { content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 5px; background: var(--seg-color, var(--accent)); }
+.sp-seg:hover { background: var(--bg-raised); }
+.sp-seg.active { background: var(--accent-soft); }
+.sp-seg.collapsed { opacity: 0.86; }
+.sp-seg .sp-head { display: flex; flex: 1; align-items: baseline; gap: var(--space-2); min-width: 0; }
+.sp-seg .sp-head-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--fs-12); }
+.sp-seg .sp-head-dur { color: var(--text-2); font-size: var(--fs-11); font-variant-numeric: tabular-nums; }
+.sp-seg input { width: 90px; }
+.sp-seg .sp-color { flex: 0 0 28px; width: 28px; height: var(--ctl); }
+.sp-dur { color: var(--text-2); font-size: var(--fs-11); }
+.sp-dur.over { color: var(--danger-text); }
+.sp-range { display: inline-flex; align-items: center; gap: 2px; }
+.sp-queue {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1); margin: var(--space-1) 0 2px; padding: var(--space-1) var(--space-2);
+  border-radius: var(--r-card); background: var(--bg-raised);
+}
+.sp-queue-title { color: var(--text); font-size: var(--fs-11); font-weight: var(--fw-semibold); }
+.sp-queue-chip {
+  display: inline-flex; align-items: center; gap: 2px; max-width: 190px; overflow: hidden; padding: 2px var(--space-1) 2px var(--space-2);
+  border-radius: var(--r-pill); background: var(--bg-hover);
+  text-overflow: ellipsis; white-space: nowrap; font-size: var(--fs-11);
+}
+.sp-fold.ui-btn { flex: none; }
+
+/* A Shorts segment's times: double-click to type one (from styles.css, phase 3c.4b). */
+.editable { border-bottom: var(--border-w) dashed color-mix(in srgb, currentColor 35%, transparent); cursor: text; }
+.editable:hover { color: var(--text); }
+input.time-edit { width: 52px; padding: 1px var(--space-1); border: var(--border-w) solid var(--accent); border-radius: var(--r-clip); background: var(--bg-raised); color: var(--text); font-size: var(--fs-11); font-variant-numeric: tabular-nums; text-align: center; }

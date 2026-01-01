@@ -1,0 +1,15 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later
+   Copyright (C) 2026 SnippStudio contributors
+   The agent bar's "Done" and its card of what the job changed (KOLAY-PLAN.md,
+   item 4), as the token card beside it. Values only from tokens.css. */
+.agent-sum-btn { text-align: left; white-space: nowrap; cursor: pointer; text-decoration: underline dotted var(--text-3); text-underline-offset: 3px; }
+.agent-sum-btn:hover { text-decoration-color: var(--text); }
+.agent-sum-card {
+  position: fixed; z-index: var(--z-pop); display: flex; flex-direction: column; gap: var(--space-1);
+  width: 320px; padding: var(--space-3); border-radius: var(--r-card); background: var(--bg-raised); box-shadow: var(--shadow-pop);
+  color: var(--text); font-size: var(--fs-12); white-space: normal;
+}
+.agent-sum-title { margin-bottom: var(--space-1); color: var(--text); font-weight: var(--fw-semibold); }
+.agent-sum-row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); color: var(--text-2); }
+.agent-sum-n { flex: 0 1 auto; min-width: 0; text-align: right; color: var(--text); font-variant-numeric: tabular-nums; }
+.agent-sum-actions { display: flex; justify-content: flex-end; margin-top: var(--space-2); padding-top: var(--space-2); border-top: var(--border-w) solid var(--line); }

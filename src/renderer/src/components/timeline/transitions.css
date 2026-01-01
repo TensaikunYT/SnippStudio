@@ -1,0 +1,55 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* Transitions (core polish T): the cut on the timeline, the block, the grid of
+   kinds the Inspector and Library → Effects share. Design values only
+   (ui/tokens.css). */
+
+/* ---- the cut on the timeline ------------------------------------------- */
+/* Pinned to the cut, at the top of the lane: the trim handles stay grabbable
+   below it. Under the header column (8) like everything else pinned to a time. */
+.tl-trans-junction { position: absolute; top: 1px; height: 24px; transform: translateX(-50%); z-index: var(--z-sticky); }
+
+/* The target: 24 × 24 to aim at, shown only where it is wanted. A faint dot
+   on every cut of the lane under the pointer, the "+" whole near the cut or
+   with a clip of it selected, full under the pointer (or while a kind is
+   dragged from Library). */
+.tl-trans-target { display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; background: transparent; color: var(--bg-well); cursor: pointer; }
+.tl-trans-plus { display: grid; place-items: center; width: 18px; height: 18px; border-radius: var(--r-pill); background: var(--text); box-shadow: var(--shadow-pop); opacity: 0; transform: scale(0.3); transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease); }
+.tl-track:hover .tl-trans-plus { opacity: 0.7; }
+.tl-trans-target:hover .tl-trans-plus, .tl-trans-target:focus-visible .tl-trans-plus, body.ct-dragging .tl-trans-plus { opacity: 1; transform: scale(1); }
+/* Near the cut along the lane, or a clip of the cut selected: whole (16 px)
+   and ready to grab (audit G4); right over the target: 18 px. */
+.tl-trans-junction.is-near .tl-trans-plus { opacity: 1; transform: scale(0.9); }
+.tl-trans-junction .tl-trans-target:hover .tl-trans-plus, .tl-trans-junction .tl-trans-target:focus-visible .tl-trans-plus { transform: scale(1); }
+.tl-trans-target.is-drop .tl-trans-plus { box-shadow: 0 0 0 3px var(--line-strong); transform: scale(1.15); }
+body.tl-dragging .tl-trans-junction .tl-trans-plus { opacity: 0; }
+
+/* A set transition is an object on the cut: as wide as it is long, its name
+   when there is room, a grip at each end. */
+/* (okunur, 23 November: lighter, with a ring, so it is seen at rest on any
+   clip colour, not only under the pointer.) */
+.tl-trans-block { position: absolute; top: 0; left: 50%; transform: translateX(-50%); height: 24px; display: flex; align-items: center; justify-content: space-between; overflow: hidden; border-radius: var(--r-clip); background: color-mix(in srgb, var(--text) 24%, var(--bg-raised)); box-shadow: inset 0 0 0 var(--border-w) color-mix(in srgb, var(--text) 55%, transparent); color: var(--text); font-size: var(--fs-11); cursor: pointer; }
+.tl-trans-block:hover { background: color-mix(in srgb, var(--text) 34%, var(--bg-raised)); }
+.tl-trans-block.is-selected { box-shadow: inset 0 0 0 2px var(--select); background: color-mix(in srgb, var(--select-soft) 34%, var(--bg-raised)); color: var(--text); }
+.tl-trans-block.is-drop { box-shadow: inset 0 0 0 2px var(--accent); }
+.tl-trans-block .tt-mid { flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center; gap: var(--space-1); align-self: stretch; padding: 0 var(--space-1); user-select: none; }
+.tl-trans-block .tt-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: var(--fw-medium); }
+.tl-trans-block .tt-mute { display: inline-flex; color: var(--text-3); pointer-events: none; }
+.tl-trans-block .tt-edge { position: relative; width: 7px; align-self: stretch; flex: none; background: var(--line-strong); cursor: ew-resize; }
+.tl-trans-block .tt-edge:hover, .tl-trans-block.is-selected .tt-edge { background: var(--select); }
+/* The end's grab area is 9 px (the visible grip 7). */
+.tl-trans-block .tt-edge::after { content: ''; position: absolute; top: 0; bottom: 0; left: -2px; right: -2px; }
+/* An end being dragged: the length now, under the block (as a trim's label). */
+.tl-trans-tip { position: absolute; top: 28px; left: 50%; transform: translateX(-50%); padding: 1px var(--space-2); border-radius: var(--r-clip); background: var(--bg-raised); box-shadow: var(--shadow-pop); color: var(--text); font-family: var(--font-mono); font-size: var(--fs-11); font-weight: var(--fw-medium); white-space: nowrap; pointer-events: none; }
+
+/* (The grid of kinds and its pictures: components/inspector/transition-preview.css, DENEME-2.) */
+
+/* ---- the Inspector's transition ---------------------------------------- */
+.ct-between { margin-bottom: var(--space-2); color: var(--text-2); font-size: var(--fs-12); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ct-empty { display: grid; gap: var(--space-2); justify-items: start; }
+.ct-sound { display: flex; align-items: center; gap: var(--space-1); min-width: 0; }
+.ct-sound .ui-slider { flex: 1; min-width: 0; }
+.ct-actions { flex-wrap: wrap; gap: var(--space-1); align-items: center; }
+.insp-row.ct-default-row > .ui-btn { flex: 0 0 auto; }
+.ct-is-default { display: inline-flex; align-items: center; gap: var(--space-1); color: var(--text-3); font-size: var(--fs-11); }
+.ct-default-now { color: var(--text-3); }

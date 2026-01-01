@@ -1,0 +1,187 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Copyright (C) 2026 SnippStudio contributors
+// IPC for the agent connection (SnippStudio TERMINAL-YOK-PLAN.md; before it
+// phase 4B.1's embedded session, removed on 21 Nov 2026): agent access on or
+// off, how it stands (the server, the agents installed, an agent working from
+// outside), and the Settings window's "Agent connection" page: the lines the
+// user runs to add this copy to Claude Code or Codex once, the read-only
+// checks of those registrations, OpenCode's and Antigravity's parts, and a
+// new key. The app never starts an agent and never writes an agent's
+// settings; the key never leaves the main process.
+import { app } from 'electron'
+import path from 'node:path'
+import fs from 'node:fs'
+import { execFile } from 'node:child_process'
+import { systemTool, systemToolCwd } from '../system-tool'
+import type { AgentHost, AgentStatus } from '../agent-host'
+import { AGENT_IDS, agentEnv, agentQuery, agentVersion, antigravityPrintLine, claudeAddLine, codexAddLine, codexEnvLine, codexEnvQueryArgs, codexEnvVerdict, codexPersistLine, codexLaunchLine, codexRegisterLine, codexRegistrationState, codexTokenEnv, fileExists, findAgents, openCodeConfig, registrationState, startLine, stopVersionQueries, tokenSetupLine, type AgentFound, type AgentId, type CodexEnvVerdict, type Registration } from '../agent-connect'
+import { CHANNEL } from '../channel'
+import { registeredServerName } from '../../shared/product'
+import { e2eMode } from '../e2e-hooks'
+import { ipcMain } from '../state'
+
+export interface SessionStatus {
+  server: AgentStatus | null
+  /** The agent programs found (Claude Code first). */
+  agents: { id: AgentId; path: string }[]
+  /** An agent working from outside (DIS-MCP-PLAN.md, 6): its program's name
+   *  and when it was last heard from. */
+  external: { client: string; seen: number } | null
+  /** What the connection wizard shows live (SIHIRBAZ-PLAN.md, 4): each
+   *  program's last active session and the latest refused request (401: an
+   *  old key; 404: an agent window older than the server). */
+  heard: { seen: { client: string; at: number }[]; refused: { why: 'key' | 'session'; at: number } | null }
+}
+
+const settingsFile = (): string => path.join(app.getPath('userData'), 'agent.json')
+
+function agentsNow(): AgentFound[] {
+  const env = process.env
+  // (A test run looks in PATH only: never the computer's own install places.)
+  if (e2eMode()) {
+    const empty = path.join(app.getPath('userData'), 'agent-search')
+    return findAgents({ PATH: env.PATH, USERPROFILE: empty, APPDATA: empty, LOCALAPPDATA: empty, HOME: empty }, fileExists)
+  }
+  return findAgents(env, fileExists, process.platform, readLink, subfolders)
+}
+
+/** A folder's subfolders by name, or none (the Codex app's own bin folder). */
+function subfolders(p: string): string[] {
+  try {
+    return fs.readdirSync(p, { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name)
+  } catch {
+    return []
+  }
+}
+
+/** A link's target, or null (the Codex app's execution aliases). */
+function readLink(p: string): string | null {
+  try {
+    return fs.readlinkSync(p)
+  } catch {
+    return null
+  }
+}
+
+/** Does the user's own Codex variable hold this copy's key (Windows)?
+ *  PowerShell compares the two itself and prints one word (codexEnvQueryArgs):
+ *  no value reaches this process, the page or a log. A test run asks the
+ *  process scope instead, the variable put there from the test's
+ *  e2e-user-env.json in its own profile (never the computer's environment). */
+function codexEnvCheck(name: string, platform: string = process.platform): Promise<CodexEnvVerdict> {
+  if (platform !== 'win32') return Promise.resolve('unknown')
+  const variable = codexTokenEnv(name)
+  let extra: Record<string, string> = {}
+  if (e2eMode()) {
+    try {
+      const given = JSON.parse(fs.readFileSync(path.join(app.getPath('userData'), 'e2e-user-env.json'), 'utf8')) as Record<string, unknown>
+      if (typeof given[variable] === 'string') extra = { [variable]: given[variable] as string }
+    } catch {
+      /* none: the variable is missing */
+    }
+  }
+  // (Windows' own PowerShell by its full path, started in System32; the
+  // app's own environment without any key variable: agentEnv.)
+  const tool = systemTool('powershell', platform)
+  const args = codexEnvQueryArgs(name, settingsFile(), e2eMode() ? 'Process' : 'User')
+  return new Promise((resolve) => {
+    execFile(tool, args, { cwd: systemToolCwd(platform), env: agentEnv(process.env, extra), timeout: 15_000, windowsHide: true }, (err, out) => {
+      resolve(err ? 'unknown' : codexEnvVerdict(String(out ?? '')))
+    })
+  })
+}
+
+const found = (id: AgentId): AgentFound | null => agentsNow().find((a) => a.id === id) ?? null
+
+export function registerAgentSessionIpc(deps: { host: () => AgentHost | null }): { stop: () => void; windowGone: (contentsId: number) => void } {
+  const status = async (): Promise<SessionStatus> => {
+    const host = deps.host()
+    const server = host ? await host.status() : null
+    return {
+      server,
+      agents: agentsNow().map((a) => ({ id: a.id as AgentId, path: a.path })),
+      external: server?.running ? host?.external() ?? null : null,
+      heard: host?.heard() ?? { seen: [], refused: null }
+    }
+  }
+  const name = (): string => registeredServerName(CHANNEL)
+
+  ipcMain.handle('agent:connect', async (_event, on: unknown) => {
+    await deps.host()?.setEnabled(on === true)
+    return status()
+  })
+  ipcMain.handle('agentLink:status', () => status())
+  ipcMain.handle('agentLink:catalog', async (event) => {
+    const list = agentsNow()
+    const owner = event.sender.id
+    return Promise.all(AGENT_IDS.map(async (id: AgentId) => {
+      const agent = list.find((a) => a.id === id)
+      return { id, installed: !!agent, version: agent ? await agentVersion(agent, app.getPath('userData'), owner) : null }
+    }))
+  })
+  // Each part turns access on first: the key is then in the profile's file,
+  // where the lines read it.
+  const key = async (): Promise<{ url: string; token: string; running: boolean } | null> => {
+    const host = deps.host()
+    await host?.setEnabled(true)
+    return (await host?.key()) ?? null
+  }
+  ipcMain.handle('agentLink:openCodeSetup', async () => {
+    const k = await key()
+    return k ? { config: openCodeConfig(k.url), environment: tokenSetupLine(settingsFile()), launch: startLine(tokenSetupLine(settingsFile()), 'opencode', process.platform, found('opencode')?.path) } : null
+  })
+  ipcMain.handle('agentLink:antigravitySetup', async () => {
+    const k = await key()
+    return k ? { command: antigravityPrintLine(settingsFile(), k.url) } : null
+  })
+  ipcMain.handle('agentLink:claudeSetup', async () => {
+    const k = await key()
+    return k ? { command: claudeAddLine(settingsFile(), k.url, name(), process.platform, found('claude')?.path), name: name() } : null
+  })
+  ipcMain.handle('agentLink:codexSetup', async () => {
+    const k = await key()
+    const codex = found('codex')?.path
+    // (register: the wizard's one line; launch: outside Windows, the key and
+    // codex in one line, each time.)
+    return k ? {
+      command: codexAddLine(k.url, name(), process.platform, codex),
+      register: codexRegisterLine(settingsFile(), k.url, name(), process.platform, codex),
+      launch: codexLaunchLine(settingsFile(), name(), process.platform, codex),
+      environment: codexEnvLine(settingsFile(), name()),
+      persist: codexPersistLine(settingsFile(), name(), process.platform),
+      name: name(),
+      variable: codexTokenEnv(name())
+    } : null
+  })
+  // (Whether the user's Codex variable holds this copy's key: a verdict only.)
+  ipcMain.handle('agentLink:codexEnv', () => codexEnvCheck(name()))
+  // The read-only checks: only the verdict leaves (the output may hold the key).
+  ipcMain.handle('agentLink:check', async (event, which: unknown): Promise<Registration> => {
+    if (which !== 'claude' && which !== 'codex') return 'unknown'
+    const agent = found(which)
+    const k = await deps.host()?.key()
+    if (!agent) return 'notInstalled'
+    if (!k) return 'unknown'
+    if (which === 'claude') {
+      const result = await agentQuery(agent, ['mcp', 'get', name()], app.getPath('userData'), event.sender.id, 30_000)
+      return registrationState(result, { url: k.url, token: k.token, serverOn: k.running })
+    }
+    const result = await agentQuery(agent, ['mcp', 'get', name(), '--json'], app.getPath('userData'), event.sender.id, 30_000)
+    return codexRegistrationState(result, { url: k.url, env: codexTokenEnv(name()) })
+  })
+  ipcMain.handle('agentLink:renewKey', async () => {
+    await deps.host()?.renewKey()
+    return status()
+  })
+
+  return {
+    // (The app quitting, or agent access going off: every version query
+    // still running, each by its own PID: audit S2.)
+    stop: () => {
+      stopVersionQueries()
+    },
+    windowGone: (contentsId) => {
+      stopVersionQueries(contentsId)
+    }
+  }
+}

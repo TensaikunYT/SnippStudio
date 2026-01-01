@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><title>r4 49 bin kişi</title>
+<style>
+html,body{margin:0;width:1920px;height:1080px;background:transparent;overflow:hidden;font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif}
+#p{position:absolute;left:96px;top:640px;width:1060px;height:370px;background:rgba(18,22,32,.84);border-radius:18px;border-left:8px solid #4cc9f0;box-shadow:0 10px 40px rgba(0,0,0,.4);opacity:0}
+#num{position:absolute;left:40px;top:14px;font-size:150px;font-weight:900;line-height:1.1;color:#fff;font-variant-numeric:tabular-nums}
+#num small{font-size:56px;color:#4cc9f0;margin-left:16px;font-weight:800}
+#sub{position:absolute;left:44px;top:182px;font-size:36px;font-weight:700;color:#ffd166;letter-spacing:.08em;opacity:0}
+#g{position:absolute;left:44px;top:240px}
+.d{position:absolute;width:20px;height:44px}
+#cap{position:absolute;right:30px;top:40px;font-size:40px;font-weight:800;color:#fff;opacity:0}
+</style></head><body>
+<div id="p"><div id="num">0<small>kişi</small></div><div id="sub">BİRKAÇ SAAT İÇİNDE</div><div id="g"></div><div id="cap">Pripyat → </div></div>
+<script>
+// t = seconds from the start of this range (range starts at 332.639 s of the talk, first word "Birkaç").
+const C=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),P=(t,a,b)=>C((t-a)/(b-a)),E=x=>1-Math.pow(1-x,3),
+ K=x=>{const c=2.70158;return 1+c*Math.pow(x-1,3)+1.70158*Math.pow(x-1,2)};
+const $=id=>document.getElementById(id),DUR=4.1;
+// 49 figures, each = 1 000 people; 3 rows (17 / 16 / 16) — 49 words "49 bin" at 1.74–2.54
+const people=[];const g=$('g');
+for(let i=0;i<49;i++){const r=i<17?0:i<33?1:2,c=i<17?i:i<33?i-17:i-33;
+ const e=document.createElement('div');e.className='d';e.style.left=(c*58)+'px';e.style.top=(r*38)+'px';
+ e.innerHTML='<svg width="20" height="44" viewBox="0 0 20 44"><circle cx="10" cy="8" r="7" fill="#4cc9f0"/><path d="M3 19h14l2 14h-4v10h-4V33h-2v10H5V33H1z" fill="#4cc9f0"/></svg>';
+ g.appendChild(e);people.push(e);}
+function renderOut(t){
+  const f=1-P(t,3.7,4.1);
+  const p=$('p');p.style.opacity=E(P(t,0,.35))*f;p.style.transform=`translateY(${(1-E(P(t,0,.5)))*50}px)`;
+  $('sub').style.opacity=E(P(t,.2,.6));
+  // counter runs over "yaklaşık 49 bin" (1.74 → 2.54)
+  const c=E(P(t,1.0,2.6));$('num').firstChild.nodeValue=Math.round(49000*c).toLocaleString('tr-TR');
+  // figures fill in left→right as the number climbs, then walk right ("ayrılıyor" 3.46–4.1)
+  const walk=E(P(t,3.3,4.1))*40;
+  people.forEach((e,i)=>{const s=P(c*49,i,i+1);e.style.opacity=s;e.style.transform=`translate(${walk*(i%3+1)/2}px,${(1-K(s))*20}px)`;});
+  $('cap').style.opacity=E(P(t,3.0,3.5));$('cap').style.transform=`translateX(${(1-E(P(t,3.0,3.5)))*40}px)`;
+}
+let driven=false;window.renderOut=t=>{driven=true;renderOut(t)};window.READY=true;
+const s0=performance.now();(function L(){if(!driven)renderOut(((performance.now()-s0)/1000)%DUR);requestAnimationFrame(L)})();
+</script></body></html>

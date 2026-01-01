@@ -1,0 +1,39 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>F4 paused GSAP timeline</title>
+<style>html,body{margin:0;background:#0d0f14;overflow:hidden}canvas{display:block}</style>
+<script src="gsap.min.js"></script>
+</head><body>
+<canvas id="c" width="1280" height="720"></canvas>
+<script>
+// A paused GSAP timeline registered in window.__timelines, the way a
+// seek-driven composition hands its timeline to whoever plays it. The
+// timeline tweens plain values; its onUpdate paints them on the canvas.
+const cv = document.getElementById('c')
+const g = cv.getContext('2d')
+const st = { x: 120, y: 360, r: 40, spin: 0, bar: 0, hue: 200 }
+function paint() {
+  g.fillStyle = '#0d0f14'
+  g.fillRect(0, 0, 1280, 720)
+  g.fillStyle = 'hsl(' + st.hue.toFixed(1) + ',75%,58%)'
+  g.beginPath()
+  g.arc(st.x, st.y, st.r, 0, Math.PI * 2)
+  g.fill()
+  g.save()
+  g.translate(640, 200)
+  g.rotate(st.spin)
+  g.fillStyle = '#f2f2f2'
+  g.fillRect(-90, -14, 180, 28)
+  g.restore()
+  g.fillStyle = '#ffb347'
+  g.fillRect(80, 640, st.bar * 1120, 26)
+}
+const tl = gsap.timeline({ paused: true, onUpdate: paint })
+tl.to(st, { x: 1160, duration: 3, ease: 'power2.inOut' })
+  .to(st, { y: 520, r: 90, hue: 20, duration: 2, ease: 'back.out(2)' }, 1)
+  .to(st, { spin: Math.PI * 4, duration: 6, ease: 'none' }, 0)
+  .to(st, { bar: 1, duration: 8, ease: 'none' }, 0)
+  .to(st, { x: 640, y: 360, r: 60, duration: 2, ease: 'elastic.out(1, 0.4)' }, 5)
+window.__timelines = { main: tl }
+paint()
+</script>
+</body></html>

@@ -1,0 +1,48 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Copyright (C) 2026 SnippStudio contributors */
+/* The agent in the top bar (GONDER2-PLAN.md, the user's example): a small dark
+   pill — a thin ring that turns while the agent works (still with less
+   motion), the program's mark in its colour, and two lines: the program's
+   name over how it stands, the second line in the program's colour. Its
+   height: the least two lines need, under the bar's own. Design values only. */
+.agent-pill {
+  display: inline-flex; flex: none; align-items: center; gap: var(--space-2);
+  height: calc(var(--ctl) + var(--space-1)); max-width: 220px; padding: 0 var(--space-3) 0 var(--space-2);
+  border: var(--border-w) solid var(--line); border-radius: var(--r-pill); background: var(--bg-well);
+  color: var(--text); font: inherit; cursor: pointer;
+}
+.agent-pill:hover { background: var(--bg-hover); }
+.agent-pill .agent-chip { display: inline-flex; align-items: center; gap: var(--space-2); min-width: 0; }
+.agent-pill-ring {
+  flex: none; width: 14px; height: 14px; border-radius: var(--r-pill);
+  border: 2px solid var(--agent-line);
+}
+.agent-pill-ring.is-live { border-color: var(--agent-line); border-top-color: var(--agent); animation: agent-pill-spin calc(var(--dur-slow) * 4) linear infinite; }
+.agent-pill.is-waiting .agent-pill-ring, .agent-pill.is-draft .agent-pill-ring { border-color: var(--agent); }
+.agent-pill.is-reply .agent-pill-ring { border-color: var(--warn); }
+.agent-pill.is-done .agent-pill-ring, .agent-pill.is-idle .agent-pill-ring { border-color: var(--text-3); }
+@keyframes agent-pill-spin { to { transform: rotate(360deg); } }
+html.motion-off .agent-pill-ring.is-live { animation: none; }
+.agent-pill-mark { flex: none; width: 14px; height: 14px; fill: var(--agent); }
+.agent-pill-mark.is-line { fill: none; stroke: var(--agent); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.agent-pill-mark.is-badge text { fill: var(--bg-app); font-family: var(--font); font-size: var(--fs-11); font-weight: var(--fw-semibold); }
+.agent-pill-text { display: flex; flex-direction: column; min-width: 0; line-height: 1.15; text-align: left; }
+.agent-pill-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text); font-size: var(--fs-12); font-weight: var(--fw-semibold); }
+.agent-pill-state { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--agent-text); font-size: var(--fs-11); font-weight: var(--fw-medium); }
+.agent-pill.is-reply .agent-pill-state { color: var(--warn); }
+.agent-pill.is-done .agent-pill-state, .agent-pill.is-idle .agent-pill-state { color: var(--text-3); }
+
+/* The agent bar's phase, in the same words (AgentRow.tsx). */
+.agent-bar-phase { flex: none; color: var(--agent-text); font-size: var(--fs-12); font-weight: var(--fw-medium); white-space: nowrap; }
+.agent-bar-phase.is-reply { color: var(--warn); }
+
+/* The line under a send button (SendLine.tsx). */
+.send-line { display: flex; align-items: center; gap: var(--space-2); min-height: var(--ctl-sm); color: var(--text-2); font-size: var(--fs-12); }
+.send-line-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.send-line.is-taken .send-line-text { color: var(--agent-text); }
+.send-line.is-queued .send-line-text { color: var(--warn); }
+.agent-bar .send-line { flex: none; }
+.pn-send-row, .watch-send-row { display: flex; align-items: center; gap: var(--space-1); min-width: 0; }
+.pn-send-row > :first-child { flex: 1; min-width: 0; }
+.watch-send-row > .send-line { flex: 1; }
+.watch-send-row { justify-content: flex-end; }

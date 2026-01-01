@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8"><title>r2 Reaktörler</title>
+<style>
+html,body{margin:0;width:1920px;height:1080px;background:transparent;overflow:hidden;font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif}
+#panel{position:absolute;left:96px;top:700px;width:980px;height:300px;padding:0;opacity:0;background:rgba(18,22,32,.84);border-radius:18px;border-left:8px solid #4cc9f0;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+svg{position:absolute;left:0;top:0}
+.lab{position:absolute;color:#fff;font-weight:800;opacity:0;white-space:nowrap}
+#l1{left:40px;top:28px;font-size:40px;color:#4cc9f0}
+#l2{left:560px;top:28px;font-size:40px;color:#ffb703}
+#big{position:absolute;left:40px;top:225px;font-size:44px;font-weight:700;color:#fff;opacity:0}
+</style></head><body>
+<div id="panel">
+ <div class="lab" id="l1">ÇALIŞIYOR · 4</div>
+ <div class="lab" id="l2">İNŞA HALİNDE · 2</div>
+ <svg id="svg" width="980" height="300" viewBox="0 0 980 300"></svg>
+ <div id="big">4 reaktör çalışıyor · 2 reaktör yolda</div>
+</div>
+<script>
+// t = seconds from the start of this range (range starts at 43.059 s of the talk, first word "Dört").
+const C=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),P=(t,a,b)=>C((t-a)/(b-a)),E=x=>1-Math.pow(1-x,3),
+ K=x=>{const c=2.70158;return 1+c*Math.pow(x-1,3)+1.70158*Math.pow(x-1,2)};
+const $=id=>document.getElementById(id),DUR=3.6,S=43.059;
+const NS='http://www.w3.org/2000/svg',svg=$('svg');
+// reactor = cooling-tower silhouette + block
+function tower(x,y,done){
+  const g=document.createElementNS(NS,'g');g.setAttribute('transform',`translate(${x},${y})`);
+  const col=done?'#4cc9f0':'#ffb703';
+  g.innerHTML=`<path class="b" d="M0 150 L12 50 Q20 20 18 0 L62 0 Q60 20 68 50 L80 150 Z" fill="${done?col:'none'}" fill-opacity="${done?.9:0}" stroke="${col}" stroke-width="5" ${done?'':'stroke-dasharray="12 9"'} stroke-linejoin="round"/>
+  <path class="f" d="M0 150 L12 50 Q20 20 18 0 L62 0 Q60 20 68 50 L80 150 Z" fill="${col}" fill-opacity=".85" style="display:${done?'none':'block'}"/>`;
+  svg.appendChild(g);return g;
+}
+const done=[0,1,2,3].map(i=>tower(40+i*120,95,true));
+const build=[0,1].map(i=>tower(560+i*150,95,false));
+// clip fill of construction towers from the bottom via per-tower clipPath rects
+build.forEach((g,i)=>{const cp=document.createElementNS(NS,'clipPath');cp.id='c'+i;cp.innerHTML=`<rect x="0" y="150" width="90" height="0"/>`;svg.appendChild(cp);g.querySelector('.f').setAttribute('clip-path',`url(#c${i})`);g._r=cp.firstChild;});
+const gr=document.createElementNS(NS,'line');gr.setAttribute('x1',30);gr.setAttribute('x2',950);gr.setAttribute('y1',245);gr.setAttribute('y2',245);gr.setAttribute('stroke','#8d99ae');gr.setAttribute('stroke-width',4);svg.appendChild(gr);
+function renderOut(t){
+  const a=t,f=1-P(t,3.2,3.6);
+  $('panel').style.opacity=E(P(t,0,.35))*f;
+  $('panel').style.transform=`translateY(${(1-E(P(t,0,.5)))*50}px)`;
+  // "Dört reaktör" 43.06–43.74: four towers pop one after another
+  done.forEach((g,i)=>{const p=K(P(t,.05+i*.17,.05+i*.17+.45));g.setAttribute('transform',`translate(${40+i*120},${95+(1-p)*40}) `);g.style.opacity=P(t,.05+i*.17,.2+i*.17);});
+  $('l1').style.opacity=E(P(t,.1,.5));
+  // "iki reaktörün" 44.88: dashed outlines, then "inşası sürüyor" 46.18-46.66 fills from bottom
+  build.forEach((g,i)=>{g.style.opacity=E(P(t,1.6+i*.2,2));const h=150*P(t,2.2+i*.1,3.1);g._r.setAttribute('y',150-h);g._r.setAttribute('height',h);});
+  $('l2').style.opacity=E(P(t,1.7,2.2));
+  $('big').style.opacity=E(P(t,2.3,2.8));
+}
+let driven=false;window.renderOut=t=>{driven=true;renderOut(t)};window.READY=true;
+const s0=performance.now();(function L(){if(!driven)renderOut(((performance.now()-s0)/1000)%DUR);requestAnimationFrame(L)})();
+</script></body></html>

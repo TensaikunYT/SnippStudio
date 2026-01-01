@@ -1,0 +1,62 @@
+# Dependencies
+node_modules/
+
+# Build output
+out/
+release/
+release-staged/
+dist/
+
+# Logs / OS junk
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Local editor/agent settings
+.claude/settings.local.json
+
+# Personal content — never publish these. Media dropped in the working folder
+# while testing is the thing to keep out; the app's own icons are source and
+# have to ship, or a fresh clone can't be packaged at all.
+*.autocut
+*.snipp
+*.mp3
+*.mp4
+*.mov
+*.mkv
+*.wav
+*.png
+*.jpg
+*.jpeg
+!build/**
+!src/**
+!docs/images/**
+
+# Local debugging scratch scripts
+cdp-*.mjs
+
+# Whisper model cache, if it ever lands in the tree
+models/
+*.onnx
+*.onnx_data
+# Release model set (weights are not in git; see models-dist/README.md)
+models-dist/*
+!models-dist/README.md
+out-test/
+
+# Fix run: local review sheets and clips
+review-fix/
+
+# Craft run: local review sheets and clips
+review-next2/
+
+# Local outputs (exports, the Renders panel files): never in the repository
+cikti/
+.env
+
+# VideoHub's files in a code film's folder
+.videohub/
+
+# The e2e harness's open test window (scripts/e2e/hold.mjs)
+scripts/e2e/.hold.json

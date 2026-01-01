@@ -1,0 +1,8 @@
+<!doctype html><meta charset="utf-8"><style>html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:transparent}*{box-sizing:border-box}body{font-family:Segoe UI,Arial,sans-serif;color:#fff}.a{position:absolute}.card{background:rgba(15,20,30,.82);border:2px solid rgba(255,255,255,.25);border-radius:18px;box-shadow:0 8px 30px rgba(0,0,0,.4)}</style>
+<div class="a card" style="left:120px;top:90px;padding:28px 44px;width:640px"><div style="font-size:28px;color:#ccc">PRİPYAT TAHLİYESİ</div><div style="font-size:120px;font-weight:800;line-height:1.1"><span id=n>0</span></div><div style="font-size:30px">kişi · birkaç saat içinde</div><div id=g style="display:grid;grid-template-columns:repeat(25,1fr);gap:6px;margin-top:20px"></div></div>
+<script>
+var DUR=4.1,E=function(x){return Math.max(0,Math.min(1,x))},S=function(t,a,b){return 1-Math.pow(1-E((t-a)/(b-a)),3)};
+var G=document.getElementById('g'),D=[];for(var i=0;i<100;i++){var d=document.createElement('div');d.style.cssText='aspect-ratio:1;border-radius:50%;background:#6cb6ff';G.appendChild(d);D.push(d)}
+function draw(t){var p=S(t,.3,3),o=1-S(t,3.7,4.1);document.body.style.opacity=S(t,0,.3)*o;document.getElementById('n').textContent=Math.round(49000*p).toLocaleString('tr-TR');for(var i=0;i<100;i++){var s=E(p*100-i);D[i].style.opacity=.15+.85*s;D[i].style.transform='scale('+(.6+.4*s)+')'}}
+var ext=false;window.renderOut=function(t){ext=true;draw(t)};window.READY=true;var t0=performance.now();(function L(){if(!ext)draw(((performance.now()-t0)/1000)%DUR);requestAnimationFrame(L)})();
+</script>

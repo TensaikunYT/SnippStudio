@@ -1,0 +1,20 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>kod-klibi</title>
+<style>html,body{margin:0;background:#000}canvas{display:block}</style></head>
+<body><canvas id="c" width="1280" height="720"></canvas>
+<script>
+// A test code film (SnippStudio testdata): window.renderOut(t) draws second t;
+// its audio is audio/mix.wav. Every frame says its own time.
+window.__config = { width: 1280, height: 720, fps: 30, duration: 12 };
+const c = document.getElementById('c'), g = c.getContext('2d');
+window.renderOut = function (t) {
+  const k = t / 12;
+  g.fillStyle = '#101820'; g.fillRect(0, 0, 1280, 720);
+  for (let i = 0; i < 12; i++) { g.fillStyle = i <= t ? '#3fb68b' : '#26313b'; g.fillRect(80 + i * 93, 560, 80, 60); }
+  g.fillStyle = '#f2c46d'; g.beginPath(); g.arc(160 + k * 960, 330 + Math.sin(t * 2) * 90, 50, 0, Math.PI * 2); g.fill();
+  g.fillStyle = '#ffffff'; g.font = '700 84px Segoe UI, sans-serif'; g.textBaseline = 'top';
+  g.fillText('kod klibi ' + t.toFixed(2) + ' s', 80, 60);
+};
+window.renderOut(0);
+window.READY = true;
+</script></body></html>
